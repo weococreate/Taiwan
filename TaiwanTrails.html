@@ -958,7 +958,11 @@ function fitRegion(r){
   var pts=ITEMS.filter(function(a){return a.region===r;}).map(function(a){return [a.lat,a.lng];});
   if(pts.length)map.fitBounds(pts,{padding:[40,40],maxZoom:11});
 }
-boot();
 </script>
+
+<div data-source="weoco" style="box-sizing:border-box;max-width:1100px;margin:24px auto 0;padding:0 20px;font-size:12.5px;line-height:1.75;color:#5b6472;text-align:left"><b>資料來源</b>：百岳／小百岳名單與座標整理自<b>維基百科</b>（CC BY-SA 4.0）及 Wikidata／OpenStreetMap；步道軌跡為<b>農業部林業及自然保育署</b>「所轄自然步道軌跡圖」開放資料；玉山路線開放狀態為<b>內政部國家公園署</b>開放資料。</div>
+
+<div data-disclaimer="weoco" style="box-sizing:border-box;max-width:1100px;margin:28px auto 20px;padding:14px 20px;border-top:1px solid rgba(128,128,128,.25);font-size:12.5px;line-height:1.75;color:#5b6472;text-align:left"><strong style="color:#39404b">免責聲明</strong>：本頁為個人整理之公開資料視覺化，僅供參考，不構成任何專業建議，亦不代表任何機關或機構立場。資料經自動彙整，可能有解析誤差或未及更新，實際資訊請以官方公布為準。</div>
+<script>boot();</script>
 </body>
 </html>

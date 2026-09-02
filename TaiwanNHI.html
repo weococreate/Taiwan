@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-<!-- Google tag (gtag.js) GA4 G-JVW9ZBDT3Y — injected by ensure-ga4.py (single source of truth) -->
+<!-- Google tag (gtag.js) GA4 G-JVW9ZBDT3Y — injected by GA4 single-source injector -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JVW9ZBDT3Y"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
@@ -79,6 +79,8 @@ gtag('config', 'G-JVW9ZBDT3Y');
   .up{color:var(--red)}.down{color:var(--green)}
   .facts{display:grid;gap:10px;margin:8px 0}
   .fact{background:#f3f8f8;border-left:4px solid var(--teal);border-radius:0 10px 10px 0;padding:10px 14px;font-size:14px}
+  .fact.inc{border-left-color:var(--blue)} .fact.exp{border-left-color:var(--amber)} .fact.sys{border-left-color:var(--red)}
+  .honest.diag{background:#fdeeee;border-color:#f0caca} .honest.diag b{color:var(--red)}
   .honest{background:#fff8ec;border:1px solid #f0dcbb;border-radius:12px;padding:12px 15px;font-size:13.5px;margin-top:12px}
   .honest b{color:var(--amber)}
   .pill{display:inline-block;font-size:11.5px;background:#eef2f6;color:var(--sub);padding:2px 9px;border-radius:20px;margin-left:6px;vertical-align:middle}
@@ -91,6 +93,20 @@ gtag('config', 'G-JVW9ZBDT3Y');
 <script>
 // 所有數字來自 window.NHI_DATA（build-taiwannhi.js 產出），勿寫死在 HTML。
 var POINT_VALUE = 0.9; // 浮動點值約 0.9 元/點（各季各分區不同，僅供點→元粗略換算，標明估計）
+
+// ⚠ 第 6 章「財務現況與結構性診斷」暫置常數（2026-07 手動彙整之官方公布值）。
+//   來源：健保署 114 年度中央政府總預算案／全民健康保險會 114 年費率審議結果／衛福部 2025 總額核定新聞稿。
+//   此為年度級指標，與前五章逐月開放資料來源／頻率不同。
+//   TODO(Phase 0)：改由 build-taiwannhi.js 從官方資料源抓取後移入 window.NHI_DATA.diagnosis，本常數即可移除。
+var DIAG = {
+  asOf: '2026-07（官方公布值彙整）',
+  kpis: [
+    {lab:'2025(114年) 預計收支短絀', v:'−202', u:'億元', cls:'neg'},
+    {lab:'現行一般保險費率',        v:'5.17',      u:'%'},
+    {lab:'2025 健保給付總額',       v:'9,286',     u:'億元'},
+    {lab:'總額年成長率',            v:'+5.5',      u:'%（歷年最高）'}
+  ]
+};
 var CH; // 已建立的 chart 實例集合，供重繪釋放
 
 // ── 格式工具 ──
@@ -134,9 +150,9 @@ function render(d){
   '<div id="fetchwarn" class="loaderr" style="display:none;margin-top:10px;font-size:13px"></div></header>'+
   '<nav class="toc">'+
     '<a href="#c1">① 收支總覽</a><a href="#c2">② 錢從哪來</a><a href="#c3">③ 醫院排行</a>'+
-    '<a href="#c4">④ 誰在用</a><a href="#c5">⑤ 用在哪</a>'+
+    '<a href="#c4">④ 誰在用</a><a href="#c5">⑤ 用在哪</a><a href="#c6">⑥ 財務診斷</a>'+
   '</nav>'+
-  sec1()+sec2()+sec3()+sec4()+sec6()+
+  sec1()+sec2()+sec3()+sec4()+sec6()+secDiag()+
   '<footer>本儀表板數字均來自政府開放資料，經程式解析彙整，非官方發布物。<br>'+
   '收支以「元」（現金基礎）、醫療點數以「點」計，兩者不可直接相減；點值浮動約 0.9 元/點。<br>'+
   '產生時間：'+ (m.generatedAt||'').slice(0,16).replace('T',' ') +'</footer>';
@@ -189,6 +205,24 @@ function sec6(){return '<section id="c5"><h2><span class="n">5</span>用在哪�
   '<div style="font-size:14px;font-weight:600;margin:18px 0 4px">每人急診費用最高的疾病（總費用 ÷ 患者人數）</div>'+
   '<div class="chartbox tall"><canvas id="use_perperson"></canvas></div>'+
   '<div class="note" id="use_note"></div><div class="src" id="use_src"></div></section>';}
+
+// ── Ch6 財務現況與結構性診斷（年度級官方數字＋根因解讀，資料來自 DIAG 常數，見檔頭 TODO）──
+function secDiag(){
+  var k=DIAG.kpis.map(function(x){return kpi(x.lab,x.v,x.u,x.cls);}).join('');
+  return '<section id="c6"><h2><span class="n">6</span>財務現況與結構性診斷<span class="pill">官方數字・解讀</span></h2>'+
+  '<div class="lead">前五章看「資料現況」，本章把最新官方財務數字與結構性根因收攏成一頁診斷：健保為什麼開始入不敷出。</div>'+
+  '<div class="kpis">'+k+'</div>'+
+  '<div class="honest diag"><b>一句話診斷：</b>收入靠<b>萎縮中的薪資</b>、支出被<b>三隻怪獸</b>推高、制度又<b>鼓勵衝量</b>——三面夾擊。健保署預算文件示警：若維持現行費率 5.17%，<b>安全準備恐於 2025 年用罄</b>，但 114 年費率審議仍決定維持 5.17%（調費政治敏感，一再遞延）。</div>'+
+  '<div style="font-size:14px;font-weight:600;margin:16px 0 8px">為什麼會缺錢？三個結構性根因</div>'+
+  '<div class="facts">'+
+    '<div class="fact inc"><b>收入端｜費基先天不良。</b>保費以「薪資」為主要費基，但少子化＋高齡化讓<b>繳費人口縮小、用錢人口變多</b>，加上受僱薪資成長緩慢，收入天花板明顯。</div>'+
+    '<div class="fact exp"><b>支出端｜三隻怪獸。</b>①<b>人口老化</b>——高齡者醫療利用是年輕人的數倍；②<b>新藥新科技昂貴</b>——癌症標靶、免疫療法、罕病用藥動輒百萬，民眾對可近性期待高；③<b>高醫療利用</b>——年門診次數全球數一數二，逛醫院、重複檢查與用藥普遍。</div>'+
+    '<div class="fact sys"><b>制度端｜誘因錯置。</b>論量計酬鼓勵衝量；總額支付下衝量又造成<b>點值稀釋</b>反傷醫護；部分負擔偏低失去<b>價格訊號</b>，小病湧向大醫院；藥價差／低價值醫療難以退場。</div>'+
+  '</div>'+
+  '<div class="note"><b>什麼是「點值稀釋」？</b>醫療費用以「點」計，正常 1 點給付 1 元；但當全體申報量超過「總額」上限，點值就被打折、跌破 1 元（近年多季約 0.9x 元）。結果是醫護<b>「做愈多、單價愈低」</b>——這正是本儀表板第 3 章各醫院「醫療點數」背後的隱形折價。</div>'+
+  '<div class="honest"><b>閱讀提醒：</b>本章數字為 2026-07 彙整之官方公布值（年度預算案／費率審議／總額核定），屬<b>年度級</b>指標，與前五章逐月更新的開放資料<b>來源不同、更新頻率不同</b>，並列比較時請留意時點。</div>'+
+  '<div class="src">資料來源：健保署 114 年度中央政府總預算案（收支短絀、安全準備示警）／全民健康保險會 114 年度保險費率審議結果（維持 5.17%）／衛福部 2025 年健保總額核定新聞稿（9,286 億元、+5.5%）。截至 '+DIAG.asOf+'。<br>⚠ 開發註記：本章目前為手動彙整常數（DIAG），Phase 0 將改由 build 從官方資料源自動抓取後移入 NHI_DATA。</div>'+
+  '</section>';}
 
 // ── Ch1 收支總覽 ──
 function drawOverview(o){
@@ -393,5 +427,7 @@ window.NHI_DATA = {"meta":{"generatedAt":"2026-07-12T00:12:47.252Z","fetchError"
 
 boot();
 </script>
+
+<div data-disclaimer="weoco" style="box-sizing:border-box;max-width:1100px;margin:28px auto 20px;padding:14px 20px;border-top:1px solid rgba(128,128,128,.25);font-size:12.5px;line-height:1.75;color:#5b6472;text-align:left"><strong style="color:#39404b">免責聲明</strong>：本頁為個人整理之公開資料視覺化，僅供參考，不構成任何專業建議，亦不代表任何機關或機構立場。資料經自動彙整，可能有解析誤差或未及更新，實際資訊請以官方公布為準。</div>
 </body>
 </html>
