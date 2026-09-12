@@ -285,19 +285,33 @@ function pickDistinct(pool, n, exclude){
   while(out.length<n && guard++<800){ const c=rand(pool); if(!set.has(c.zh)){ set.add(c.zh); out.push(c); } }
   return out;
 }
+const DISABLED_Q=new Set();
+function meaningKey(x){ return String((x&&(x.sem||x.def))||'').replace(/[\s，。；：、！？「」『』（）]/g,''); }
+function conflicts(a,b){
+  if(!a||!b||a.zh===b.zh)return true;
+  if(meaningKey(a)&&meaningKey(a)===meaningKey(b))return true;
+  return (a.syn||[]).includes(b.zh)||(b.syn||[]).includes(a.zh);
+}
+function safeDistractors(pool,it,n){ return shuffle(pool.filter(x=>!conflicts(it,x))).slice(0,n); }
 function buildQuestions(level){
   const pool=POOL[level]; const n=QN[level];
-  const picks=shuffle(pool.slice()).slice(0,n);
-  return picks.map(it=>{
-    const useCloze = it.ex && it.ex.length && Math.random()<0.5;
-    const distract=pickDistinct(pool.length>=8?pool:MAINS, 3, [it]);
+  const picks=shuffle(pool.filter(it=>!DISABLED_Q.has(it.zh)).slice()).slice(0,n*3);
+  const questions=[];
+  for(const it of picks){
+    const exactExamples=(it.ex||[]).filter(e=>e.split(it.zh).length===2);
+    const useCloze=exactExamples.length>0&&Math.random()<0.5;
+    const distract=safeDistractors(pool.length>=8?pool:MAINS,it,3);
+    if(distract.length<3)continue;
     const opts=shuffle([it, ...distract]);
     if(useCloze){
-      const ex=rand(it.ex).split(it.zh).join('＿＿＿');
-      return {type:'克漏字', html:'把成語填進空格：<br><span class="blank">'+ex+'</span>', ansZh:it.zh, opts};
+      const ex=rand(exactExamples).replace(it.zh,'＿＿＿');
+      questions.push({type:'克漏字', html:'把成語填進空格：<br><span class="blank">'+ex+'</span>', ansZh:it.zh, opts});
+    }else{
+      questions.push({type:'看意思猜成語', html:'哪個成語的意思是：<br><span class="mean">'+(it.sem||it.def)+'</span>', ansZh:it.zh, opts});
     }
-    return {type:'看意思猜成語', html:'哪個成語的意思是：<br><span class="mean">'+(it.sem||it.def)+'</span>', ansZh:it.zh, opts};
-  });
+    if(questions.length===n)break;
+  }
+  return questions;
 }
 function startGame(level){
   game={level, qs:buildQuestions(level), i:0, score:0, streak:0};
@@ -315,6 +329,9 @@ function showQ(){
   const box=$('gopts'); box.innerHTML='';
   q.opts.forEach(o=>{ const b=document.createElement('button'); b.className='gopt'; b.textContent=o.zh;
     b.onclick=()=>answer(o.zh,b,q); box.appendChild(b); });
+  const report=document.createElement('button'); report.className='gopt'; report.textContent='回報此題可能多解並停用本次題目';
+  report.onclick=()=>{ DISABLED_Q.add(q.ansZh); q._done=true; q._ok=false; box.querySelectorAll('button').forEach(b=>b.disabled=true); $('gfb').textContent='已停用此題；之後重新出題不再選用。'; $('gfb').className='gfb b'; $('gnext').style.visibility='visible'; markDot(); };
+  box.appendChild(report);
   markDot();
 }
 const CHEER=['太棒了！🎉','答對囉！👏','好厲害！🌟','就是這個！✨','你好強！🔥'];

@@ -113,7 +113,7 @@ function boot(){
     + '<section class="card"><h2>全台鄉鎮醫療資源分布</h2><p class="cap">各鄉鎮市區的特約機構數（面量圖）。顏色越深資源越多；離島與偏鄉普遍偏淺。切換檢視類別，滑鼠移到鄉鎮看明細。</p>'
       + '<div class="switch" id="sw_map"></div><div class="maprow"><div id="mapbox"><div class="tip" id="tip"></div></div></div><div class="legend" id="legend"></div></section>'
     + (d.access&&d.geoVillages?
-      '<section class="card"><h2>住宅醫療可及性分級：離最近醫院多遠</h2><p class="cap">每個村里（代表點）到最近醫院——醫學中心／區域／地區任一層級——的直線距離分級。同一鄉鎮內市街與山區村里可差數十公里，這張圖看得出鄉鎮面量圖看不出的「鄉內差異」；偏鄉只要鄰近有地區醫院即列為可及。深色點為 450 家醫院位置。口徑：直線距離（非交通時間、非道路里程）。</p>'
+      '<section class="card"><h2>住宅醫療可及性分級：離最近醫院多遠</h2><p class="cap">每個村里（代表點）到最近醫院——醫學中心／區域／地區任一層級——的直線距離分級。同一鄉鎮內市街與山區村里可差數十公里，這張圖看得出鄉鎮面量圖看不出的「鄉內差異」；偏鄉只要鄰近有地區醫院即列為可及。深色點為 450 家醫院位置。統計範圍：直線距離（非交通時間、非道路里程）。</p>'
       + '<div class="acstats" id="acstats"></div>'
       + '<div class="maprow"><div id="acmapbox"><div class="tip" id="actip"></div></div></div><div class="legend" id="aclegend"></div></section>'
       + '<section class="card"><h2>離醫院最遠的村里榜</h2><p class="cap">有人口的村里中，距最近醫院直線距離最遠的前 30 名。以離島與高山村里為主；外島（烏坵、蘭嶼、東引）為跨海直線距離。</p>'
@@ -131,9 +131,9 @@ function boot(){
     + '<section class="card"><h2>醫療荒榜：無醫院層級的鄉鎮</h2><p class="cap">下列鄉鎮市區境內無任何地區醫院以上層級機構（僅有診所／藥局或更少）。中性呈現「該層級機構數為 0」，不作醫療品質結論。共 '+d.medDesert.length+' 個。</p>'
       + '<div class="tbl-wrap"><table id="desert"></table></div></section>'
     + '<div class="foot">資料來源：健保署開放資料 info.nhi.gov.tw（全民健保特約醫事機構名冊，每日更新，本頁為現行特約）。'
-      + '口徑：特約≠全部醫療院所（自費診所不在內）；已終止合約者已排除；地址文字解析至鄉鎮市區（未定位 '+d.meta.unlocated+' 筆）；無經緯度欄故採鄉鎮面量圖。診所／藥局明細量大未全嵌，本頁提供鄉鎮聚合與醫院層級清單。'
+      + '統計範圍：特約≠全部醫療院所（自費診所不在內）；已終止合約者已排除；地址文字解析至鄉鎮市區（未定位 '+d.meta.unlocated+' 筆）；無經緯度欄故採鄉鎮面量圖。診所／藥局明細量大未全嵌，本頁提供鄉鎮聚合與醫院層級清單。'
       + (d.access?' 可及性分級：村里代表點（內政部村里界圖）至最近醫院的 Haversine 直線距離，非交通時間、非道路里程；醫院座標以各縣市門牌坐標開放資料比對為主、少數為地理編碼／路段級（詳 README）；村里人口為戶政司 ODRP014（'+(d.access.meta.popJoin||'')+' 村里有人口值）。':'')
-      + (d.fusion?' 醫療可及×高齡化：老化指數快照自 '+d.fusion.source+'（民國 '+d.fusion.year+' 年，TaiwanFusion F6 build 時單向引用，非即時 fetch，跨站口徑與更新節奏詳 TaiwanPop）。':'')
+      + (d.fusion?' 醫療可及×高齡化：老化指數快照自 '+d.fusion.source+'（民國 '+d.fusion.year+' 年，TaiwanFusion F6 build 時單向引用，非即時 fetch，跨站統計範圍與更新節奏詳 TaiwanPop）。':'')
       + '</div>';
 
   drawMap(d);

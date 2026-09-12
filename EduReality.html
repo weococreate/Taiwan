@@ -195,10 +195,10 @@ gtag('config', 'G-JVW9ZBDT3Y');
   <div class="reveal">
     <span class="chap-no">第二章 · 人真的變少了</span>
     <h2 class="chap">出生數 40 年腰斬，2020 年起人口開始自然減少</h2>
-    <p class="lead">1981 年一年生 41.4 萬個寶寶；2024 年只剩 13.5 萬。而且從 <mark class="red">2020 年起，死亡數首度超過出生數</mark> —— 台灣人口正式進入自然負成長。</p>
+    <p class="lead" id="vitalsLead">1981 年一年生 41.4 萬個寶寶；2024 年只剩 13.5 萬。而且從 <mark class="red">2020 年起，死亡數首度超過出生數</mark> —— 台灣人口正式進入自然負成長。</p>
   </div>
   <div class="card reveal"><div class="chart-box"><canvas id="cVitals"></canvas></div>
-    <p class="cap"><b>出生數 vs 死亡數（1980–2024）。</b>兩線交叉點 = 人口開始自然減少。資料：內政部戶政司。</p>
+    <p class="cap" id="vitalsCap"><b>出生數 vs 死亡數（1980–2024）。</b>兩線交叉點 = 人口開始自然減少。資料：內政部戶政司。</p>
   </div>
   <div class="card reveal"><div class="chart-box"><canvas id="cTfr"></canvas></div>
     <p class="cap"><b>總生育率（每位婦女一生平均生育數）。</b>2.1 是人口替代水準；台灣 2024 年僅 <mark class="red">0.885</mark>，全球最低之一。資料：內政部戶政司。</p>
@@ -229,7 +229,7 @@ gtag('config', 'G-JVW9ZBDT3Y');
     <p class="lead">今年的大學新鮮人，是 18 年前出生的那批孩子。把出生數往後推 18 年，就是每年的「大學適齡人口」—— 它跟著出生數一起腰斬，但大學的招生量能沒有跟著縮。</p>
   </div>
   <div class="card reveal"><div class="chart-box"><canvas id="cCollege"></canvas></div>
-    <p class="cap"><b>大學適齡人口（＝18 年前出生數）。</b>2004 年還有 20.5 萬人要升大學，2042 年（2024 年出生者）只剩 13.5 萬。資料：由出生數序列推算。</p>
+    <p class="cap" id="collegeCap"><b>大學適齡人口（＝18 年前出生數）。</b>2004 年還有 20.5 萬人要升大學，2042 年（2024 年出生者）只剩 13.5 萬。資料：由出生數序列推算。</p>
   </div>
   <div class="reveal">
     <p class="lead" style="margin-top:20px">結果就是錄取率一路飆到接近 100%。爸媽當年拚死拚活的窄門，現在<mark>登記就有</mark>。</p>
@@ -276,7 +276,7 @@ gtag('config', 'G-JVW9ZBDT3Y');
   </div>
 
   <div class="card reveal">
-    <p style="font-size:17px"><b>2024 年的教師荒：</b>截至 8 月底，全台 <mark class="teal">3,303</mark> 所公立國中小仍缺 <mark class="teal">1,429</mark> 名代理教師；部分學校甄選逾 40 次無人應徵。少子化下，一邊是擠不進正職的流浪教師，一邊是沒人想接的代理缺 —— 制度的兩頭同時失靈。</p>
+    <p id="teacherShortage" style="font-size:17px"><b>2024 年的教師荒：</b>截至 8 月底，全台 <mark class="teal">3,303</mark> 所公立國中小仍缺 <mark class="teal">1,429</mark> 名代理教師；部分學校甄選逾 40 次無人應徵。少子化下，一邊是擠不進正職的流浪教師，一邊是沒人想接的代理缺 —— 制度的兩頭同時失靈。</p>
     <p class="cap">資料來源：教育部統計／BBC 中文、天下雜誌（2024）。</p>
   </div>
 </section>
@@ -299,7 +299,7 @@ gtag('config', 'G-JVW9ZBDT3Y');
 
   <div class="tool reveal">
     <h3>🎯 教甄期望值計算器</h3>
-    <p class="hint">「當老師好」的前提是考得上。假設每年教甄錄取率、你打算連考幾年，算算看累積上榜機率與機會成本。</p>
+    <p class="hint">「當老師好」的前提是考得上。以下是每年固定且彼此獨立的機率示範；累積值不是個人實際等待年數，也不是金額成本。</p>
     <div class="row">
       <label>每年教甄錄取率</label>
       <input type="range" id="passRate" min="1" max="30" value="8" step="1">
@@ -323,7 +323,7 @@ gtag('config', 'G-JVW9ZBDT3Y');
     <p class="lead">這不是「唸書無用」，而是<mark>供需反轉</mark>。數據只證明一件事：給下一代的建議，該跟著數據一起更新了。</p>
   </div>
   <div class="stats reveal">
-    <div class="stat"><div class="num birth">−67%</div><div class="desc">出生數 1981→2024<br>腰斬再腰斬</div></div>
+    <div class="stat"><div class="num birth" id="birthDecline">−67%</div><div class="desc" id="birthDeclineDesc">出生數 1981→2024<br>腰斬再腰斬</div></div>
     <div class="stat"><div class="num">98.9%</div><div class="desc">2024 大學錄取率<br>怎樣都有學校唸</div></div>
     <div class="stat"><div class="num teach">3 萬＋</div><div class="desc">流浪教師<br>鐵飯碗變窄門</div></div>
   </div>
@@ -341,6 +341,16 @@ function initApp(){
   "use strict";
   var D = window.EDU_DATA;
   if(!D){ document.body.insertAdjacentHTML("afterbegin","<p style='padding:40px;color:#e0533d'>資料檔 edureality-data.js 未載入。</p>"); return; }
+  var vitals=D.vitals||[], latestVital=vitals[vitals.length-1];
+  if(latestVital){
+    var byMax=document.getElementById('byear'), byNumMax=document.getElementById('byearNum');
+    if(byMax) byMax.max=latestVital.year; if(byNumMax) byNumMax.max=latestVital.year;
+    var firstNatural=vitals.find(function(v){return v.deaths>v.births;}), lead=document.getElementById('vitalsLead'), cap=document.getElementById('vitalsCap');
+    if(lead) lead.innerHTML='1981 年一年生 41.4 萬個寶寶；'+latestVital.year+' 年只剩 '+(latestVital.births/10000).toFixed(1)+' 萬。而且從 <mark class="red">'+(firstNatural?firstNatural.year:'資料期內')+' 年起，死亡數首度超過出生數</mark> —— 台灣人口正式進入自然負成長。';
+    if(cap) cap.innerHTML='<b>出生數 vs 死亡數（1980–'+latestVital.year+'）。</b>兩線交叉點 = 人口開始自然減少。資料：內政部戶政司。';
+  }
+  var shortage=D.teacherReality&&D.teacherReality.shortage, shortageEl=document.getElementById('teacherShortage');
+  if(shortage&&shortageEl) shortageEl.innerHTML='<b>'+shortage.year+' 年的教師荒：</b>截至 8 月底，全台 <mark class="teal">'+shortage.schools.toLocaleString()+'</mark> 所公立國中小仍缺 <mark class="teal">'+shortage.vacancies.toLocaleString()+'</mark> 名代理教師；部分學校甄選逾 '+shortage.maxRounds+' 次無人應徵。少子化下，一邊是擠不進正職的流浪教師，一邊是沒人想接的代理缺 —— 制度的兩頭同時失靈。';
 
   // ---- 主題 ----
   var root=document.documentElement, tb=document.getElementById("themeBtn");
@@ -382,7 +392,14 @@ function initApp(){
 
   // ---- 章1 對比數字（從資料填入，避免寫死不同步）----
   var last=D.vitals[D.vitals.length-1];
+  var latestYear=latestVital ? latestVital.year : last.year;
+  var baseVital=D.vitals.find(function(v){return v.year===1981;}) || D.vitals[0];
   document.getElementById("vs-birth").innerHTML=(last.births/10000).toFixed(1)+"<span class='unit'> 萬</span>";
+  var decline=(1-last.births/baseVital.births)*100, declineEl=document.getElementById('birthDecline'), declineDesc=document.getElementById('birthDeclineDesc');
+  if(declineEl) declineEl.textContent='−'+Math.round(decline)+'%';
+  if(declineDesc) declineDesc.innerHTML='出生數 '+baseVital.year+'→'+latestYear+'<br>腰斬再腰斬';
+  var collegeCap=document.getElementById('collegeCap');
+  if(collegeCap) collegeCap.innerHTML='<b>大學適齡人口（＝18 年前出生數）。</b>2004 年還有 20.5 萬人要升大學，'+(latestYear+18)+' 年（'+latestYear+' 年出生者）只剩 '+(last.births/10000).toFixed(1)+' 萬。資料：由出生數序列推算。';
   var admLast=D.admitRate[D.admitRate.length-1];
   document.getElementById("vs-admit").innerHTML=admLast.rate+"<span class='unit'> %</span>";
   document.getElementById("s-old").textContent=D.aging.current.rate+"%";
@@ -495,11 +512,11 @@ function initApp(){
   var byMap={}; D.vitals.forEach(function(v){byMap[v.year]=v;});
   var by=document.getElementById("byear"),byN=document.getElementById("byearNum"),byOut=document.getElementById("byearOut");
   function byUpdate(y){
-    y=Math.max(1980,Math.min(2024,y|0)); by.value=y; byN.value=y;
+    y=Math.max(1980,Math.min(latestYear,y|0)); by.value=y; byN.value=y;
     var v=byMap[y]; var pct=((last.births-v.births)/v.births*100);
     var cmp = v.births>last.births
-      ? "比 2024 年多 <span class='big'>"+Math.round((v.births-last.births)/10000*10)/10+" 萬</span>人"
-      : "比 2024 年少 <span class='big bad'>"+Math.round((last.births-v.births)/10000*10)/10+" 萬</span>人";
+      ? "比 "+latestYear+" 年多 <span class='big'>"+Math.round((v.births-last.births)/10000*10)/10+" 萬</span>人"
+      : "比 "+latestYear+" 年少 <span class='big bad'>"+Math.round((last.births-v.births)/10000*10)/10+" 萬</span>人";
     byOut.innerHTML =
       "<div>"+y+" 年出生了 <span class='big'>"+fmt(v.births)+"</span> 人，"+cmp+"。</div>"+
       "<div style='margin-top:8px'>那年的總生育率是 <b>"+v.tfr+"</b>；這批人在 <b>"+(y+18)+"</b> 年成為大學適齡人口。</div>";
@@ -515,12 +532,12 @@ function initApp(){
     var p=+pr.value/100, n=+ty.value;
     prV.textContent=(+pr.value)+"%"; tyV.textContent=n+" 年";
     var cum=(1-Math.pow(1-p,n))*100;         // 累積上榜機率
-    var expTries=(1/p).toFixed(1);           // 期望要考幾次
+    var expTries=p===0?'不可用':(p===1?'1.0':(1/p).toFixed(1)); // 0% 無有限期望，100% 為一次
     var cls=cum>=70?"good":(cum>=40?"":"bad");
     evOut.innerHTML=
       "<div>連考 <b>"+n+"</b> 年、每年錄取率 <b>"+(+pr.value)+"%</b>：</div>"+
       "<div style='margin-top:6px'>累積上榜機率 <span class='big "+cls+"'>"+cum.toFixed(1)+"%</span></div>"+
-      "<div style='margin-top:8px;color:var(--tx2)'>平均要考 <b>"+expTries+"</b> 次才會上一次；這段期間多半只能當代理教師（薪資與保障低於正職），這就是「機會成本」。</div>";
+      "<div style='margin-top:8px;color:var(--tx2)'>模型期望試次 <b>"+expTries+"</b>；此為固定獨立機率下的數學示範，不代表個人實際等待年數、代理年資或金額成本。</div>";
   }
   pr.oninput=evUpdate; ty.oninput=evUpdate; evUpdate();
 }

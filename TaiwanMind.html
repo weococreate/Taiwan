@@ -1865,7 +1865,7 @@ window.TAIWANMIND = {
         <div class="chartbox"><canvas id="c-report"></canvas></div>
       </div>
     </div>
-    <div class="note"><b>怎麼讀：</b>「死亡人數」是死因統計（實際離世）；「通報人次」是自殺防治通報系統的關懷通報，一人一年可被通報多次，兩者口徑不同。通報量成長同時反映關懷網絡擴大與需求增加，<b>不能單獨當成惡化證據</b>，須對照死亡率一起判讀。</div>
+    <div class="note"><b>怎麼讀：</b>「死亡人數」是死因統計（實際離世）；「通報人次」是自殺防治通報系統的關懷通報，一人一年可被通報多次，兩者統計範圍不同。通報量成長同時反映關懷網絡擴大與需求增加，<b>不能單獨當成惡化證據</b>，須對照死亡率一起判讀。</div>
   </section>
 
   <!-- 年齡剖面 -->
@@ -1895,7 +1895,7 @@ window.TAIWANMIND = {
         <div class="chartbox short"><canvas id="c-cause-school"></canvas></div>
       </div>
     </div>
-    <div class="note"><b>重要口徑：</b>自殺原因由通報人員於通報時勾選，<b>一個個案可複選多重原因</b>，因此各原因占率加總會超過 100%。此為「通報時研判」，非死因鑑定結論。</div>
+    <div class="note"><b>重要統計範圍：</b>自殺原因由通報人員於通報時勾選，<b>一個個案可複選多重原因</b>，因此各原因占率加總會超過 100%。此為「通報時研判」，非死因鑑定結論。</div>
   </section>
 
   <!-- 縣市 -->
@@ -1930,7 +1930,7 @@ window.TAIWANMIND = {
   </section>
 
   <footer>
-    <h3>資料來源與口徑說明</h3>
+    <h3>資料來源與統計範圍說明</h3>
     <ul class="caveat-list" id="caveats"></ul>
     <div class="src" id="sources"></div>
     <p style="margin-top:14px">本頁為資料監測用途，遵循世界衛生組織（WHO）自殺報導原則，不描述自殺方法細節、不作個案渲染。若內容引發不適，請善用上方求助專線。</p>
@@ -2032,7 +2032,7 @@ function render(){
 
   /* ── 4 原因（占率折線：情感 vs 精神健康 交叉）── */
   var causeColors=[C.rose,C.violet,C.amber,C.slate,C.blue,'#a8907a','#c3ccd4',C.teal];
-  // 用人次算各年占率（分母=當年通報總人次，含複選 → 用官方口徑：以通報總人次為分母）
+  // 用人次算各年占率（分母=當年通報總人次，含複選 → 用官方統計範圍：以通報總人次為分母）
   var reportTotals=D.reportTotal.map(r=>r.reports);
   var causeSeries=D.reportCauseLabels.map(function(lab,ci){
     return {label:lab,data:D.reportCause.map(function(row,yi){return +(row.counts[ci]/reportTotals[yi]*100).toFixed(1);}),

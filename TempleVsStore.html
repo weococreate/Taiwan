@@ -194,8 +194,8 @@ gtag('config', 'G-JVW9ZBDT3Y');
   </div>
 
   <div class="verdict">
-    <span class="tag">一半真</span>
-    <p>只數<strong>登記有案的寺廟</strong>，其實<strong>超商還比較多</strong>（多一千多家，而且超商還在展店）。但一般人講的「廟」通常把教會、神壇、路邊小廟都算進去——那就真的遠比超商多了。</p>
+    <span class="tag">資料載入中</span>
+    <p>數值、年份與範圍載入完成前，不提供多寡結論。</p>
   </div>
 
   <section>
@@ -246,7 +246,7 @@ gtag('config', 'G-JVW9ZBDT3Y');
           <div class="bar-title">③ ＋ 未登記神壇宮廟 <small>路邊小廟／私壇，坊間估計</small></div>
           <div class="bar-val" style="color:var(--temple)">≈30,000＋</div>
         </div>
-        <div class="track"><div class="fill" style="width:97%">碾壓 · 逾兩倍</div></div>
+        <div class="track"><div class="fill" style="width:0%">待載入</div></div>
       </div>
     </div>
   </section>
@@ -265,11 +265,11 @@ gtag('config', 'G-JVW9ZBDT3Y');
   </section>
 
   <div class="takeaway" style="border-left-color:var(--store)">
-    <b style="color:var(--store)">一句話結論：</b>嚴格用「登記寺廟」對比，超商略勝；但把宗教場所算全（教會＋神壇＋小廟），廟壓倒性勝出。所以坊間的說法<b style="color:var(--store)">方向沒錯，只是常被拿錯口徑</b>。
+    <b style="color:var(--store)">一句話結論：</b>資料載入完成前，不提供多寡或倍數判斷。
   </div>
 
   <footer>
-    <b>資料來源與口徑</b><br>
+    <b>資料來源與統計範圍</b><br>
     · 登記寺廟 12,419 座：內政部全國宗教資訊系統（religion.moi.gov.tw）＋內政統計月報寺廟登記概況，114 年；依《監督寺廟條例》登記之寺廟（正式＋補辦），<b>不含未登記宮壇與教會教堂</b>。<br>
     · 便利商店 ≈13,700 家：經濟部統計處／CRIF 中華徵信所，2024 年底四大超商（7-ELEVEN、全家、萊爾富、OK）合計。<br>
     · 登記教會（堂）≈3,300 座：內政部宗教場所統計（2010 年 3,336 座，近年約 3,300–4,000）。<br>
@@ -279,6 +279,59 @@ gtag('config', 'G-JVW9ZBDT3Y');
 </div>
 
 <script>
+// 頁內唯一數字／定義／年份／來源正本；所有可見圖文與 meta 均由此推導。
+var FACTS={
+  registeredTemple:{label:'登記寺廟',count:12419,year:2025,periodKind:'rocYear',approx:false,
+    scope:'依《監督寺廟條例》正式或補辦登記之寺廟；不含教會、神壇與未登記宮壇。',
+    source:'內政部全國宗教資訊系統寺廟開放資料',url:'https://religion.moi.gov.tw/Report/temple.xml'},
+  convenienceStore:{label:'四大便利商店',count:13700,year:2024,periodKind:'yearEnd',approx:true,
+    scope:'7-ELEVEN、全家、萊爾富、OK 約數；原頁引用經濟部統計處／CRIF，具體報告連結尚未確認。',
+    source:'經濟部統計處／CRIF 中華徵信所（原頁引用，待補具體報告連結）',url:null},
+  registeredChurch:{label:'登記教會（堂）',count:3336,year:2010,periodKind:'year',approx:false,
+    scope:'較早年度的登記教會統計，不代表 2025 年全部宗教建築。',
+    source:'內政部宗教場所統計（原頁引用，具體表格連結待確認）',url:null},
+  unregistered:{label:'未登記神壇宮廟',count:null,year:null,periodKind:'unknown',approx:true,
+    scope:'沒有官方完整名冊，不設定下限、不估精準總數或倍數。',source:'無完整官方名冊',url:null},
+  iconUnit:1000
+};
+function fnum(x){return !x||x.count==null?'未知':(x.approx?'約 ':'')+x.count.toLocaleString('zh-Hant');}
+function periodOf(x){
+  if(!x||x.year==null||x.periodKind==='unknown')return '未知';
+  if(x.periodKind==='rocYear')return '民國 '+(x.year-1911)+' 年';
+  return x.year+' 年'+(x.periodKind==='yearEnd'?'底':'');
+}
+function sourceLine(x){return '· '+x.label+'：'+fnum(x)+'；'+periodOf(x)+'；'+x.scope+' 來源：'+(x.url?'<a href="'+x.url+'" target="_blank" rel="noopener">'+x.source+'</a>':x.source)+'。';}
+function icons(kind,x){
+  var n=x.count==null?0:Math.ceil(x.count/FACTS.iconUnit), frac=x.count==null?0:(x.count/FACTS.iconUnit-Math.floor(x.count/FACTS.iconUnit));
+  var out=''; for(var i=0;i<n;i++)out+='<svg viewBox="0 0 64 64"'+(i===n-1&&frac?' style="opacity:'+Math.max(.2,frac).toFixed(2)+'"':'')+'><use href="#g-'+kind+'"/></svg>';
+  return out;
+}
+(function renderFacts(){
+  document.querySelector('.wrap').textContent='資料載入中；數值、年份與範圍尚未完成核對。';
+  var temple=FACTS.registeredTemple, store=FACTS.convenienceStore, church=FACTS.registeredChurch, unknown=FACTS.unregistered;
+  var comparable=temple.year===store.year;
+  var verdict=comparable
+    ? (temple.count>store.count?'在相同年份與範圍下，登記寺廟較多。':'在相同年份與範圍下，四大超商較多。')
+    : '兩個數字的年份不同（'+periodOf(temple)+'／'+periodOf(store)+'），只能條件式並列，不能據此判定目前哪個較多。';
+  var max=Math.max(temple.count,store.count), tw=(temple.count/max*100).toFixed(1), sw=(store.count/max*100).toFixed(1);
+  document.querySelector('meta[name="description"]').content=temple.label+' '+fnum(temple)+'（'+periodOf(temple)+'）與'+store.label+' '+fnum(store)+'（'+periodOf(store)+'）的條件式比較。';
+  document.querySelector('.wrap').innerHTML=
+    '<div class="eyebrow">台灣冷知識 · 先對齊年份與範圍</div>'+
+    '<h1>台灣<span class="hl">廟比超商多</span>，能直接判定嗎？</h1>'+
+    '<p class="lede">同年、同範圍才作可核實比較；名冊快照、年度統計與估計值分開呈現。</p>'+
+    '<div class="faceoff"><div class="side temple"><svg class="hero-ic" viewBox="0 0 64 64"><use href="#g-temple"/></svg><div class="num">'+fnum(temple)+'</div><div class="lab">'+temple.label+'</div><div class="sub">'+periodOf(temple)+'</div></div><div class="vs">VS</div><div class="side store"><svg class="hero-ic" viewBox="0 0 64 64"><use href="#g-store"/></svg><div class="num">'+fnum(store)+'</div><div class="lab">'+store.label+'</div><div class="sub">'+periodOf(store)+'</div></div></div>'+
+    '<div class="verdict"><span class="tag">條件式結論</span><p>'+verdict+'</p></div>'+
+    '<section><h2>圖示比較</h2><p class="note">每個圖示約代表 '+FACTS.iconUnit.toLocaleString('zh-Hant')+' 座／家；尾端半透明圖示表示不足一個單位。圖示仍受上述跨年限制。</p><div class="picto">'+
+      '<div class="picto-row temple"><div class="picto-lab"><svg viewBox="0 0 64 64"><use href="#g-temple"/></svg>'+temple.label+'</div><div class="picto-icons temple">'+icons('temple',temple)+'</div><div class="picto-n">'+fnum(temple)+'</div></div>'+
+      '<div class="picto-row store"><div class="picto-lab"><svg viewBox="0 0 64 64"><use href="#g-store"/></svg>'+store.label+'</div><div class="picto-icons store">'+icons('store',store)+'</div><div class="picto-n">'+fnum(store)+'</div></div></div></section>'+
+    '<section><h2>同一尺度，不混合不同定義</h2><p class="note">長條只呈現兩個各自有數字的系列，不把較早年的教會數或未知的未登記數加進寺廟。</p><div class="bars">'+
+      '<div class="bar-row"><div class="bar-head"><div class="bar-title">'+temple.label+' <small>'+periodOf(temple)+'</small></div><div class="bar-val">'+fnum(temple)+'</div></div><div class="track"><div class="fill" style="width:'+tw+'%">'+tw+'%</div></div></div>'+
+      '<div class="bar-row"><div class="bar-head"><div class="bar-title">'+store.label+' <small>'+periodOf(store)+'</small></div><div class="bar-val">'+fnum(store)+'</div></div><div class="track"><div class="fill" style="width:'+sw+'%;background:var(--store)">'+sw+'%</div></div></div></div></section>'+
+    '<section><h2>其他定義為何不能直接相加</h2><div class="grid2"><div class="stat"><div class="k">'+church.label+'</div><div class="v">'+fnum(church)+' <small>'+periodOf(church)+'</small></div><div class="note">'+church.scope+'</div></div><div class="stat"><div class="k">'+unknown.label+'</div><div class="v">未知 <small>不估倍數</small></div><div class="note">'+unknown.scope+'</div></div></div></section>'+
+    '<div class="takeaway"><b>一句話結論：</b>'+verdict+' 「宗教場所」也不能只拿單一年份的寺廟、較早年的教會與未知未登記數直接相加。</div>'+
+    '<footer><b>資料來源、統計範圍與期間</b><br>'+sourceLine(temple)+'<br>'+sourceLine(store)+'<br>'+sourceLine(church)+'<br>'+sourceLine(unknown)+'<br>本頁為個人資料整理；待查證連結未補齊前，不把約數寫成已確認的當期官方總量。</footer>';
+})();
+
 /* 深／淺色切換：跟隨系統，可手動覆蓋（存 localStorage） */
 (function(){
   var btn=document.getElementById('themeBtn'), root=document.documentElement, KEY='templevsstore-theme';
