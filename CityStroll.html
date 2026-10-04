@@ -1004,7 +1004,7 @@ const Logic = (() => {
 if (typeof window !== 'undefined') window.CityStrollLogic = Logic;
 
 /* ===================== 畫面 ===================== */
-const FEATURES = { route: false, share: false, blurb: false }; /* __FEATURES__ 預覽版由 build-citystroll-preview.js 改成 true */
+const FEATURES = { route: true, share: true, blurb: true }; /* 2026-10-04 使用者看過預覽版後裁定三項都上線 */
 const STORAGE = 'citystroll-marks-v1';
 const DEFAULT_DISTRICT = '臺北市/信義區';
 const $ = id => document.getElementById(id);
