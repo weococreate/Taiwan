@@ -899,7 +899,7 @@ footer{color:var(--dim);font-size:.78rem;padding:24px 0 48px;font-family:var(--m
      <button class="tab" role="tab" data-mode="station" aria-selected="false">捷運站</button>
     </div>
     <div class="controls" id="ctl-district"><select id="district" aria-label="選行政區"></select><select id="vill" aria-label="選里"></select><span class="lead">不選里就整區看，依里分成小塊；選了里就只看那一里。</span></div>
-    <div class="controls" id="ctl-near" hidden><button class="secondary" data-action="locate">定位我的位置</button><select id="radiusNear" aria-label="範圍"><option value="500">500 公尺內</option><option value="1000" selected>1 公里內</option><option value="2000">2 公里內</option></select><span class="lead" id="nearHint">按一下定位，列出走路到得了的地方。</span></div>
+    <div class="controls" id="ctl-near" hidden><button class="secondary" data-action="locate">定位我的位置</button><select id="radiusNear" aria-label="範圍"><option value="500">500 公尺內</option><option value="1000" selected>1 公里內</option><option value="2000">2 公里內</option></select><span class="lead" id="nearHint">按一下定位，列出走路到得了的地方。手機第一次會問要不要允許。</span></div>
     <div id="ctl-station" hidden><div class="chips lines" id="lineChips" role="group" aria-label="選路線"></div><div class="chips stations" id="stationChips" role="group" aria-label="選捷運站"></div><div class="controls"><select id="radiusStation" aria-label="範圍"><option value="500" selected>500 公尺內</option><option value="1000">1 公里內</option></select><span class="lead" id="stationHint">先選路線，再點一站。</span></div></div>
     <div class="controls"><input id="q" type="search" placeholder="或直接找名字、路名，例如 大安森林、淡水" aria-label="搜尋地點" autocomplete="off"></div>
    </div>
@@ -1055,13 +1055,28 @@ function drawMap(cur) {
   $('mapNote').textContent = places.length ? `${cur.title}：${places.length} 個地方；圓圈數字點了會展開` : '這個範圍沒有符合的地方';
 }
 function locate() {
-  if (!navigator.geolocation) { toast('這台手機不支援定位。'); return; }
-  $('nearHint').textContent = '正在找你的位置…';
-  navigator.geolocation.getCurrentPosition(pos => {
+  if (!navigator.geolocation) { toast('這台手機的瀏覽器不支援定位，改用捷運站或行政區。'); return; }
+  if (location.protocol !== 'https:' && location.protocol !== 'file:' && location.hostname !== '127.0.0.1' && location.hostname !== 'localhost') { toast('這個網址不是 https，手機不給定位；請用 https 的網址開。'); return; }
+  $('nearHint').textContent = '正在找你的位置…（第一次會問你要不要允許）';
+  const done = pos => {
     me = { lat: pos.coords.latitude, lon: pos.coords.longitude }; const t = Logic.townOf(D.towns, me.lat, me.lon);
-    $('nearHint').textContent = t ? `你在${t.city}${t.town}。` : '你不在雙北範圍內，仍可依距離列。';
+    $('nearHint').textContent = (t ? `你在${t.city}${t.town}` : '你不在雙北範圍內，仍可依距離列') + `（誤差約 ${Math.round(pos.coords.accuracy || 0)} 公尺）。`;
     mode = 'near'; render(); toast('找到了，附近的地方列在下面。');
-  }, () => { $('nearHint').textContent = '拿不到位置；可以改選行政區或捷運站。'; toast('拿不到位置；可以改選行政區或捷運站。'); }, { enableHighAccuracy: true, timeout: 10000 });
+  };
+  const fail = err => {
+    const why = err && err.code === 1 ? '你沒有允許這個網站用定位。iPhone：設定 → 隱私權與安全性 → 定位服務 → Safari（或 Chrome）改成「使用期間」；Android：網址列左邊的鎖頭 → 權限 → 位置。'
+      : err && err.code === 2 ? '現在抓不到位置（室內、地下或訊號差），走到窗邊或戶外再按一次。'
+      : '定位太久沒有回應，再按一次；或改用「捷運站」選附近的站。';
+    $('nearHint').textContent = why; toast('拿不到位置。' + (err && err.code === 1 ? '請到手機設定開啟定位權限。' : '可以改選捷運站或行政區。'));
+  };
+  // 先用快的（網路／基地台定位，室內也抓得到），拿到就列；再在背景用 GPS 精修一次
+  navigator.geolocation.getCurrentPosition(pos => {
+    done(pos);
+    if ((pos.coords.accuracy || 9999) > 150) navigator.geolocation.getCurrentPosition(p2 => { if ((p2.coords.accuracy || 9999) < (pos.coords.accuracy || 9999)) done(p2); }, () => {}, { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 });
+  }, err => {
+    if (err && err.code === 1) { fail(err); return; }
+    navigator.geolocation.getCurrentPosition(done, fail, { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 });
+  }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 120000 });
 }
 
 /* ---- 畫面 ---- */
