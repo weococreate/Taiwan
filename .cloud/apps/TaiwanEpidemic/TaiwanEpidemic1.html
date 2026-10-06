@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>傳染病急診監測｜最近流行什麼病</title>
+<script src="../../vendor/chart.umd.min.js"></script>
+<style>
+  :root{
+    --ink:#1a2b33; --sub:#5b6b73; --line:#e5eaed; --bg:#f6f8f9;
+    --card:#fff; --accent:#0f7a6b;
+    --up:#d94a3d; --down:#2f8f5b; --band:#eef2f4;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.6 -apple-system,"PingFang TC","Noto Sans TC",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  #app{max-width:1000px;margin:0 auto;padding:20px 18px 60px}
+  header h1{font-size:23px;margin:4px 0 6px;letter-spacing:.3px}
+  header .lede{color:var(--sub);font-size:14.5px;margin:0 0 10px}
+  .badge{display:inline-block;background:#e8f4f1;color:var(--accent);
+    font-size:13px;font-weight:600;padding:3px 10px;border-radius:20px;margin-right:6px}
+  .caliber{background:#fff9ec;border:1px solid #f2e2bd;color:#7a5f1e;
+    font-size:12.8px;line-height:1.55;padding:10px 12px;border-radius:9px;margin:12px 0 4px}
+  h2{font-size:17px;margin:30px 0 4px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+  h2 small{font-weight:400;color:var(--sub);font-size:12.5px}
+  .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:14px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:12px 12px 11px;cursor:pointer;transition:.15s;position:relative}
+  .kpi:hover{border-color:var(--accent);transform:translateY(-1px)}
+  .kpi.on{border-color:var(--accent);box-shadow:0 0 0 2px rgba(15,122,107,.15)}
+  .kpi .nm{font-size:13.5px;font-weight:700;color:var(--ink)}
+  .kpi .val{font-size:25px;font-weight:800;line-height:1.1;margin:6px 0 1px;
+    font-variant-numeric:tabular-nums}
+  .kpi .unit{font-size:11px;color:var(--sub);font-weight:400}
+  .kpi .wow{font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums}
+  .kpi .wow.up{color:var(--up)} .kpi .wow.down{color:var(--down)} .kpi .wow.flat{color:var(--sub)}
+  .kpi .chip{display:inline-block;font-size:10.5px;font-weight:600;padding:1px 7px;
+    border-radius:20px;margin-top:7px}
+  .chip.above{background:#fbe6e3;color:#b5382c}
+  .chip.within{background:#eef2f4;color:#5b6b73}
+  .chip.below{background:#e4f2ea;color:#2f8f5b}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:16px 16px 10px;margin-top:12px}
+  .chartwrap{position:relative;height:340px}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin:10px 2px 2px;font-size:12.5px;color:var(--sub)}
+  .legend i{display:inline-block;width:22px;height:0;vertical-align:middle;margin-right:5px}
+  .grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:12px}
+  .barrow{display:flex;align-items:center;gap:8px;margin:5px 0;font-size:13px}
+  .barrow .lbl{width:52px;text-align:right;color:var(--sub);flex:none;font-variant-numeric:tabular-nums}
+  .barrow .track{flex:1;background:#eef2f4;border-radius:5px;height:16px;overflow:hidden}
+  .barrow .fill{display:block;height:100%;border-radius:5px;min-width:2px}
+  .barrow .num{width:52px;flex:none;text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+  footer{margin-top:34px;padding-top:14px;border-top:1px solid var(--line);
+    font-size:12px;color:var(--sub);line-height:1.7}
+  .loaderr{padding:16px;border:1px solid #e33;color:#c00;border-radius:8px;background:#fff5f5}
+  @media(max-width:720px){
+    .kpis{grid-template-columns:repeat(2,1fr)}
+    .grid2{grid-template-columns:1fr}
+    .chartwrap{height:300px}
+  }
+</style>
+</head>
+<body>
+<div id="app"><div class="loading">載入中…</div></div>
+<script>
+var SYND_COLOR = {
+  ili:'#0f7a6b', entero:'#c9662b', diarrhea:'#3f6bd6', conj:'#b0453f', herp:'#8a54b8'
+};
+var state = { sel:'ili', chart:null };
+
+function fmt(n){ return (n==null)?'—':n.toLocaleString('en-US'); }
+function arrow(p){
+  if(p==null) return {t:'—',c:'flat'};
+  if(p>0) return {t:'▲ '+p+'%',c:'up'};
+  if(p<0) return {t:'▼ '+Math.abs(p)+'%',c:'down'};
+  return {t:'0%',c:'flat'};
+}
+function chipLabel(v){ return v==='above'?'高於往年同期':v==='below'?'低於往年同期':v==='within'?'落在往年區間':''; }
+
+function boot(){
+  var d = window.EPIDEMIC_DATA;
+  var app = document.getElementById('app');
+  if(!d || !d.syndromes || !d.syndromes.length){
+    app.innerHTML = '<div class="loaderr">⚠ 無資料'+(d&&d.meta&&d.meta.fetchError?'：'+d.meta.fetchError:'')+'</div>';
+    return;
+  }
+  var m = d.meta;
+  var html = ''
+   + '<header>'
+   + '<span class="badge">疾管署急診監測</span>'
+   + '<span class="badge">資料更新至 '+m.latestYear+' 年第 '+m.latestWeek+' 週</span>'
+   + '<h1>傳染病急診監測</h1>'
+   + '<p class="lede">類流感、腸病毒、腹瀉等症候群的急診就診趨勢——現在是升是降、跟往年同期比嚴不嚴重，一頁看懂。</p>'
+   + '</header>';
+
+  html += '<div class="kpis" id="kpis">';
+  d.syndromes.forEach(function(s){
+    var k=s.kpi, a=arrow(k.wow);
+    html += '<div class="kpi'+(s.key===state.sel?' on':'')+'" data-k="'+s.key+'">'
+      + '<div class="nm">'+s.name+'</div>'
+      + '<div class="val">'+fmt(k.value)+'<span class="unit"> 人次</span></div>'
+      + '<div class="wow '+a.c+'">'+a.t+' <span style="color:var(--sub);font-weight:400">週增</span></div>'
+      + (k.vsBaseline?'<div class="chip '+k.vsBaseline+'">'+chipLabel(k.vsBaseline)+'</div>':'')
+      + '</div>';
+  });
+  html += '</div>';
+
+  html += '<div class="caliber">📏 <b>統計範圍</b>：數值為急診「就診人次」（實際看診人數），<b>非就診比率</b>；'
+       + '疾管署源檔未附急診總人次分母，故不換算比率。跨年比較會受各年急診量變動影響，趨勢判讀請一併參考。'
+       + '單位：人次／週。</div>';
+
+  html += '<h2 id="curveTitle"></h2>'
+       + '<div class="panel"><div class="chartwrap"><canvas id="curve"></canvas></div>'
+       + '<div class="legend">'
+       + '<span><i id="lgToday" style="border-top:3px solid var(--accent)"></i>今年（'+m.latestYear+'）</span>'
+       + '<span><i style="border-top:2px solid #c3ccd1"></i>近 3 年</span>'
+       + '<span><i style="height:12px;background:var(--band);border-radius:2px;width:22px"></i>往年同期範圍（近 10 年 min–max）</span>'
+       + '<span><i style="border-top:2px dashed #9aa7ad"></i>往年同期中位</span>'
+       + '</div></div>';
+
+  html += '<h2>最新一週分布 <small id="distSub"></small></h2>'
+       + '<div class="grid2">'
+       + '<div class="panel"><div style="font-size:13.5px;font-weight:700;margin-bottom:8px">各縣市就診人次</div><div id="countyBars"></div></div>'
+       + '<div class="panel"><div style="font-size:13.5px;font-weight:700;margin-bottom:8px">各年齡別就診人次</div><div id="ageBars"></div></div>'
+       + '</div>';
+
+  html += '<footer>'
+       + '資料來源：'+m.source+'（'+m.license+'）。'
+       + '症候群定義與流行研判以疾管署「傳染病統計資料查詢系統」公告為準。<br>'
+       + '⚠ '+m.disclaimer+'　資料時間戳：'+ (m.generatedAt||'').slice(0,10) +'。'
+       + '</footer>';
+
+  app.innerHTML = html;
+
+  document.getElementById('kpis').addEventListener('click', function(e){
+    var c = e.target.closest('.kpi'); if(!c) return;
+    state.sel = c.getAttribute('data-k');
+    document.querySelectorAll('.kpi').forEach(function(x){ x.classList.toggle('on', x.getAttribute('data-k')===state.sel); });
+    render();
+  });
+  render();
+}
+
+function curSyn(){ return window.EPIDEMIC_DATA.syndromes.find(function(s){return s.key===state.sel;}); }
+
+function render(){
+  var s = curSyn(), m = window.EPIDEMIC_DATA.meta, col = SYND_COLOR[s.key];
+  document.getElementById('curveTitle').innerHTML = s.name+' 週別急診就診人次 <small>逐週對照近年同期（'+s.freq+'更新）</small>';
+  document.getElementById('distSub').textContent = '（'+s.name+'　'+m.latestYear+' 年第 '+m.latestWeek+' 週）';
+  var lg = document.getElementById('lgToday'); if(lg) lg.style.borderTopColor = col;
+  renderCurve(s, col);
+  renderBars('countyBars', window.EPIDEMIC_DATA.countyOrder.map(function(c){return [c, s.latestCounty[c]||0];}), col);
+  renderBars('ageBars', s.ages.map(function(a){return [a, s.latestAge[a]||0];}), col);
+}
+
+function renderCurve(s, col){
+  var weeks = []; for(var w=1;w<=53;w++) weeks.push(w);
+  var cy = String(s.latestYear);
+  var prev3 = s.years.filter(function(y){return y<cy;}).slice(-3);
+  var bmax = weeks.map(function(w){return s.baseline[w]?s.baseline[w].max:null;});
+  var bmin = weeks.map(function(w){return s.baseline[w]?s.baseline[w].min:null;});
+  var bmed = weeks.map(function(w){return s.baseline[w]?s.baseline[w].med:null;});
+  var ds = [];
+  ds.push({label:'往年最大',data:bmax,borderColor:'transparent',backgroundColor:'rgba(210,222,228,.55)',
+    pointRadius:0,fill:'+1',tension:.3,order:5});
+  ds.push({label:'往年最小',data:bmin,borderColor:'transparent',backgroundColor:'transparent',
+    pointRadius:0,fill:false,tension:.3,order:5});
+  ds.push({label:'往年中位',data:bmed,borderColor:'#9aa7ad',borderDash:[5,4],borderWidth:1.5,
+    pointRadius:0,fill:false,tension:.3,order:4});
+  prev3.forEach(function(y){
+    ds.push({label:y,data:weeks.map(function(w){return (s.series[y]&&s.series[y][w]!=null)?s.series[y][w]:null;}),
+      borderColor:'#c3ccd1',borderWidth:1.2,pointRadius:0,fill:false,tension:.3,order:3});
+  });
+  ds.push({label:cy,data:weeks.map(function(w){return (s.series[cy]&&s.series[cy][w]!=null)?s.series[cy][w]:null;}),
+    borderColor:col,borderWidth:3,pointRadius:0,fill:false,tension:.3,order:1});
+  if(state.chart) state.chart.destroy();
+  state.chart = new Chart(document.getElementById('curve'),{
+    type:'line',
+    data:{labels:weeks.map(function(w){return 'W'+w;}),datasets:ds},
+    options:{responsive:true,maintainAspectRatio:false,animation:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},
+        tooltip:{callbacks:{title:function(it){return '第 '+it[0].label.slice(1)+' 週';},
+          label:function(c){ if(c.dataset.label.indexOf('往年最')===0)return null;
+            var nm=c.dataset.label==='往年中位'?'往年同期中位':c.dataset.label+' 年';
+            return nm+'：'+(c.parsed.y==null?'—':c.parsed.y.toLocaleString('en-US'))+' 人次';}}}},
+      scales:{x:{ticks:{maxTicksLimit:14,font:{size:11}},grid:{display:false}},
+        y:{beginAtZero:true,ticks:{font:{size:11}},title:{display:true,text:'就診人次／週',font:{size:11}}}}}
+  });
+}
+
+function renderBars(id, pairs, col){
+  var max = Math.max.apply(null, pairs.map(function(p){return p[1];}).concat([1]));
+  var html = pairs.map(function(p){
+    var w = max>0 ? Math.round(p[1]/max*100) : 0;
+    return '<div class="barrow"><span class="lbl">'+p[0]+'</span>'
+      + '<span class="track"><span class="fill" style="width:'+w+'%;background:'+col+'"></span></span>'
+      + '<span class="num">'+p[1].toLocaleString('en-US')+'</span></div>';
+  }).join('');
+  document.getElementById(id).innerHTML = html;
+}
+
+/* __DEV_LOADER_START__ */
+(function(){
+  var t = Date.now();
+  function load(src, cb){
+    var s = document.createElement('script');
+    s.src = src + '?t=' + t;
+    s.onload = cb;
+    s.onerror = function(){ document.getElementById('app').innerHTML =
+      '<div class="loaderr">⚠ 載入失敗：' + src + '（請確認 taiwanepidemic-data.js 已產出，或用本機伺服器開啟；開發版不可 file:// 直開）</div>'; };
+    document.head.appendChild(s);
+  }
+  load('taiwanepidemic-data.js', boot);
+})();
+/* __DEV_LOADER_END__ */
+/* __DEPLOY_BOOT__ */
+</script>
+</body>
+</html>

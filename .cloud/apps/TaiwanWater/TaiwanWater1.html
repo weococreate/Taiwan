@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>水庫水情監測站</title>
+<script src="../../vendor/chart.umd.min.js"></script>
+<style>
+  :root{
+    --surface:#fcfcfb; --page:#f9f9f7; --ink:#0b0b0b; --sec:#52514e; --muted:#898781;
+    --grid:#e1e0d9; --baseline:#c3c2b7; --border:rgba(11,11,11,.10);
+    --blue:#2a78d6; --blue-deep:#104281; --blue-pale:#cde2fb;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--page);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Noto Sans TC",sans-serif}
+  #app{max-width:1120px;margin:0 auto;padding:20px 16px 48px}
+  h1{font-size:26px;margin:8px 0 2px}
+  h2{font-size:19px;margin:0 0 4px}
+  h3{font-size:15px;margin:18px 0 8px;color:var(--sec)}
+  .sub{color:var(--sec);font-size:14px;margin:0 0 16px}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .note{color:var(--sec);font-size:13px;margin:8px 0 0}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:16px 0}
+  .kpi{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+  .kpi .v{font-size:28px;font-weight:700;line-height:1.2}
+  .kpi .u{font-size:14px;font-weight:400;color:var(--sec)}
+  .kpi .t{font-size:13px;color:var(--sec);margin-top:2px}
+  .wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:10px}
+  .res{background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px 12px}
+  .res .nm{font-weight:600;font-size:14.5px;display:flex;justify-content:space-between;align-items:baseline}
+  .res .nm .pct{font-size:19px;font-variant-numeric:tabular-nums}
+  .res .bar{height:8px;background:var(--blue-pale);border-radius:4px;margin:6px 0 4px;overflow:hidden}
+  .res .bar i{display:block;height:100%;background:var(--blue);border-radius:4px}
+  .res .dt{font-size:12px;color:var(--sec);line-height:1.5}
+  .res .low{display:inline-block;font-size:11px;border:1px solid var(--baseline);border-radius:6px;padding:0 5px;color:var(--sec);margin-left:4px}
+  .qrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:8px}
+  .qrow select{font:15px system-ui,"Noto Sans TC",sans-serif;padding:6px 10px;border:1px solid var(--baseline);border-radius:8px;background:#fff}
+  .qrow label{font-size:14px;color:var(--sec)}
+  .chartbox{position:relative;width:100%}
+  .legend{font-size:13px;color:var(--sec);margin-top:6px}
+  .legend b{font-weight:600}
+  .sw{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:4px;border-radius:2px}
+  ul.caveats{margin:8px 0 0;padding-left:20px;color:var(--sec);font-size:14px}
+  ul.caveats li{margin:6px 0}
+  .foot{color:var(--muted);font-size:12.5px;margin-top:24px}
+  .loaderr{padding:16px;border:1px solid #e33;color:#c00;border-radius:8px;background:#fff5f5}
+  table.rvt{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:4px}
+  table.rvt th{color:var(--sec);font-weight:600;text-align:left;padding:6px 8px;border-bottom:1px solid var(--baseline);white-space:nowrap}
+  table.rvt td{padding:6px 8px;border-bottom:1px solid var(--grid);font-variant-numeric:tabular-nums;white-space:nowrap}
+  table.rvt td.nm{font-weight:600;white-space:normal}
+  table.rvt td.rg{color:var(--muted);font-size:12.5px}
+  .st{display:inline-block;font-size:12px;border:1px solid var(--baseline);border-radius:6px;padding:0 6px;color:var(--sec)}
+  .st.alert{border-color:var(--blue-deep);color:var(--blue-deep);font-weight:700}
+  .tblwrap{overflow-x:auto}
+</style>
+</head>
+<body>
+<div id="app"><div class="loading">載入中…</div></div>
+<script>
+// 所有數字來自 window.WATER_DATA（build-taiwanwater.js 產出），勿寫死在 HTML。
+// 色彩合規：依水利署開放資料注意事項，蓄水率一律單色藍深淺，不用綠/黃/橙/紅（勿與官方水情燈號混淆）。
+var charts = {};
+var REGION_ORDER = ['北部', '中部', '南部', '東部', '離島', '其他'];
+
+function fmt(n){ return n == null ? '—' : Number(n).toLocaleString('zh-Hant-TW'); }
+function fmt1(n){ return n == null ? '—' : Number(n).toLocaleString('zh-Hant-TW', { maximumFractionDigits: 1 }); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function destroyChart(k){ if (charts[k]) { charts[k].destroy(); delete charts[k]; } }
+
+function renderWall(){
+  var D = window.WATER_DATA;
+  var html = '';
+  REGION_ORDER.forEach(function(rg){
+    var group = D.reservoirs.filter(function(r){ return r.region === rg; });
+    if (!group.length) return;
+    html += '<h3>' + rg + '（' + group.length + ' 座）</h3><div class="wall">';
+    group.forEach(function(r){
+      var pct = r.rate != null ? r.rate.toFixed(1) + '%' : '無資料';
+      html += '<div class="res">' +
+        '<div class="nm"><span>' + esc(r.name) + (r.rate != null && r.rate < 30 ? '<span class="low">偏低</span>' : '') + '</span><span class="pct">' + pct + '</span></div>' +
+        '<div class="bar"><i style="width:' + (r.rate != null ? Math.min(100, r.rate) : 0) + '%"></i></div>' +
+        '<div class="dt">' +
+          (r.storage != null && r.capacity != null ? '蓄水 ' + fmt1(r.storage) + ' / ' + fmt1(r.capacity) + ' 萬m³<br>' : '蓄水量未登錄<br>') +
+          (r.rainToday != null && r.rainToday > 0 ? '集水區今日雨量 ' + fmt1(r.rainToday) + ' mm<br>' : '') +
+          '觀測 ' + esc((r.obsTime || '').replace('T', ' ').slice(5, 16)) +
+        '</div></div>';
+    });
+    html += '</div>';
+  });
+  document.getElementById('wall').innerHTML = html;
+}
+
+function renderTrend(){
+  var D = window.WATER_DATA;
+  var code = document.getElementById('t-res').value;
+  var t = D.trends[code];
+  var box = document.getElementById('trend-note');
+  destroyChart('trend');
+  if (!t || t.recent.length < 5){
+    box.textContent = '此水庫歷史序列累積中（開站起自養＋回補進行中），資料足量後顯示趨勢。';
+    return;
+  }
+  var from = document.getElementById('t-from').value, to = document.getElementById('t-to').value;
+  var recent = t.recent.filter(function(x){ return x[0].slice(0, 7) >= from && x[0].slice(0, 7) <= to; });
+  var m2021 = {};
+  t.y2021.forEach(function(x){ m2021[x[0]] = x[1]; });
+  var labels = recent.map(function(x){ return x[0]; });
+  var cur = recent.map(function(x){ return x[1]; });
+  var ref = recent.map(function(x){ var v = m2021[x[0].slice(5)]; return v == null ? null : v; });
+  charts.trend = new Chart(document.getElementById('c-trend'), {
+    type: 'line',
+    data: { labels: labels, datasets: [
+      { label: '近一年蓄水率', data: cur, borderColor: '#2a78d6', backgroundColor: '#2a78d6', borderWidth: 2, pointRadius: 0, pointHoverRadius: 4, spanGaps: true, tension: 0 },
+      { label: '2021 乾旱年同月日', data: ref, borderColor: '#898781', backgroundColor: '#898781', borderWidth: 2, borderDash: [6, 4], pointRadius: 0, pointHoverRadius: 4, spanGaps: true, tension: 0 }
+    ] },
+    options: { maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { position: 'top', labels: { boxWidth: 14, font: { size: 12 } } },
+        tooltip: { callbacks: { label: function(c){ return ' ' + c.dataset.label + '：' + (c.parsed.y == null ? '—' : c.parsed.y.toFixed(1) + '%'); } } } },
+      scales: { x: { ticks: { autoSkip: true, maxTicksLimit: 13, maxRotation: 45, color: '#898781', font: { size: 11 } }, grid: { display: false }, border: { color: '#c3c2b7' } },
+                y: { min: 0, max: 105, ticks: { color: '#898781', callback: function(v){ return v + '%'; } }, grid: { color: '#e1e0d9' }, border: { display: false }, title: { display: true, text: '蓄水率', color: '#898781', font: { size: 12 } } } } }
+  });
+  var last = recent[recent.length - 1];
+  var refLast = last ? m2021[last[0].slice(5)] : null;
+  box.textContent = last
+    ? '最新 ' + last[0] + '：' + last[1].toFixed(1) + '%' + (refLast != null ? '；2021 年同日 ' + refLast.toFixed(1) + '%（' + (last[1] >= refLast ? '高' : '低') + '於乾旱年 ' + Math.abs(last[1] - refLast).toFixed(1) + ' 個百分點）' : '')
+    : '';
+}
+
+function renderRain(){
+  var D = window.WATER_DATA;
+  var rows = D.reservoirs.filter(function(r){ return r.main && r.rainToday != null; })
+    .map(function(r){ return { name: r.name, v: r.rainToday }; })
+    .sort(function(a, b){ return b.v - a.v; });
+  destroyChart('rain');
+  var cv = document.getElementById('c-rain');
+  cv.parentElement.style.height = Math.max(140, rows.length * 24 + 60) + 'px';
+  charts.rain = new Chart(cv, {
+    type: 'bar',
+    data: { labels: rows.map(function(x){ return x.name; }), datasets: [{ label: '今日集水區累積雨量', data: rows.map(function(x){ return x.v; }), backgroundColor: '#2a78d6', borderRadius: 4, barPercentage: 0.72 }] },
+    options: { indexAxis: 'y', maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(c){ return ' ' + c.parsed.x.toFixed(1) + ' mm'; } } } },
+      scales: { x: { beginAtZero: true, ticks: { color: '#898781' }, grid: { color: '#e1e0d9' }, border: { display: false }, title: { display: true, text: 'mm（本日累積至觀測時刻）', color: '#898781', font: { size: 12 } } },
+                y: { ticks: { autoSkip: false, color: '#52514e', font: { size: 12.5 } }, grid: { display: false }, border: { color: '#c3c2b7' } } } }
+  });
+}
+
+function renderRiver(){
+  var D = window.WATER_DATA;
+  var box = document.getElementById('river-box');
+  if (!D.river || D.river.err){
+    box.innerHTML = '<p class="note">本章暫無資料' + (D.river && D.river.err ? '（' + esc(D.river.err) + '）' : '') + '，主章不受影響。</p>';
+    return;
+  }
+  var order = ['北部', '中部', '南部', '東部'];
+  var rows = '';
+  order.forEach(function(rg){
+    D.river.stations.filter(function(s){ return s.region === rg; }).forEach(function(s, i){
+      var margin = '';
+      if (s.level != null){
+        var ths = [s.a3, s.a2, s.a1].filter(function(v){ return v != null; });
+        if (ths.length && s.status === '未達警戒') margin = '低於最近警戒 ' + (Math.min.apply(null, ths) - s.level).toFixed(1) + ' m';
+      }
+      rows += '<tr>' +
+        (i === 0 ? '<td class="rg">' + rg + '</td>' : '<td class="rg"></td>') +
+        '<td class="nm">' + esc(s.name) + '<span class="rg">（' + esc(s.river) + '）</span></td>' +
+        '<td>' + (s.level == null ? '—' : s.level.toFixed(2)) + '</td>' +
+        '<td>' + (s.a3 == null ? '—' : s.a3.toFixed(1)) + ' / ' + (s.a2 == null ? '—' : s.a2.toFixed(1)) + ' / ' + (s.a1 == null ? '—' : s.a1.toFixed(1)) + '</td>' +
+        '<td>' + (s.status == null ? '<span class="st">無資料</span>' : (s.status.indexOf('達') === 0 ? '<span class="st alert">' + esc(s.status) + '</span>' : '<span class="st">' + esc(s.status) + '</span>')) + '</td>' +
+        '<td class="rg">' + (margin || '') + '</td>' +
+        '<td class="rg">' + esc((s.at || '').replace('T', ' ').slice(5, 16)) + '</td>' +
+      '</tr>';
+    });
+  });
+  box.innerHTML = '<div class="tblwrap"><table class="rvt">' +
+    '<tr><th></th><th>測站（河川）</th><th>現在水位 m</th><th>警戒值 三/二/一級 m</th><th>狀態</th><th>距警戒</th><th>觀測</th></tr>' +
+    rows + '</table></div>';
+}
+
+function renderGw(){
+  var D = window.WATER_DATA;
+  var wrap = document.getElementById('gw-wrap');
+  if (!D.gw || D.gw.err){
+    wrap.innerHTML = '<p class="note">本章暫無資料' + (D.gw && D.gw.err ? '（' + esc(D.gw.err) + '）' : '') + '，主章不受影響。</p>';
+    return;
+  }
+  var rows = D.gw.wells.filter(function(w){ return w.level != null; })
+    .sort(function(a, b){ return a.level - b.level; });
+  destroyChart('gw');
+  var cv = document.getElementById('c-gw');
+  cv.parentElement.style.height = Math.max(160, rows.length * 26 + 70) + 'px';
+  charts.gw = new Chart(cv, {
+    type: 'bar',
+    data: { labels: rows.map(function(w){ return w.town + ' ' + w.site; }),
+      datasets: [{ label: '水位高程', data: rows.map(function(w){ return w.level; }), backgroundColor: '#2a78d6', borderRadius: 3, barPercentage: 0.7 }] },
+    options: { indexAxis: 'y', maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(c){
+        var w = rows[c.dataIndex];
+        return ' 水位高程 ' + c.parsed.x.toFixed(2) + ' m｜井深 ' + (w.depth != null ? w.depth.toFixed(0) : '—') + ' m｜觀測 ' + (w.at || '').replace('T', ' ').slice(5, 16);
+      } } } },
+      scales: { x: { ticks: { color: '#898781' }, grid: { color: '#e1e0d9' }, border: { display: false }, title: { display: true, text: '水位高程 m（0＝海平面，負值＝低於海平面）', color: '#898781', font: { size: 12 } } },
+                y: { ticks: { autoSkip: false, color: '#52514e', font: { size: 12.5 } }, grid: { display: false }, border: { color: '#c3c2b7' } } } }
+  });
+  var neg = rows.filter(function(w){ return w.level < 0; }).length;
+  document.getElementById('gw-note').innerHTML = '<b>' + neg + '/' + rows.length + '</b> 口代表井水位高程低於海平面（觀測時刻見各條 tooltip）。';
+}
+
+function boot(){
+  var D = window.WATER_DATA;
+  if (!D){ document.getElementById('app').innerHTML = '<div class="loaderr">⚠ 無資料</div>'; return; }
+  var m = D.meta;
+  var lowMains = D.reservoirs.filter(function(r){ return r.main && r.rate != null && r.rate < 50; });
+  var mains = D.reservoirs.filter(function(r){ return r.main; });
+
+  document.getElementById('app').innerHTML =
+    '<h1>水庫水情監測站</h1>' +
+    '<p class="sub">水利署開放資料觀測快照，資料日期 <b>' + esc(m.today || '未知') + '</b>（各庫觀測時刻見卡片；非瀏覽器即時）。</p>' +
+    '<div class="kpis">' +
+      '<div class="kpi"><div class="v">' + fmt1(D.national.rate) + '<span class="u">%</span></div><div class="t">全台可統計水庫合計蓄水率</div></div>' +
+      '<div class="kpi"><div class="v">' + fmt((D.national.storage / 10000).toFixed(1)) + ' <span class="u">億m³</span></div><div class="t">合計蓄水量（容量 ' + (D.national.capacity / 10000).toFixed(1) + ' 億m³）</div></div>' +
+      '<div class="kpi"><div class="v">' + fmt(D.meta.counts.reservoirs) + ' <span class="u">座</span></div><div class="t">收錄水庫（可算蓄水率 ' + D.meta.counts.computable + ' 座）</div></div>' +
+      '<div class="kpi"><div class="v">' + lowMains.length + ' <span class="u">座</span></div><div class="t">主力水庫蓄水率低於 50%' + (lowMains.length ? '：' + lowMains.map(function(r){ return r.name; }).join('、') : '') + '</div></div>' +
+    '</div>' +
+    '<div class="card"><h2>全台水庫蓄水一覽</h2><p class="note">依區域分組（水庫代碼首碼），組內按有效容量排序。藍條深淺僅表比例，非官方水情燈號（見統計範圍）。</p><div id="wall"></div></div>' +
+    '<div class="card"><h2>單一水庫趨勢：近一年 vs 2021 乾旱年</h2>' +
+      '<div class="qrow"><label>水庫 <select id="t-res">' + mains.map(function(r){ return '<option value="' + r.code + '">' + esc(r.name) + '</option>'; }).join('') + '</select></label>' +
+      '<label>起 <select id="t-from"></select></label><label>迄 <select id="t-to"></select></label></div>' +
+      '<div class="chartbox" style="height:300px"><canvas id="c-trend"></canvas></div>' +
+      '<p class="note" id="trend-note"></p>' +
+      '<p class="note">歷史序列：2021 全年＋近一年由水利署防災網歷史庫回補（每日 07:00 快照）；其後由本站每日自養累積（抓取時刻快照，兩者觀測時刻略有差異）。</p></div>' +
+    '<div class="card"><h2>主力水庫集水區今日雨量</h2><div class="chartbox"><canvas id="c-rain"></canvas></div>' +
+      '<p class="note">來源為水情資料之「本日集水區累積降雨量」欄位，累積至各庫觀測時刻；0 mm 亦如實顯示。</p></div>' +
+    '<div class="card"><h2>河川水位與淹水警戒</h2>' +
+      '<p class="note">主要河川代表站（固定白名單各 1 站），現水位對照水利署公告之三級警戒水位；「狀態」為本站依數值之文字標註，非官方警戒發布。水位為高程（m），各站基準不同、跨站不可互比。</p>' +
+      '<div id="river-box"></div>' +
+      '<p class="note">警戒水位由低至高為三級→二級→一級（一級最嚴重，水位逼近計畫洪水位）；定義與即時警戒發布以水利署／防災資訊為準。</p></div>' +
+    '<div class="card"><h2>地下水位：彰雲嘉地層下陷觀測</h2>' +
+      '<p class="note">彰雲嘉沿海與雲林高鐵沿線為全台地層下陷熱區；本章取代表井（各站編號(2)中深層井）當日水位高程，長期低於海平面代表深層地下水超抽壓力。</p>' +
+      '<div id="gw-wrap"><div class="chartbox"><canvas id="c-gw"></canvas></div><div class="legend" id="gw-note"></div></div></div>' +
+    '<div class="card"><h2>統計範圍與注意事項</h2><ul class="caveats">' +
+      '<li><b>蓄水率分母＝有效容量</b>（水庫每日營運狀況之日更值；缺值退用年度水庫基本資料之「目前有效容量」）。容量隨淤積與清淤變動，各庫最近庫容測量年月載於資料檔；蓄水量>容量之異常值不顯示比率。</li>' +
+      '<li><b>快照範圍</b>：本頁為每日抓取當下之快照，非即時串流；各水庫由管理單位以自記儀器或人工登錄，時刻不一。</li>' +
+      '<li><b>色彩聲明</b>：依水利署開放資料注意事項，本站不以綠/黃/橙/紅色階表示蓄水率，避免與官方「水情燈號」混淆；限水與燈號資訊請以水利署網站為準。</li>' +
+      '<li><b>收錄範圍</b>：水利署水情資料所列公告水庫（含攔河堰/離島）；少數代碼無名稱對照或未登錄蓄水量者標示無資料。「主力水庫」指防災網 21 座重點水庫（有歷史對照）。</li>' +
+      '<li><b>低蓄水率 ≠ 一定缺水</b>：阿公店水庫每年 6–9 月依規定空庫排砂、攔河堰（石岡壩/集集/高屏溪堰）以調節取水為主蓄量本小，汛期低蓄水率屬正常操作；判讀請以公共給水主力庫（翡翠/石門/曾文/南化等）為準。</li>' +
+      '<li><b>2021 對照</b>：2021 為近年最嚴重乾旱年（日月潭、曾文見底）；同月日對照僅供感受水情相對位置，集水區降雨型態每年不同。</li>' +
+      '<li><b>河川與地下水（擴章）</b>：兩章為固定代表站白名單（河川各主要河川 1 站、地下水彰雲嘉 12 井），非全網測站；單日快照非趨勢，歷史序列自 2026-07-25 起自養累積。地下水單日水位受降雨與抽用影響波動，地層下陷量請以水利署年度監測為準；任一擴章來源暫斷時該章標「暫無資料」，不影響水庫主章。</li>' +
+    '</ul></div>' +
+    '<p class="foot">資料來源：' + esc(m.source) + '（' + esc(m.license) + '）｜觀測快照 ' + esc((m.snapshotAt || m.generatedAt || '未知').slice(0, 16).replace('T', ' ')) + '｜本機建置 ' + esc((m.builtAt || '').slice(0, 16).replace('T', ' ')) + ' UTC｜本頁為個人資料觀測站，非防汛或用水決策依據。</p>';
+
+  // 起迄月選單（近一年可得月份）
+  var months = [];
+  var anyTrend = D.trends[mains[0] && mains[0].code] || { recent: [] };
+  Object.keys(D.trends).forEach(function(c){
+    D.trends[c].recent.forEach(function(x){ var mo = x[0].slice(0, 7); if (months.indexOf(mo) < 0) months.push(mo); });
+  });
+  months.sort();
+  var selF = document.getElementById('t-from'), selT = document.getElementById('t-to');
+  selF.innerHTML = selT.innerHTML = months.map(function(x){ return '<option>' + x + '</option>'; }).join('');
+  if (months.length){ selF.value = months[0]; selT.value = months[months.length - 1]; }
+
+  Chart.defaults.font.family = 'system-ui,-apple-system,"Noto Sans TC",sans-serif';
+  Chart.defaults.color = '#52514e';
+
+  document.getElementById('t-res').onchange = renderTrend;
+  selF.onchange = renderTrend;
+  selT.onchange = renderTrend;
+
+  renderWall();
+  renderTrend();
+  renderRain();
+  renderRiver();
+  renderGw();
+}
+
+/* __DEV_LOADER_START__ */
+(function(){
+  var t = Date.now();
+  function load(src, cb){
+    var s = document.createElement('script');
+    s.src = src + '?t=' + t;
+    s.onload = cb;
+    s.onerror = function(){ document.getElementById('app').innerHTML =
+      '<div class="loaderr">⚠ 載入失敗：' + src + '（請確認 taiwanwater-data.js 已產出，或用本機伺服器開啟；開發版不可 file:// 直開）</div>'; };
+    document.head.appendChild(s);
+  }
+  load('taiwanwater-data.js', boot);
+})();
+/* __DEV_LOADER_END__ */
+/* __DEPLOY_BOOT__ */
+</script>
+</body>
+</html>
