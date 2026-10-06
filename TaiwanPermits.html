@@ -13,7 +13,7 @@ gtag('config', 'G-JVW9ZBDT3Y');
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>自然課本數據即時站</title>
+<title>建照使照觀測</title>
 <script>/**
  * Skipped minification because the original files appears to be already minified.
  * Original file: /npm/chart.js@4.4.1/dist/chart.umd.js
@@ -37,182 +37,373 @@ gtag('config', 'G-JVW9ZBDT3Y');
 </script>
 <style>
   :root{
-    --red:#e5484d; --yellow:#e08a00; --green:#2b9a66; --info:#8b8b8b;
-    --ink:#1a1a1a; --sub:#5b6470; --line:#e6e8eb; --bg:#f6f7f9; --card:#fff;
+    --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a887f;
+    --line:#e8e6e0; --card:#fcfcfb; --neg:#d03b3b; --pos:#2a78d6;
   }
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font:16px/1.65 system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
-  #app{max-width:1000px;margin:0 auto;padding:20px 16px 64px}
-  .loaderr{padding:16px;border:1px solid var(--red);color:#c00;border-radius:8px;background:#fff5f5}
-
-  header.hero{background:linear-gradient(135deg,#1a237e 0%,#4527a0 100%);color:#fff;
-    border-radius:16px;padding:26px 24px;margin-bottom:18px}
-  header.hero h1{font-size:26px;margin:0 0 6px;font-weight:800;letter-spacing:.5px}
-  header.hero p{margin:0;opacity:.92;font-size:15px}
-  .scoreboard{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
-  .score{background:rgba(255,255,255,.14);border-radius:10px;padding:8px 14px;font-size:14px;font-weight:600}
-  .score b{font-size:20px;margin-right:4px}
-
-  .callout{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--red);
-    border-radius:12px;padding:16px 18px;margin-bottom:22px}
-  .callout .k{font-size:13px;color:var(--red);font-weight:700;letter-spacing:1px}
-  .callout .big{font-size:19px;font-weight:800;margin:4px 0}
-  .callout .flip{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:15px;margin-top:6px}
-  .flip .was{color:var(--sub);text-decoration:line-through}
-  .flip .arrow{color:var(--red);font-weight:800}
-  .flip .now{color:var(--ink);font-weight:800;background:#fdeaea;padding:2px 10px;border-radius:20px}
-
-  h2.chap{font-size:19px;margin:26px 0 4px;display:flex;align-items:center;gap:8px}
-  h2.chap .g{font-size:12px;color:var(--sub);font-weight:500;background:#eef1f4;padding:2px 8px;border-radius:12px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:12px}
-
-  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:15px 16px;
-    display:flex;flex-direction:column;box-shadow:0 1px 2px rgba(0,0,0,.03)}
-  .card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
-  .card .name{font-size:15.5px;font-weight:700;line-height:1.35}
-  .badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap;color:#fff}
-  .badge.red{background:var(--red)} .badge.yellow{background:var(--yellow)}
-  .badge.green{background:var(--green)} .badge.info{background:var(--info)}
-
-  .cmp{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:stretch;margin:12px 0 8px}
-  .cell{border-radius:10px;padding:9px 11px;font-size:13.5px}
-  .cell .lab{font-size:11px;font-weight:700;letter-spacing:.5px;margin-bottom:3px;opacity:.75}
-  .cell.tb{background:#f0f2f5;color:#42484f}
-  .cell.now{background:#eef0ff;color:#28226e}
-  .cell .val{font-weight:700;font-size:14px;line-height:1.4}
-  .cell .sub2{font-size:11.5px;color:var(--sub);margin-top:3px}
-  .mid{display:flex;align-items:center;font-size:20px;color:#b6bcc4}
-
-  .chartbox{margin:6px 0 4px;height:150px}
-  .chartcap{font-size:10.5px;color:#9aa2ab;text-align:center;margin:-2px 0 4px}
-  .meta{font-size:11.5px;color:var(--sub);border-top:1px dashed var(--line);padding-top:8px;margin-top:auto;line-height:1.5}
-  .meta a{color:#4527a0;text-decoration:none}
-  .mode{display:inline-block;font-size:10px;font-weight:700;padding:1px 6px;border-radius:8px;margin-right:5px;vertical-align:1px}
-  .mode.auto{background:#e6f6ee;color:#1a7a47} .mode.semi{background:#fdf3e3;color:#9a6400}
-  .mode.live{background:#e9f0fe;color:#1f5fce}
-
-  footer.foot{margin-top:34px;font-size:12.5px;color:var(--sub);border-top:1px solid var(--line);padding-top:16px}
-  footer.foot b{color:var(--ink)}
-  .fetchwarn{background:#fff8e6;border:1px solid #f0d488;color:#7a5a00;border-radius:8px;padding:8px 12px;font-size:12.5px;margin-top:10px}
-  @media(max-width:520px){ .cmp{grid-template-columns:1fr}.mid{display:none} }
+  body{margin:0;background:#fff;color:var(--ink);font:16px/1.6 system-ui,"Noto Sans TC",sans-serif}
+  #app{max-width:1024px;margin:0 auto;padding:24px 20px 48px}
+  h1{font-size:26px;margin:8px 0 2px}
+  .sub{color:var(--ink2);font-size:14px;margin-bottom:18px}
+  section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:18px 0}
+  h2{font-size:19px;margin:0 0 4px}
+  .note{color:var(--ink2);font-size:13px;margin:2px 0 12px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px}
+  .kpi{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#fff;border-top:3px solid var(--line)}
+  .kpi .v{font-size:22px;font-weight:700;letter-spacing:.3px}
+  .kpi .l{font-size:13px;color:var(--ink2)}
+  .kpi .d{font-size:12px;color:var(--ink3)}
+  .chartbox{position:relative;height:360px}
+  .chartbox.tall{height:420px}
+  table{border-collapse:collapse;width:100%;font-size:14px}
+  th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+  th{color:var(--ink2);font-weight:600;font-size:13px}
+  th:first-child,td:first-child{text-align:left}
+  th.sortable{cursor:pointer;user-select:none}
+  th.sortable:hover{color:var(--ink)}
+  th.sortable.on{color:var(--ink)}
+  th .tri{font-size:9px;margin-left:3px;color:var(--ink3);vertical-align:1px}
+  th.sortable.on .tri{color:var(--pos)}
+  .thin{color:var(--ink3);font-size:11px}
+  .ctl{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 12px}
+  .ctl>span:first-child{margin-right:auto}
+  .sel{font-size:13px;color:var(--ink2);white-space:nowrap}
+  .sel select{font-size:13px;padding:3px 8px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);cursor:pointer;min-width:82px}
+  .btns{display:flex;gap:8px;flex-wrap:wrap}
+  .btns button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:4px 12px;font-size:13px;cursor:pointer;color:var(--ink2)}
+  .btns button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .flex2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media(max-width:760px){.flex2{grid-template-columns:1fr}.chartbox{height:280px}}
+  footer{color:var(--ink3);font-size:12px;margin-top:24px;line-height:1.7}
+  .loaderr{padding:16px;border:1px solid #e33;color:#c00;border-radius:8px;background:#fff5f5}
 </style>
 </head>
 <body>
 <div id="app"><div class="loading">載入中…</div></div>
 <script>
-// 所有數字來自 window.SCIENCE_DATA（build 產出），勿寫死在 HTML。
-var CHARTS = [];
-function esc(s){ return String(s==null?'':s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];}); }
+// 所有數字來自 window.PERMITS_DATA（build 產出），勿寫死在 HTML。
+var C = { blue:'#2a78d6', aqua:'#1baf7a', yellow:'#eda100', green:'#008300',
+          violet:'#4a3aa7', red:'#e34948', magenta:'#e87ba4', orange:'#eb6834',
+          grid:'#eeece6', ink2:'#52514e', crit:'#d03b3b' };
+function n0(v){ return v==null ? '—' : Math.round(v).toLocaleString('zh-Hant'); }
+function pct(v,d){ return v==null ? '—' : (v>0?'+':'')+v.toFixed(d==null?1:d)+'%'; }
+function ml(l){ return l.m? l.y+'/'+String(l.m).padStart(2,'0') : String(l.y); }
+function wan(v){ return v==null?'—':(v/10000).toFixed(1)+'萬'; }
+var charts={};
+function mkChart(id,cfg,plugins){ if(charts[id]) charts[id].destroy(); charts[id]=new Chart(document.getElementById(id),cfg,plugins); return charts[id]; }
+function baseOpts(unit){
+  return {
+    responsive:true, maintainAspectRatio:false, animation:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{ legend:{labels:{boxWidth:12,boxHeight:12,font:{size:12}}},
+      tooltip:{callbacks:{label:function(c){ return c.dataset.label+'：'+n0(c.parsed.y)+(unit||''); }}} },
+    scales:{ x:{grid:{display:false},ticks:{maxTicksLimit:14,color:C.ink2,font:{size:11}}},
+             y:{grid:{color:C.grid},ticks:{color:C.ink2,font:{size:11},callback:function(v){return v>=10000?(v/10000)+'萬':n0(v);}}} }
+  };
+}
+// 年增率序列
+function yoy(arr){ return arr.map(function(v,i){ var p=arr[i-1]; return (v!=null&&p!=null&&p!==0)?(v-p)/p*100:null; }); }
+
+var state={ flowMetric:'count', cityYearIdx:null, citySel:'臺北市', structMetric:'count',
+            fusionYear:'latest', fusionSort:'permit', fusionDir:'desc' };
+
+/* ===== 1｜景氣溫度計（建照領先指標）===== */
+function chapterLead(d){
+  var a=d.national.annual, ys=a.labels.map(function(l){return l.y;});
+  var pc=a.series.permit.count, pa=a.series.permit.area;
+  var yc=yoy(pc), lastI=pc.length-1;
+  // 最新完整年（末年可能為當年未完，年序列以整年列為準，皆完整年）
+  return '<section><h2>1｜營建景氣溫度計：建照領先指標</h2>'+
+    '<div class="note">建照＝開工前的「許可」；在全國總體統計中可作為開工與完工的領先參考，但不代表同一批建物的單案追蹤。全國核發建造執照（內政部統計處，'+ys[0]+'～'+ys[lastI]+' 年）。</div>'+
+    '<div class="kpis">'+
+      '<div class="kpi" style="border-top-color:'+C.blue+'"><div class="l">'+ys[lastI]+' 年建照件數</div><div class="v">'+n0(pc[lastI])+'</div><div class="d">年增 '+pct(yc[lastI])+'</div></div>'+
+      '<div class="kpi"><div class="l">'+ys[lastI]+' 年樓地板面積</div><div class="v">'+wan(pa[lastI])+'</div><div class="d">㎡，年增 '+pct(yoy(pa)[lastI])+'</div></div>'+
+      '<div class="kpi" style="border-top-color:'+C.aqua+'"><div class="l">最新月別（'+d.meta.latestPeriod+'）</div><div class="v">'+n0(lastMonthVal(d,"permit"))+'</div><div class="d">當月建照件數</div></div>'+
+      '<div class="kpi"><div class="l">'+ys[lastI]+' 年 vs '+ys[0]+' 年</div><div class="v">'+pct((pc[lastI]-pc[0])/pc[0]*100,0)+'</div><div class="d">長期變動</div></div>'+
+    '</div>'+
+    '<div class="note">建照件數（柱）與年增率（線）</div>'+
+    '<div class="chartbox tall"><canvas id="cLead"></canvas></div></section>';
+}
+function lastMonthVal(d,stage){ var s=d.national.monthly.series[stage].count; for(var i=s.length-1;i>=0;i--){ if(s[i]!=null) return s[i]; } return null; }
+function drawLead(d){
+  var a=d.national.annual, labels=a.labels.map(function(l){return l.y+'年';});
+  var pc=a.series.permit.count, yc=yoy(pc);
+  var o=baseOpts(' 件');
+  o.scales.y2={position:'right',grid:{display:false},ticks:{color:C.orange,font:{size:11},callback:function(v){return v+'%';}}};
+  o.plugins.tooltip.callbacks.label=function(c){ return c.dataset.label+'：'+(c.dataset.yAxisID==='y2'?pct(c.parsed.y):n0(c.parsed.y)+' 件'); };
+  mkChart('cLead',{data:{labels:labels,datasets:[
+    {type:'bar',label:'建照件數',data:pc,backgroundColor:C.blue,borderRadius:4,maxBarThickness:26,yAxisID:'y'},
+    {type:'line',label:'年增率',data:yc,borderColor:C.orange,backgroundColor:C.orange,pointRadius:2,borderWidth:2,yAxisID:'y2'}
+  ]},options:o});
+}
+
+/* ===== 解讀：為什麼建照件數在減少 =====（動態計算，隨月更自動更新，不寫死數字） */
+function chapterInsight(d){
+  var a=d.national.annual, ys=a.labels.map(function(l){return l.y;});
+  var pc=a.series.permit.count, pa=a.series.permit.area;
+  var uc=a.series.uselic.count, ua=a.series.uselic.area;
+  var lastI=pc.length-1;
+  // 建照件數高峰年
+  var peakI=0; for(var i=1;i<pc.length;i++){ if(pc[i]!=null&&pc[i]>pc[peakI]) peakI=i; }
+  var dropPct=(pc[peakI]-pc[lastI])/pc[peakI]*100;
+  // 每件平均樓地板面積（首個完整年 vs 最新年）＝大案化證據
+  var f=0; while(f<pc.length&&(pc[f]==null||pa[f]==null)) f++;
+  var avg0=pa[f]/pc[f], avgL=pa[lastI]/pc[lastI];
+  var avgGrow=(avgL-avg0)/avg0*100;
+  // 使照：件數高峰 vs 面積（完工端同型態）
+  var upeak=0; for(var j=1;j<uc.length;j++){ if(uc[j]!=null&&uc[j]>uc[upeak]) upeak=j; }
+  var uAreaUp=(ua[lastI]!=null&&ua[upeak]!=null)&&ua[lastI]>=ua[upeak];
+  // 近年（106 年起）最大單年跌幅＝階梯式轉折
+  var yc=yoy(pc), worst=null, worstY=null;
+  for(var k=0;k<yc.length;k++){ if(ys[k]>=106&&yc[k]!=null&&(worst==null||yc[k]<worst)){ worst=yc[k]; worstY=ys[k]; } }
+  return '<section><h2>解讀：為什麼建照「件數」在減少？</h2>'+
+    '<div class="note">同樣的資料，件數與面積講的是兩個故事。以下數字由本頁資料即時計算，隨每月更新。</div>'+
+    '<table>'+
+    '<tr><td style="white-space:nowrap">① 大案化（主因）</td><td style="text-align:left;white-space:normal">建照件數自 '+ys[peakI]+' 年高峰（'+n0(pc[peakI])+' 件）降至 '+ys[lastI]+' 年 '+n0(pc[lastI])+' 件，<b>減少約 '+dropPct.toFixed(0)+'%</b>；但同期<b>每件平均樓地板面積由 '+n0(Math.round(avg0))+' ㎡ 增至 '+n0(Math.round(avgL))+' ㎡（＋'+avgGrow.toFixed(0)+'%）</b>。單案規模翻倍，同樣營建量用更少件承載——件數減少不等於營建活動萎縮。</td></tr>'+
+    '<tr><td style="white-space:nowrap">② 件數與面積背離</td><td style="text-align:left;white-space:normal">建照樓地板面積並未隨件數同步腰斬（見上方溫度計柱與面積 KPI）；完工端亦然——使照件數自 '+ys[upeak]+' 年（'+n0(uc[upeak])+' 件）下滑，'+(uAreaUp?'使照<b>面積卻逆勢走高</b>':'面積相對抗跌')+'。看營建體量應以面積／造價為準，件數受大案化長期壓低會失真。</td></tr>'+
+    (worstY?'<tr><td style="white-space:nowrap">③ 階梯式下跌</td><td style="text-align:left;white-space:normal">減量非平滑，集中在特定年份：近年最大單年跌幅落在 <b>'+worstY+' 年（'+pct(worst)+'）</b>。這種外生型下跌通常對應資金環境與政策衝擊，而非人口／土地的緩慢趨勢。</td></tr>':'')+
+    '<tr><td style="white-space:nowrap">④ 市場常見解釋<br><span class="note" style="margin:0">（待查核，非本頁資料可證）</span></td><td style="text-align:left;white-space:normal">業界多將近年斷崖歸因於《平均地權條例》修法（限制預售轉讓等）、升息循環與缺工缺料造成的推案遞延，以及新制上路前的搶照基期效應。<b>以上屬市場推論，本頁資料無法自證</b>，引用前建議另以金融統計範圍與景氣指標查核。</td></tr>'+
+    '</table></section>';
+}
+
+/* ===== 解讀（本業）：對營建授信與景氣循環的意涵 =====（動態計算，隨月更自動更新，不寫死數字） */
+function chapterTakeaway(d){
+  var a=d.national.annual, ys=a.labels.map(function(l){return l.y;});
+  var pc=a.series.permit.count, pa=a.series.permit.area;
+  var lastI=pc.length-1;
+  // 件數高峰年（與上一章解讀同基準，取全序列 argmax）
+  var peakI=0; for(var i=1;i<pc.length;i++){ if(pc[i]!=null&&pc[i]>pc[peakI]) peakI=i; }
+  // 同一段期間：件數跌幅 vs 面積跌幅（證明面積是更穩的量體指標）
+  var cDrop=Math.abs((pc[lastI]-pc[peakI])/pc[peakI]*100);
+  var aDrop=Math.abs((pa[lastI]-pa[peakI])/pa[peakI]*100);
+  // 最新年建照件數是否為全序列最低（破底）
+  var minC=pc[0]; for(var j=1;j<pc.length;j++){ if(pc[j]!=null&&pc[j]<minC) minC=pc[j]; }
+  var isTrough=pc[lastI]===minC;
+  return '<section><h2>解讀：對營建授信與景氣循環的意涵</h2>'+
+    '<div class="note">承上——把「件數 vs 面積」與「三階段的統計先後」放到營建授信／景氣循環的用途上看；三階段為獨立總量，沒有單案配對。數字由本頁資料即時計算，隨每月更新。</div>'+
+    '<table>'+
+    '<tr><td style="white-space:nowrap">量體看面積<br>別只看件數</td><td style="text-align:left;white-space:normal">件數受大案化長期壓低會失真：同一段期間（'+ys[peakI]+'→'+ys[lastI]+' 年），建照<b>件數減少約 '+cDrop.toFixed(0)+'%</b>，但<b>樓地板面積僅減少約 '+aDrop.toFixed(0)+'%</b>——面積跌幅遠小於件數。判讀營建景氣熱度宜以<b>面積／造價</b>為主量體指標，件數僅作輔助，否則會把「大案化」誤讀成「營建萎縮」。</td></tr>'+
+    '<tr><td style="white-space:nowrap">建照可作為完工端<br>的領先參考</td><td style="text-align:left;white-space:normal">在總體統計的先後順序中，建照（許可）通常早於開工、使照（完工）；這是階段總量的時間關係，不是同一批建築的追蹤結果。'+(isTrough?'而 <b>'+ys[lastI]+' 年建照件數（'+n0(pc[lastI])+' 件）已是全序列最低（破底）</b>；':'')+'核照量能可作為開工與使照的上游參考，'+(isTrough?'循此統計先後推論，':'')+'未來 1～2 年<b>開工與使照量能偏弱</b>的機率較高。營建授信與景氣循環評估可將此領先訊號納入前瞻——惟屬領先指標的邏輯推論、非預測保證，宜再疊 TaiwanPrices 景氣對策信號對照後再對外陳述。</td></tr>'+
+    '</table></section>';
+}
+
+/* ===== 2｜三階段：建照→開工→使照 ===== */
+function chapterFlow(d){
+  return '<section><h2>2｜供給管道：建照 → 開工 → 使照</h2>'+
+    '<div class="note">建照、開工、使照是三組獨立的行政統計月別總量，用來觀察供給活動的先後與規模；資料沒有單案配對，因此不代表同一批建築，三線差額也不計為在建存量。各階段缺少的月份留空；開工統計自 98 年起。</div>'+
+    '<div class="ctl"><span class="note" style="margin:0">月別時間序列</span>'+
+      '<div class="btns" id="flowBtns">'+
+        '<button data-m="count" class="on">件數</button>'+
+        '<button data-m="area">樓地板面積</button></div></div>'+
+    '<div class="chartbox tall"><canvas id="cFlow"></canvas></div></section>';
+}
+function drawFlow(d){
+  var mo=d.national.monthly, labels=mo.labels.map(ml);
+  var mk=state.flowMetric, unit=mk==='area'?' ㎡':' 件';
+  var o=baseOpts(unit);
+  o.scales.x.ticks.maxTicksLimit=12;
+  mkChart('cFlow',{type:'line',data:{labels:labels,datasets:[
+    {label:'建照（許可）',borderColor:C.blue,backgroundColor:C.blue,pointRadius:0,borderWidth:1.6,data:mo.series.permit[mk]},
+    {label:'開工',borderColor:C.orange,backgroundColor:C.orange,pointRadius:0,borderWidth:1.6,data:mo.series.start[mk]},
+    {label:'使照（完工）',borderColor:C.aqua,backgroundColor:C.aqua,pointRadius:0,borderWidth:1.6,data:mo.series.uselic[mk]}
+  ]},options:o});
+  Array.prototype.forEach.call(document.querySelectorAll('#flowBtns button'),function(b){
+    b.className=state.flowMetric===b.getAttribute('data-m')?'on':'';
+    b.onclick=function(){ state.flowMetric=b.getAttribute('data-m'); drawFlow(d); };
+  });
+}
+
+/* ===== 3｜縣市版圖 ===== */
+function chapterCity(d){
+  var years=d.cities.years;
+  var yrOpts=years.map(function(y,i){ return '<option value="'+i+'"'+(i===years.length-1?' selected':'')+'>'+y+' 年</option>'; }).join('');
+  var cityOpts=d.cities.names.map(function(c){ return '<option value="'+c+'"'+(c===state.citySel?' selected':'')+'>'+c+'</option>'; }).join('');
+  return '<section><h2>3｜縣市版圖：誰在大建設</h2>'+
+    '<div class="note">各縣市核發建造執照件數。左：指定年度縣市排行；右：單一縣市歷年趨勢。</div>'+
+    '<div class="flex2">'+
+      '<div><div class="ctl"><span class="note" style="margin:0">縣市排行</span>'+
+        '<label class="sel">年度 <select id="cityYear">'+yrOpts+'</select></label></div>'+
+        '<div class="chartbox tall"><canvas id="cCityRank"></canvas></div></div>'+
+      '<div><div class="ctl"><span class="note" style="margin:0">歷年趨勢</span>'+
+        '<label class="sel">縣市 <select id="citySel">'+cityOpts+'</select></label></div>'+
+        '<div class="chartbox tall"><canvas id="cCityTrend"></canvas></div></div>'+
+    '</div></section>';
+}
+function drawCity(d){
+  var years=d.cities.years;
+  var yi=state.cityYearIdx==null?years.length-1:state.cityYearIdx;
+  var rows=d.cities.names.map(function(c){ return {c:c,v:d.cities.annual.count[c][yi]}; })
+    .filter(function(x){return x.v!=null;}).sort(function(a,b){return b.v-a.v;});
+  var o1=baseOpts(' 件'); o1.indexAxis='y'; o1.plugins.legend.display=false;
+  o1.scales.x={grid:{color:C.grid},ticks:{color:C.ink2,font:{size:11},callback:function(v){return v>=10000?(v/10000)+'萬':n0(v);}}};
+  o1.scales.y={grid:{display:false},ticks:{color:C.ink2,font:{size:12},autoSkip:false}};
+  mkChart('cCityRank',{type:'bar',data:{labels:rows.map(function(x){return x.c;}),
+    datasets:[{label:years[yi]+'年',data:rows.map(function(x){return x.v;}),backgroundColor:C.blue,borderRadius:3,maxBarThickness:16}]},options:o1});
+  var o2=baseOpts(' 件');
+  mkChart('cCityTrend',{type:'line',data:{labels:years.map(function(y){return y+'年';}),
+    datasets:[{label:state.citySel,borderColor:C.violet,backgroundColor:C.violet,pointRadius:2,borderWidth:2,data:d.cities.annual.count[state.citySel]}]},options:o2});
+}
+
+/* ===== 4｜結構面：用途別 / 構造別 ===== */
+var PIE_COLS=[C.blue,C.orange,C.yellow,C.aqua,C.violet,C.magenta,C.green,C.red,'#7a8ca3','#b08a3e','#6aa84f','#c9c7bf'];
+function pieCfg(items,unit){
+  var top=items.slice().sort(function(a,b){return b.v-a.v;});
+  var tot=top.reduce(function(s,x){return s+x.v;},0);
+  return {type:'doughnut',data:{labels:top.map(function(x){return x.cat;}),
+    datasets:[{data:top.map(function(x){return x.v;}),backgroundColor:top.map(function(_,i){return PIE_COLS[i%PIE_COLS.length];}),borderColor:'#fff',borderWidth:2}]},
+    options:{responsive:true,maintainAspectRatio:false,animation:false,cutout:'52%',
+      plugins:{legend:{position:'right',labels:{boxWidth:12,boxHeight:12,font:{size:11}}},
+        tooltip:{callbacks:{label:function(c){ return c.label+'：'+n0(c.parsed)+unit+'（'+(c.parsed/tot*100).toFixed(1)+'%）'; }}}}}};
+}
+function chapterStruct(d){
+  var s=d.structure;
+  return '<section><h2>4｜結構面：蓋的是什麼、怎麼蓋（'+s.year+' 年建照）</h2>'+
+    '<div class="note">'+s.year+' 年核發建造執照的用途別與構造別占比。左＝用途（住宅/商業/工業…）、右＝構造（混凝土/鋼構…）。可切件數／樓地板面積。</div>'+
+    '<div class="ctl"><span class="note" style="margin:0">統計範圍</span>'+
+      '<div class="btns" id="structBtns"><button data-m="count" class="on">件數</button><button data-m="area">樓地板面積</button></div></div>'+
+    '<div class="flex2">'+
+      '<div><div class="note">用途別</div><div class="chartbox tall"><canvas id="cUse"></canvas></div></div>'+
+      '<div><div class="note">構造別</div><div class="chartbox tall"><canvas id="cStruct"></canvas></div></div>'+
+    '</div></section>';
+}
+function drawStruct(d){
+  var s=d.structure, mk=state.structMetric, unit=mk==='area'?' ㎡':' 件';
+  mkChart('cUse', pieCfg(s.permitUse[mk], unit));
+  mkChart('cStruct', pieCfg(s.permitStruct[mk], unit));
+  Array.prototype.forEach.call(document.querySelectorAll('#structBtns button'),function(b){
+    b.className=state.structMetric===b.getAttribute('data-m')?'on':'';
+    b.onclick=function(){ state.structMetric=b.getAttribute('data-m'); drawStruct(d); };
+  });
+}
+
+/* ===== 6｜房市三角對照（TaiwanFusion F3b：建照量 × 預售價 × 租金，宿主單向快照 taiwanpresale/taiwanrent）===== */
+// 可切年：'latest'＝各站最新窗口（建照為最新完整年、預售近 N 季、租金近 N 月）；否則為民國年整數，
+// 三欄一律取「該年全年」值（西元＝民國＋1911）。年選單只列建照與預售/租金皆有資料的年度。
+var FUSION_COLS=[{k:'c',t:'縣市'},{k:'permit',t:'建照件數'},{k:'presale',t:'預售中位（萬/坪）'},{k:'rent',t:'租金中位（元/坪/月）'}];
+function fusionYears(d){
+  var out=[], years=d.cities.years, fy=d.fusion.years||[];
+  for(var i=0;i<years.length;i++){ if(fy.indexOf(years[i]+1911)>=0) out.push(years[i]); }
+  return out;
+}
+function chapterFusion(d){
+  if(!d.fusion) return '';
+  var f=d.fusion;
+  var badges=['🏗️ 建照截至 '+d.meta.latestPeriod];
+  if(f.presale) badges.push('🏢 預售截至 '+f.presale.asOf);
+  if(f.rent) badges.push('🏠 租金截至 '+f.rent.asOf);
+  var yrs=fusionYears(d), opts='<option value="latest">最新期別</option>';
+  for(var i=yrs.length-1;i>=0;i--) opts+='<option value="'+yrs[i]+'">'+yrs[i]+' 年（'+(yrs[i]+1911)+'）</option>';
+  return '<section><h2>6｜房市三角對照：建照量 × 預售價 × 租金（縣市）</h2>'+
+    '<div class="note">本站建照供給量，對照同縣市 TaiwanPresale 預售單價與 TaiwanRent 租金行情，看供給與價格的關係。'+badges.join('　')+'</div>'+
+    '<div class="note">⚠ '+f.note+'</div>'+
+    '<div class="ctl"><span class="note" style="margin:0">點欄位標題的小三角（▾）可排序</span>'+
+      '<label class="sel">年度 <select id="fusionYear">'+opts+'</select></label></div>'+
+    '<div style="overflow-x:auto"><table id="tblFusion"></table></div>'+
+    '<div class="note" id="fusionNote"></div></section>';
+}
+function fusionRows(d){
+  var f=d.fusion, years=d.cities.years, isLatest=state.fusionYear==='latest';
+  var yi=years.length-1, cell=null;
+  if(!isLatest){
+    var my=parseInt(state.fusionYear,10);
+    yi=years.indexOf(my);
+    cell=f.byYear[String(my+1911)]||{};
+  }
+  return d.cities.names.map(function(c){
+    var arr=d.cities.annual.count[c];
+    var fc=(isLatest?(f.counties[c]||{}):(cell[c]||{}));
+    return { c:c, permit:(yi>=0&&arr?arr[yi]:null),
+      presale:(fc.presalePing!=null?fc.presalePing:null), rent:(fc.rentPing!=null?fc.rentPing:null),
+      pn:(fc.presaleN!=null?fc.presaleN:null), rn:(fc.rentN!=null?fc.rentN:null) };
+  }).filter(function(x){ return x.permit!=null||x.presale!=null||x.rent!=null; });
+}
+function sortFusion(rows){
+  var k=state.fusionSort, dir=(state.fusionDir==='asc'?1:-1);
+  function byName(a,b){ return a.c.localeCompare(b.c,'zh-Hant'); }
+  return rows.slice().sort(function(a,b){
+    if(k==='c') return byName(a,b)*dir;
+    var av=a[k], bv=b[k];
+    if(av==null&&bv==null) return byName(a,b);
+    if(av==null) return 1;   // 缺值一律置底，不隨升降序翻面
+    if(bv==null) return -1;
+    return (av-bv)*dir || byName(a,b);
+  });
+}
+function drawFusion(d){
+  if(!d.fusion) return;
+  var f=d.fusion, t=document.getElementById('tblFusion');
+  if(!t) return;
+  var isLatest=state.fusionYear==='latest', years=d.cities.years;
+  var yr=isLatest?years[years.length-1]:parseInt(state.fusionYear,10);
+  var rows=sortFusion(fusionRows(d));
+  var h='<tr>';
+  FUSION_COLS.forEach(function(col){
+    var on=state.fusionSort===col.k;
+    var tri=on?(state.fusionDir==='asc'?'▴':'▾'):'▾';
+    var label=col.k==='permit'?col.t+'（'+yr+'年）':col.t;
+    h+='<th class="sortable'+(on?' on':'')+'" data-k="'+col.k+'">'+label+'<span class="tri">'+tri+'</span></th>';
+  });
+  h+='</tr>';
+  function cellHtml(v,fmt,n){
+    if(v==null) return '<td>—</td>';
+    var thin=(n!=null&&n<30);
+    return '<td'+(n!=null?' title="登錄樣本 '+n0(n)+' 筆"':'')+'>'+fmt(v)+(thin?'<span class="thin">＊</span>':'')+'</td>';
+  }
+  rows.forEach(function(r){
+    h+='<tr><td>'+r.c+'</td><td>'+n0(r.permit)+'</td>'+
+      cellHtml(r.presale,wan,r.pn)+cellHtml(r.rent,n0,r.rn)+'</tr>';
+  });
+  t.innerHTML=h;
+  Array.prototype.forEach.call(t.querySelectorAll('th.sortable'),function(th){
+    th.onclick=function(){
+      var k=th.getAttribute('data-k');
+      if(state.fusionSort===k) state.fusionDir=(state.fusionDir==='asc'?'desc':'asc');
+      else { state.fusionSort=k; state.fusionDir=(k==='c'?'asc':'desc'); }
+      drawFusion(d);
+    };
+  });
+  // 統計範圍說明隨切年改寫（年模式三欄同為該年全年值；最新模式沿用各站原窗口）
+  var notes=['建照件數＝'+yr+' 年核發建造執照件數，含全用途（住宅＋商業＋工業等，非僅住宅類），與本站排行章同一統計範圍。'];
+  if(f.presale) notes.push('預售單價＝'+(isLatest?f.presale.window+'（截至 '+f.presale.asOf+'）':yr+' 年（'+(yr+1911)+'）'+f.presale.yearWindow)+'，來源：'+f.presale.source+'。');
+  else notes.push('（TaiwanPresale 快照缺，預售欄省略）');
+  if(f.rent) notes.push('租金＝'+(isLatest?f.rent.window+'（截至 '+f.rent.asOf+'）':yr+' 年（'+(yr+1911)+'）'+f.rent.yearWindow)+'，來源：'+f.rent.source+'。');
+  else notes.push('（TaiwanRent 快照缺，租金欄省略）');
+  if(isLatest) notes.push('⚠ 「最新期別」三欄期別不同（建照為最新完整年、預售與租金為各站最新窗口），僅供數量級對照；要同期比較請於年度下拉選特定年。');
+  if(!isLatest&&f.presale&&f.presale.regimeNote&&(yr+1911)<2022) notes.push('⚠ 預售涵蓋不全：'+f.presale.regimeNote+'。');
+  notes.push('＊標記＝該格登錄樣本不足 30 筆，中位數易受個案影響。');
+  var nEl=document.getElementById('fusionNote');
+  if(nEl) nEl.innerHTML=notes.join(' ');
+  var sel=document.getElementById('fusionYear');
+  if(sel){ sel.value=String(state.fusionYear); sel.onchange=function(){ state.fusionYear=(this.value==='latest'?'latest':parseInt(this.value,10)); drawFusion(d); }; }
+}
+
+/* ===== 5｜統計範圍說明 ===== */
+function chapterNotes(d){
+  return '<section><h2>5｜統計範圍與資料來源</h2>'+
+    '<table>'+
+    '<tr><th style="text-align:left">項目</th><th style="text-align:left">說明</th></tr>'+
+    '<tr><td>三階段統計範圍</td><td style="text-align:left;white-space:normal">建照＝核發建造執照（許可）；開工＝實際動工；使照＝核發使用執照（完工）。三者是獨立行政統計，沒有單案配對，不代表同一批建物依序經過三階段；圖表僅呈現總量的統計先後，不能由三線差額推算在建存量。</td></tr>'+
+    '<tr><td>兩種量</td><td style="text-align:left;white-space:normal">「件數」＝執照張數；「樓地板面積」＝規模（㎡）。件數看熱度、面積看體量，大案少件但大面積。</td></tr>'+
+    '<tr><td>起始年不同</td><td style="text-align:left;white-space:normal">建照/使照自 95 年、開工統計自 98 年起；圖中開工前段留空，非零值，不做假接軌。</td></tr>'+
+    '<tr><td>資料來源</td><td style="text-align:left;white-space:normal">內政部統計處 statis.moi.gov.tw 參數化 API 全序列（月別）。data.gov.tw 開放資料集（dataset 13481 等）僅單年快照，本站僅用於互核。</td></tr>'+
+    '<tr><td>更新頻率</td><td style="text-align:left;white-space:normal">每月（統計月報發布，資料迄期約為查詢日往前推兩個月）。目前迄 '+d.meta.latestPeriod+'。</td></tr>'+
+    '</table>'+
+    '<footer>資料來源：'+d.meta.sources.join('；')+'。<br>產出時間 '+d.meta.generatedAt.slice(0,10)+'（資料迄 '+d.meta.latestPeriod+'）。本頁為個人資料整理，非官方網站；引用數字請以內政部原始公布為準。</footer>'+
+    '</section>';
+}
 
 function boot(){
-  var d = window.SCIENCE_DATA;
-  var app = document.getElementById('app');
-  if(!d){ app.innerHTML = '<div class="loaderr">⚠ 無資料</div>'; return; }
-  var c = d.meta.counts || {};
-
-  var html = '';
-  // Hero + 計分板
-  html += '<header class="hero"><h1>🔬 '+esc(d.meta.title)+'</h1>'+
-          '<p>'+esc(d.meta.subtitle)+'</p>'+
-          '<div class="scoreboard">'+
-            score('red','🔴',c.red,'已改寫')+
-            score('yellow','🟡',c.yellow,'需更新')+
-            score('green','🟢',c.green,'仍準')+
-            score('info','⚪',c.info,'補充')+
-          '</div></header>';
-
-  // 旗艦對照：太陽系行星數（冥王星降級）
-  var flag1 = d.points.find(function(p){return p.id==='planets';});
-  if(flag1){
-    html += '<div class="callout"><div class="k">課本最容易記錯的一題</div>'+
-      '<div class="big">'+esc(flag1.name)+'</div>'+
-      '<div class="flip"><span class="was">課本：'+esc(flag1.textbook.display)+'</span>'+
-      '<span class="arrow">→ 已改寫 →</span>'+
-      '<span class="now">現在：'+esc(flag1.current.display)+'</span></div>'+
-      '<div style="font-size:13px;color:var(--sub);margin-top:8px">'+esc(flag1.current.note)+'</div></div>';
-  }
-
-  // 各章節
-  d.chapters.forEach(function(ch){
-    var pts = d.points.filter(function(p){return p.chapter===ch.key;});
-    if(!pts.length) return;
-    html += '<h2 class="chap">'+esc(ch.icon)+' '+esc(ch.name)+' <span class="g">'+esc(ch.grade)+'</span></h2>';
-    html += '<div class="grid">'+pts.map(cardHtml).join('')+'</div>';
-  });
-
-  // footer
-  html += '<footer class="foot">'+
-    '<p><b>怎麼看：</b>'+esc(d.meta.flag_rule)+'</p>'+
-    '<p><b>資料模式：</b><span class="mode auto">auto</span>程式自動抓權威源（每次更新即最新）　'+
-    '<span class="mode semi">semi</span>科學界權威值人工年查。'+esc(d.meta.verify_policy)+'</p>'+
-    '<p><b>課本基準值</b>為國中小自然（理化／生物／地科）課本常見的科學「數字或分類事實」（非課文重製），標示對應版本年代，供對照「課本 vs 現在」。'+
-    '各數字均附權威來源（IUPAC／IAU／NASA／IUCN／CODATA 等）；紅黃綠僅在同一統計範圍下比較。'+
-    '本站<b>只收會隨科學進展改變的項目</b>，不含牛頓定律、光合作用等恆定不變的科學原理。</p>'+
-    '<p style="color:#9aa2ab">資料產生時間：'+esc(d.meta.generatedAt)+'</p>'+
-    (d.meta.fetchError?'<div class="fetchwarn">⚠ 本次自動來源狀態：'+esc(d.meta.fetchError)+'</div>':'')+
-    '</footer>';
-
-  app.innerHTML = html;
-  // 畫圖
-  CHARTS.forEach(function(cfg){ drawChart(cfg); });
-  CHARTS = [];
+  var d = window.PERMITS_DATA;
+  if(!d){ document.getElementById('app').innerHTML = '<div class="loaderr">⚠ 無資料</div>'; return; }
+  document.getElementById('app').innerHTML =
+    '<h1>建照使照觀測</h1>'+
+    '<div class="sub">營建景氣在升溫還是降溫、哪些縣市在大建設、蓋的是住宅還是廠辦——建照→開工→使照一頁看</div>'+
+    chapterLead(d)+chapterInsight(d)+chapterFlow(d)+chapterTakeaway(d)+chapterCity(d)+chapterStruct(d)+chapterNotes(d)+chapterFusion(d);
+  drawLead(d); drawFlow(d); drawCity(d); drawStruct(d); drawFusion(d);
+  document.getElementById('cityYear').onchange=function(){ state.cityYearIdx=parseInt(this.value,10); drawCity(d); };
+  document.getElementById('citySel').onchange=function(){ state.citySel=this.value; drawCity(d); };
 }
 
-function score(cls,emoji,n,txt){
-  return '<div class="score"><b>'+(n||0)+'</b>'+emoji+' '+txt+'</div>';
-}
-
-function cardHtml(p){
-  var chartId = null, cap = '';
-  var hasSeries = p.series && (p.series.length || p.series.milestones); // 陣列或里程碑物件
-  if(hasSeries){ chartId = 'chart_'+p.id; CHARTS.push({id:chartId, p:p});
-    if(p.id==='exoplanets') cap='累積確認顆數（NASA Exoplanet Archive，真實資料）';
-    if(p.id==='element_count') cap='已知元素數成長（化學史里程碑，示意）';
-  }
-  var tb = p.textbook||{}, now = p.current||{};
-  return '<div class="card">'+
-    '<div class="top"><div class="name">'+esc(p.name)+'</div>'+
-      '<span class="badge '+p.flag.level+'">'+esc(p.flag.label)+'</span></div>'+
-    '<div class="cmp">'+
-      '<div class="cell tb"><div class="lab">課本說</div>'+
-        '<div class="val">'+esc(tb.display||'—')+'</div>'+
-        (tb.note?'<div class="sub2">'+esc(tb.note)+'</div>':'')+'</div>'+
-      '<div class="mid">➜</div>'+
-      '<div class="cell now"><div class="lab">科學界最新</div>'+
-        '<div class="val">'+esc(now.display||'—')+'</div>'+
-        '<div class="sub2">事實／版本時間：'+esc(now.effectiveAsOf||now.asof||'未知')+(now.lastReviewed?'｜最後查證：'+esc(now.lastReviewed):'｜最後查證日未知')+(now.note?'｜'+esc(now.note):'')+'</div></div>'+
-    '</div>'+
-    (chartId?'<div class="chartbox"><canvas id="'+chartId+'"></canvas></div>'+(cap?'<div class="chartcap">'+esc(cap)+'</div>':''):'')+
-    '<div class="meta"><span class="mode '+p.mode+'">'+p.mode+'</span>'+
-      '統計範圍：'+esc(p.caliber||'—')+'<br>來源：'+
-      (p.source_url?'<a href="'+esc(p.source_url)+'" target="_blank" rel="noopener">'+esc(p.source)+'</a>':esc(p.source))+
-      '（'+esc(p.freq)+'）</div>'+
-  '</div>';
-}
-
-function drawChart(cfg){
-  var el = document.getElementById(cfg.id); if(!el || !window.Chart) return;
-  var p = cfg.p, s = p.series;
-  var base = { responsive:true, maintainAspectRatio:false,
-    plugins:{legend:{display:false}}, scales:{x:{ticks:{maxTicksLimit:6,font:{size:10}},grid:{display:false}},
-      y:{ticks:{font:{size:10}},grid:{color:'#eef1f4'}}} };
-  var cfgObj;
-  if(p.id==='exoplanets'){
-    cfgObj={type:'line',data:{labels:s.map(function(r){return r.year;}),datasets:[
-      {data:s.map(function(r){return r.cum;}),borderColor:'#4527a0',backgroundColor:'rgba(69,39,160,.10)',fill:true,pointRadius:0,borderWidth:2}
-    ]},options:base};
-  } else if(p.id==='element_count'){
-    var mil = s.milestones||[];
-    cfgObj={type:'line',data:{labels:mil.map(function(m){return m.year;}),datasets:[
-      {data:mil.map(function(m){return m.n;}),borderColor:'#2b9a66',backgroundColor:'rgba(43,154,102,.10)',fill:true,
-       pointRadius:4,pointBackgroundColor:'#2b9a66',borderWidth:2}
-    ]},options:base};
-  } else { return; }
-  new Chart(el.getContext('2d'), cfgObj);
-}
-
-window.SCIENCE_DATA = {"meta":{"generatedAt":"2026-10-06T12:08:16.561Z","title":"自然課本數據即時站","subtitle":"國中小自然（理化／生物／地科）課本上的科學數字，對照科學界最新共識","verify_policy":"auto：跑 apps/EduScience/update-eduscience.sh 自動刷新（NASA 系外行星）；semi：每年寒暑假人工查一輪（IUPAC 元素／CODATA 常數／IUCN 名錄等）；textbook：課本改版年重查，並確認舊翻轉是否已被新課本追上。","flag_rule":"打臉指數：分類／定義翻轉或量級改變 → 🔴 已改寫；表示法更新或估計值明顯修正 → 🟡 需更新；方向一致、僅精度提升或屬補充 → 🟢／⚪。自然科九成內容是不變的原理，本站只收會變的那一類。","counts":{"red":7,"info":4,"yellow":4,"green":4},"fetchError":null,"autoStatus":"ok"},"chapters":[{"key":"matter","name":"物質與元素","grade":"國中理化／自然","icon":"🧪"},{"key":"energy","name":"能量、宇宙與單位","grade":"國中理化／地球科學","icon":"🔭"},{"key":"life","name":"生命與演化","grade":"國中生物","icon":"🧬"},{"key":"earth","name":"地球與環境","grade":"國小自然／國中地科","icon":"🌏"}],"points":[{"id":"element_count","chapter":"matter","name":"元素週期表的元素種數","unit":"種","mode":"semi","source":"國際純粹與應用化學聯合會 IUPAC","source_url":"https://iupac.org/what-we-do/periodic-table-of-elements/","freq":"極罕變（新元素命名時）","caliber":"已正式命名並獲 IUPAC 承認的化學元素總數","textbook":{"value":109,"display":"約 109 種（或稱「一百多種」）","note":"較早課本常見；週期表第七週期尚未填滿"},"current":{"value":118,"display":"118 種（第七週期已填滿）","asof":"2016","note":"2016 年 IUPAC 正式命名 113 Nh、115 Mc、117 Ts、118 Og，週期表第七列補齊","effectiveAsOf":"2016","lastReviewed":null,"nextReview":null},"flag":{"level":"red","label":"已改寫"},"series":{"milestones":[{"year":1869,"n":63,"label":"門得列夫週期表"},{"year":1913,"n":85,"label":"莫斯利原子序"},{"year":1945,"n":96,"label":"超鈾元素時代"},{"year":1970,"n":105},{"year":2016,"n":118,"label":"第七週期填滿"}]}},{"id":"heaviest_element","chapter":"matter","name":"目前原子序最大的元素","unit":"元素","mode":"semi","source":"IUPAC 元素命名公告","source_url":"https://iupac.org/what-we-do/periodic-table-of-elements/","freq":"極罕變","caliber":"原子序最大、已獲正式命名的元素（含人工合成）","textbook":{"value":"鈾 U","display":"鈾（原子序 92）常被當成最重的元素","note":"課本多以鈾為最重天然元素的例子"},"current":{"value":"Og","display":"Oganesson（Og，原子序 118）","asof":"2016","note":"目前原子序最大的元素，人工合成、極不穩定；統計範圍不同（鈾仍是最重的天然元素）","effectiveAsOf":"2016","lastReviewed":null,"nextReview":null},"flag":{"level":"info","label":"補充"},"series":null},{"id":"atomic_weight_interval","chapter":"matter","name":"標準原子量的表示法","unit":"表示法","mode":"semi","source":"IUPAC 原子量委員會 CIAAW","source_url":"https://ciaaw.org/atomic-weights.htm","freq":"不定期（每 1–2 年審訂）","caliber":"IUPAC 公告的標準原子量呈現方式","textbook":{"value":null,"display":"原子量是單一固定值（如氫 1.008、碳 12.011）","note":"課本多給單一標準原子量"},"current":{"value":null,"display":"部分元素改用「區間」表示（如氫 [1.00784, 1.00811]）","asof":"2009 起陸續","note":"因同位素組成隨來源而異，IUPAC 對氫、碳、氯等十餘種元素改以區間公告標準原子量","effectiveAsOf":"2009 起陸續","lastReviewed":null,"nextReview":null},"flag":{"level":"yellow","label":"表示法更新"},"series":null},{"id":"avogadro","chapter":"matter","name":"亞佛加厥常數","unit":"／mol","mode":"semi","source":"CODATA／國際度量衡局 BIPM","source_url":"https://physics.nist.gov/cgi-bin/cuu/Value?na","freq":"已固定（定義值）","caliber":"1 莫耳所含基本粒子數；2019 後為定義精確值","textbook":{"value":null,"display":"約 6.02×10²³／mol（實驗測得值）","note":"課本多述為由實驗測定、帶不確定度"},"current":{"value":null,"display":"6.02214076×10²³／mol（定義精確值）","asof":"2019-05-20","note":"2019 SI 改制後，亞佛加厥常數成為定義值，不再有測量不確定度","effectiveAsOf":"2019-05-20","lastReviewed":null,"nextReview":null},"flag":{"level":"info","label":"已改為定義值"},"series":null},{"id":"planets","chapter":"energy","name":"太陽系的行星數","unit":"顆","mode":"semi","source":"國際天文聯合會 IAU","source_url":"https://www.iau.org/public/themes/pluto/","freq":"極罕變（分類決議）","caliber":"符合 IAU 行星定義的太陽系大行星數","textbook":{"value":9,"display":"9 大行星（含冥王星）","note":"2006 年前課本；水金地火木土天海冥"},"current":{"value":8,"display":"8 大行星（冥王星除外）","asof":"2006","note":"2006 年 IAU 決議將冥王星重新歸類為「矮行星」，太陽系大行星剩 8 顆","effectiveAsOf":"2006","lastReviewed":null,"nextReview":null},"flag":{"level":"red","label":"已改寫"},"series":null},{"id":"si_kg","chapter":"energy","name":"1 公斤的定義基準","unit":"定義","mode":"semi","source":"國際度量衡局 BIPM","source_url":"https://www.bipm.org/en/measurement-units","freq":"極罕變（單位制改制）","caliber":"國際單位制 (SI) 對公斤的定義基準","textbook":{"value":null,"display":"1 公斤＝巴黎「國際公斤原器」（鉑銥圓柱）","note":"2019 年前的定義；以一個實體砝碼為準"},"current":{"value":null,"display":"1 公斤由普朗克常數 h 定義","asof":"2019-05-20","note":"SI 七大基本單位改由物理常數定義，公斤脫離實體砝碼；公尺、安培、莫耳、克耳文等一併重新定義","effectiveAsOf":"2019-05-20","lastReviewed":null,"nextReview":null},"flag":{"level":"red","label":"已改寫"},"series":null},{"id":"exoplanets","chapter":"energy","name":"已確認的太陽系外行星數","unit":"顆","mode":"auto","source":"NASA Exoplanet Archive","source_url":"https://exoplanetarchive.ipac.caltech.edu/","freq":"即時（build 自動抓取；每週有新確認）","caliber":"NASA Exoplanet Archive 綜合表 (pscomppars) 中已確認的系外行星數","textbook":{"value":null,"display":"太陽系外「發現了一些」／數百顆","note":"早期課本；1995 年才首度確認繞主序星的系外行星"},"current":{"value":6375,"display":"6,375 顆（且持續增加）","asof":null,"note":"數量持續增加，2014、2016 年因 Kepler 任務批次確認而大增","effectiveAsOf":"2026","lastReviewed":null,"autoStatus":"supported","nextReview":null},"flag":{"level":"red","label":"已改寫"},"series":[{"year":1992,"cum":2},{"year":1994,"cum":3},{"year":1995,"cum":4},{"year":1996,"cum":10},{"year":1997,"cum":11},{"year":1998,"cum":17},{"year":1999,"cum":30},{"year":2000,"cum":46},{"year":2001,"cum":58},{"year":2002,"cum":87},{"year":2003,"cum":109},{"year":2004,"cum":136},{"year":2005,"cum":172},{"year":2006,"cum":204},{"year":2007,"cum":256},{"year":2008,"cum":318},{"year":2009,"cum":405},{"year":2010,"cum":498},{"year":2011,"cum":639},{"year":2012,"cum":783},{"year":2013,"cum":911},{"year":2014,"cum":1783},{"year":2015,"cum":1938},{"year":2016,"cum":3442},{"year":2017,"cum":3594},{"year":2018,"cum":3902},{"year":2019,"cum":4096},{"year":2020,"cum":4330},{"year":2021,"cum":4894},{"year":2022,"cum":5261},{"year":2023,"cum":5584},{"year":2024,"cum":5844},{"year":2025,"cum":6090},{"year":2026,"cum":6375}]},{"id":"speed_of_light","chapter":"energy","name":"光速","unit":"m/s","mode":"semi","source":"CODATA／BIPM","source_url":"https://physics.nist.gov/cgi-bin/cuu/Value?c","freq":"已固定（定義值）","caliber":"真空中光速；1983 年起為定義精確值","textbook":{"value":null,"display":"約 3×10⁸ m/s（每秒約 30 萬公里）","note":"課本常用的近似值"},"current":{"value":null,"display":"299,792,458 m/s（定義精確值）","asof":"1983 起","note":"光速為定義值，公尺反過來由光速定義；課本近似值方向正確，僅精度提升","effectiveAsOf":"1983 起","lastReviewed":null,"nextReview":null},"flag":{"level":"green","label":"大致仍準"},"series":null},{"id":"saturn_moons","chapter":"energy","name":"衛星最多的行星","unit":"行星","mode":"semi","source":"IAU 小行星中心 MPC／NASA JPL","source_url":"https://science.nasa.gov/saturn/moons/","freq":"不定期（新衛星確認時）","caliber":"已確認並編號的天然衛星數最多者","textbook":{"value":"木星","display":"木星是衛星最多的行星","note":"課本常見敘述（木星曾長期居冠）"},"current":{"value":"土星","display":"土星衛星最多（已確認 140+ 顆）","asof":"2023","note":"2023 年起土星確認衛星數躍升至逾 140 顆，超越木星（約 90+）；數字隨新發現持續變動","effectiveAsOf":"2023","lastReviewed":null,"nextReview":null},"flag":{"level":"yellow","label":"已翻轉"},"series":null},{"id":"universe_age","chapter":"energy","name":"宇宙年齡","unit":"億年","mode":"semi","source":"ESA 普朗克衛星 (Planck 2018)","source_url":"https://www.esa.int/Science_Exploration/Space_Science/Planck","freq":"隨新觀測微調","caliber":"由宇宙微波背景輻射推估的宇宙年齡","textbook":{"value":137,"display":"約 137 億年","note":"較早課本常見值"},"current":{"value":138,"display":"約 138 億年（137.9±0.2）","asof":"2018","note":"ESA 普朗克衛星 2018 年結果；與課本量級一致，精度提升","effectiveAsOf":"2018","lastReviewed":null,"nextReview":null},"flag":{"level":"green","label":"大致仍準"},"series":null},{"id":"human_genes","chapter":"life","name":"人類的基因數","unit":"個","mode":"semi","source":"Ensembl／GENCODE（人類基因體註解）","source_url":"https://www.ensembl.org/Homo_sapiens/Info/Annotation","freq":"隨註解版本微調","caliber":"人類蛋白質編碼基因數（protein-coding genes）","textbook":{"value":100000,"display":"約 10 萬個基因","note":"人類基因體計畫完成前的估計"},"current":{"value":20000,"display":"約 2 萬個蛋白質編碼基因","asof":"2020s","note":"人類基因體計畫後估計大幅下修至約 19,000–20,000；非編碼 RNA 基因另計","effectiveAsOf":"2020s","lastReviewed":null,"nextReview":null},"flag":{"level":"red","label":"已改寫"},"series":null},{"id":"domains_kingdoms","chapter":"life","name":"生物的分類系統","unit":"分類","mode":"semi","source":"學界共識（Woese 三域系統，1990）","source_url":"https://en.wikipedia.org/wiki/Three-domain_system","freq":"教科書改版時採用","caliber":"生物最高階分類架構","textbook":{"value":null,"display":"分成五界（原核、原生生物、真菌、植物、動物）","note":"Whittaker 五界系統"},"current":{"value":null,"display":"改以「三域」系統為主流（細菌、古菌、真核）","asof":"1990 提出、近代教科書採用","note":"Woese 依 rRNA 提出三域；古菌 (Archaea) 自成一域，是五界系統所沒有的層級","effectiveAsOf":"1990 提出、近代教科書採用","lastReviewed":null,"nextReview":null},"flag":{"level":"yellow","label":"分類更新"},"series":null},{"id":"described_species","chapter":"life","name":"已描述（命名）的生物種數","unit":"種","mode":"semi","source":"Catalogue of Life","source_url":"https://www.catalogueoflife.org/","freq":"年更（持續收錄）","caliber":"已被科學描述並命名的有效物種數（估計總數 800 萬–1000 萬，多數尚未描述）","textbook":{"value":1500000,"display":"約 150 萬種已知生物","note":"課本常見量級"},"current":{"value":2100000,"display":"約 210 萬種已描述","asof":"2024","note":"Catalogue of Life 收錄逾 200 萬有效物種；估計實際總數達 800 萬–1000 萬，多數仍未被發現","effectiveAsOf":"2024","lastReviewed":null,"nextReview":null},"flag":{"level":"red","label":"已改寫","diffPct":40},"series":null},{"id":"taiwan_species","chapter":"life","name":"臺灣已記錄的物種數","unit":"種","mode":"semi","source":"臺灣物種名錄 TaiCOL／TaiBIF","source_url":"https://taibif.tw/","freq":"年更（持續增補）","caliber":"臺灣物種名錄收錄之已記錄物種數","textbook":{"value":null,"display":"臺灣生物多樣性高、特有種比例高","note":"課本多為定性描述，少列總數"},"current":{"value":60000,"display":"已記錄逾 6 萬種（且持續增補）","asof":"2024","note":"臺灣物種名錄 (TaiCOL) 收錄；面積雖小但物種數可觀，特有種比例高","effectiveAsOf":"2024","lastReviewed":null,"nextReview":null},"flag":{"level":"info","label":"補充"},"series":null},{"id":"iucn_threatened","chapter":"life","name":"全球受威脅（瀕危）物種數","unit":"種","mode":"semi","source":"IUCN 紅皮書 Red List","source_url":"https://www.iucnredlist.org/","freq":"年更（每年至少更新兩次）","caliber":"IUCN 評估為受威脅（易危 VU 以上）的物種數","textbook":{"value":null,"display":"許多生物瀕臨絕種","note":"課本多為定性描述"},"current":{"value":46000,"display":"逾 4.6 萬種被列為受威脅","asof":"2024","note":"IUCN 已評估逾 16 萬物種，其中逾 4.6 萬種受威脅；數字逐年上升","effectiveAsOf":"2024","lastReviewed":null,"nextReview":null},"flag":{"level":"info","label":"補充"},"series":null},{"id":"human_cells","chapter":"life","name":"人體的細胞數","unit":"兆個","mode":"semi","source":"學界估計（Bianconi et al. 2013 等）","source_url":"https://pubmed.ncbi.nlm.nih.gov/23829164/","freq":"隨研究修正","caliber":"人體細胞總數估計（單位：兆＝10¹²）","textbook":{"value":60,"display":"人體約有數十兆個細胞（常見約 60 兆）","note":"課本常見估計"},"current":{"value":37,"display":"約 37 兆個細胞","asof":"2013","note":"2013 年較嚴謹估計約 3.7×10¹³ 個（含大量紅血球）","effectiveAsOf":"2013","lastReviewed":null,"nextReview":null},"flag":{"level":"yellow","label":"已修正"},"series":null},{"id":"microbiome_ratio","chapter":"life","name":"人體細菌數 vs 自身細胞數","unit":"倍","mode":"semi","source":"Sender, Fuchs & Milo 2016（Cell）","source_url":"https://pubmed.ncbi.nlm.nih.gov/26824647/","freq":"隨研究修正","caliber":"人體內細菌總數 ÷ 人體自身細胞數","textbook":{"value":10,"display":"體內細菌約為自身細胞的 10 倍","note":"長年流傳的 10:1 說法"},"current":{"value":1,"display":"約 1:1（菌數與人體細胞相當）","asof":"2016","note":"2016 年重新估算推翻 10:1，兩者數量相近","effectiveAsOf":"2016","lastReviewed":null,"nextReview":null},"flag":{"level":"red","label":"已推翻"},"series":null},{"id":"everest","chapter":"earth","name":"聖母峰（珠穆朗瑪峰）高度","unit":"公尺","mode":"semi","source":"中國與尼泊爾聯合公告（2020）","source_url":"https://en.wikipedia.org/wiki/Mount_Everest","freq":"極罕變（重新測量時）","caliber":"聖母峰海拔高度（含雪蓋）","textbook":{"value":8848,"display":"8,848 公尺","note":"課本沿用多年的高度"},"current":{"value":8848.86,"display":"8,848.86 公尺","asof":"2020","note":"2020 年中國與尼泊爾聯合公布最新測量結果","effectiveAsOf":"2020","lastReviewed":null,"nextReview":null},"flag":{"level":"green","label":"微幅更新"},"series":null},{"id":"taiwan_highest","chapter":"earth","name":"臺灣最高峰（玉山）高度","unit":"公尺","mode":"semi","source":"內政部國土測繪","source_url":"https://www.nlsc.gov.tw/","freq":"極罕變","caliber":"玉山主峰海拔高度","textbook":{"value":3952,"display":"玉山 3,952 公尺","note":"課本常見值"},"current":{"value":3952,"display":"玉山 3,952 公尺","asof":"現行","note":"與課本一致；為東北亞第一高峰。此點示範「課本仍準」的對照","effectiveAsOf":"現行","lastReviewed":null,"nextReview":null},"flag":{"level":"green","label":"大致仍準","diffPct":0},"series":null}]};
+window.PERMITS_DATA = {"meta":{"generatedAt":"2026-09-25T14:21:17.361Z","fetchError":null,"title":"建照使照觀測","latestPeriod":"115年7月","range":{"yearFrom":95,"to":"115年7月"},"sources":["內政部統計處 建照/開工/使照統計（statis.moi.gov.tw 參數化 API，c0850101/c0850102/c0850402/c0850201/c0850202）"],"stageNames":{"permit":"建照（許可）","start":"開工","uselic":"使照（完工）"}},"national":{"monthly":{"labels":[{"y":95,"m":1},{"y":95,"m":2},{"y":95,"m":3},{"y":95,"m":4},{"y":95,"m":5},{"y":95,"m":6},{"y":95,"m":7},{"y":95,"m":8},{"y":95,"m":9},{"y":95,"m":10},{"y":95,"m":11},{"y":95,"m":12},{"y":96,"m":1},{"y":96,"m":2},{"y":96,"m":3},{"y":96,"m":4},{"y":96,"m":5},{"y":96,"m":6},{"y":96,"m":7},{"y":96,"m":8},{"y":96,"m":9},{"y":96,"m":10},{"y":96,"m":11},{"y":96,"m":12},{"y":97,"m":1},{"y":97,"m":2},{"y":97,"m":3},{"y":97,"m":4},{"y":97,"m":5},{"y":97,"m":6},{"y":97,"m":7},{"y":97,"m":8},{"y":97,"m":9},{"y":97,"m":10},{"y":97,"m":11},{"y":97,"m":12},{"y":98,"m":1},{"y":98,"m":2},{"y":98,"m":3},{"y":98,"m":4},{"y":98,"m":5},{"y":98,"m":6},{"y":98,"m":7},{"y":98,"m":8},{"y":98,"m":9},{"y":98,"m":10},{"y":98,"m":11},{"y":98,"m":12},{"y":99,"m":1},{"y":99,"m":2},{"y":99,"m":3},{"y":99,"m":4},{"y":99,"m":5},{"y":99,"m":6},{"y":99,"m":7},{"y":99,"m":8},{"y":99,"m":9},{"y":99,"m":10},{"y":99,"m":11},{"y":99,"m":12},{"y":100,"m":1},{"y":100,"m":2},{"y":100,"m":3},{"y":100,"m":4},{"y":100,"m":5},{"y":100,"m":6},{"y":100,"m":7},{"y":100,"m":8},{"y":100,"m":9},{"y":100,"m":10},{"y":100,"m":11},{"y":100,"m":12},{"y":101,"m":1},{"y":101,"m":2},{"y":101,"m":3},{"y":101,"m":4},{"y":101,"m":5},{"y":101,"m":6},{"y":101,"m":7},{"y":101,"m":8},{"y":101,"m":9},{"y":101,"m":10},{"y":101,"m":11},{"y":101,"m":12},{"y":102,"m":1},{"y":102,"m":2},{"y":102,"m":3},{"y":102,"m":4},{"y":102,"m":5},{"y":102,"m":6},{"y":102,"m":7},{"y":102,"m":8},{"y":102,"m":9},{"y":102,"m":10},{"y":102,"m":11},{"y":102,"m":12},{"y":103,"m":1},{"y":103,"m":2},{"y":103,"m":3},{"y":103,"m":4},{"y":103,"m":5},{"y":103,"m":6},{"y":103,"m":7},{"y":103,"m":8},{"y":103,"m":9},{"y":103,"m":10},{"y":103,"m":11},{"y":103,"m":12},{"y":104,"m":1},{"y":104,"m":2},{"y":104,"m":3},{"y":104,"m":4},{"y":104,"m":5},{"y":104,"m":6},{"y":104,"m":7},{"y":104,"m":8},{"y":104,"m":9},{"y":104,"m":10},{"y":104,"m":11},{"y":104,"m":12},{"y":105,"m":1},{"y":105,"m":2},{"y":105,"m":3},{"y":105,"m":4},{"y":105,"m":5},{"y":105,"m":6},{"y":105,"m":7},{"y":105,"m":8},{"y":105,"m":9},{"y":105,"m":10},{"y":105,"m":11},{"y":105,"m":12},{"y":106,"m":1},{"y":106,"m":2},{"y":106,"m":3},{"y":106,"m":4},{"y":106,"m":5},{"y":106,"m":6},{"y":106,"m":7},{"y":106,"m":8},{"y":106,"m":9},{"y":106,"m":10},{"y":106,"m":11},{"y":106,"m":12},{"y":107,"m":1},{"y":107,"m":2},{"y":107,"m":3},{"y":107,"m":4},{"y":107,"m":5},{"y":107,"m":6},{"y":107,"m":7},{"y":107,"m":8},{"y":107,"m":9},{"y":107,"m":10},{"y":107,"m":11},{"y":107,"m":12},{"y":108,"m":1},{"y":108,"m":2},{"y":108,"m":3},{"y":108,"m":4},{"y":108,"m":5},{"y":108,"m":6},{"y":108,"m":7},{"y":108,"m":8},{"y":108,"m":9},{"y":108,"m":10},{"y":108,"m":11},{"y":108,"m":12},{"y":109,"m":1},{"y":109,"m":2},{"y":109,"m":3},{"y":109,"m":4},{"y":109,"m":5},{"y":109,"m":6},{"y":109,"m":7},{"y":109,"m":8},{"y":109,"m":9},{"y":109,"m":10},{"y":109,"m":11},{"y":109,"m":12},{"y":110,"m":1},{"y":110,"m":2},{"y":110,"m":3},{"y":110,"m":4},{"y":110,"m":5},{"y":110,"m":6},{"y":110,"m":7},{"y":110,"m":8},{"y":110,"m":9},{"y":110,"m":10},{"y":110,"m":11},{"y":110,"m":12},{"y":111,"m":1},{"y":111,"m":2},{"y":111,"m":3},{"y":111,"m":4},{"y":111,"m":5},{"y":111,"m":6},{"y":111,"m":7},{"y":111,"m":8},{"y":111,"m":9},{"y":111,"m":10},{"y":111,"m":11},{"y":111,"m":12},{"y":112,"m":1},{"y":112,"m":2},{"y":112,"m":3},{"y":112,"m":4},{"y":112,"m":5},{"y":112,"m":6},{"y":112,"m":7},{"y":112,"m":8},{"y":112,"m":9},{"y":112,"m":10},{"y":112,"m":11},{"y":112,"m":12},{"y":113,"m":1},{"y":113,"m":2},{"y":113,"m":3},{"y":113,"m":4},{"y":113,"m":5},{"y":113,"m":6},{"y":113,"m":7},{"y":113,"m":8},{"y":113,"m":9},{"y":113,"m":10},{"y":113,"m":11},{"y":113,"m":12},{"y":114,"m":1},{"y":114,"m":2},{"y":114,"m":3},{"y":114,"m":4},{"y":114,"m":5},{"y":114,"m":6},{"y":114,"m":7},{"y":114,"m":8},{"y":114,"m":9},{"y":114,"m":10},{"y":114,"m":11},{"y":114,"m":12},{"y":115,"m":1},{"y":115,"m":2},{"y":115,"m":3},{"y":115,"m":4},{"y":115,"m":5},{"y":115,"m":6},{"y":115,"m":7}],"series":{"permit":{"count":[3304,1832,3406,3243,3153,3012,2970,2664,2483,2781,3556,2780,3359,2531,2938,2578,3008,2637,2614,2899,2116,2356,2255,2413,2325,1194,1760,1880,1814,1981,1780,1391,1274,1386,1047,1652,1014,836,1384,1313,1230,1708,1918,1987,1913,2339,2310,2565,2190,1889,2215,2974,2403,2592,2420,2256,2272,2542,2550,3393,3039,1705,2932,2935,2792,2606,2667,2754,2576,2871,3219,3065,2242,2159,2772,2591,2872,2624,3005,2431,2320,2489,2853,2879,2936,1863,2676,2730,3199,2762,2862,2779,2880,3250,2632,2962,3124,1902,2701,2993,2731,2839,2792,2511,2654,2571,2414,2762,2618,1911,2293,2191,2526,2484,2293,2265,2176,2159,2415,2312,1948,1413,1845,1596,2083,2066,1687,1960,1897,1814,2170,2032,1847,1499,2473,1732,2015,2328,2144,2193,2190,1937,2373,2304,2684,1605,2207,2096,2651,2195,2185,2428,2085,2439,2469,2300,2328,1201,2135,2322,2734,2232,2469,2429,2084,2325,2427,2457,1857,1893,2150,2120,2182,2231,2606,2224,2097,1805,2225,2590,2299,1793,2312,2337,2125,2381,2205,2119,2325,1772,2214,2207,2138,1265,2223,2032,2193,2109,1743,2178,1695,1904,1894,1883,1270,1363,1564,1337,1792,1629,1728,1800,1274,1458,1731,1596,1800,1031,1546,1525,1791,1527,1704,1795,1504,1520,1781,1999,1541,1256,1679,1451,1690,1587,1661,1379,1576,1502,1308,1289,1196,860,1028,1036,1077,1113,977],"area":[3653519,2186252,3257927,2836396,3083702,3751350,4066125,2481142,2753061,2414102,3163000,3017837,3146436,2240057,2820855,2428777,3364160,2736113,3193188,2798632,2084969,2882383,3394446,3642477,3201063,1639752,2150606,2390139,2601618,2463167,2080320,2133808,1999095,1802508,2005469,1698810,1573818,1054407,1312269,1469348,1105693,1334189,1671191,1873112,1537533,2202889,2088567,2692937,1695105,1993546,2731480,2301522,2628411,2669458,2504260,2806637,2501445,2631115,2865920,3845118,3466094,1564540,3042205,2794425,2368589,3335375,2648001,2831907,2894439,2385675,2845576,3971597,2663062,1894132,3399511,2424294,3092232,2961669,2336790,2433032,2295485,2819513,3307703,3255516,3806945,2273367,2740039,3540828,3837357,2700716,3224244,3668138,3690842,3863898,2517726,3896395,3736260,2604344,3265982,3650640,3070486,3251804,3351495,2869046,3304108,3117788,2803700,3609251,3494040,2462604,2364330,2306546,2773591,3701468,2709609,2403825,2499343,2191380,2451092,3237829,2509916,1110952,2517350,1559349,2032089,2330892,2616748,2524961,2465823,1856144,2072873,2638190,2572709,1505336,2677372,2145387,2030524,2383423,2973166,2647321,2641118,2593031,2767286,2947252,3014000,1940504,3323643,2429350,2899717,2735697,2528018,2669941,2617350,3045423,3470935,3309642,3342278,1570531,2777612,3388921,3549518,2916566,3487223,2922237,2930753,3032747,3570834,3438572,3154522,2994280,3185312,3936805,2860682,4449663,3661166,3018397,3992007,3196110,3134086,3938004,4425828,2628279,3588954,2827680,3011731,3299512,4112142,4130549,3187216,3222732,3690577,5300228,4185539,2539511,3991640,2886896,4128057,4128117,3669597,4334919,3816173,4625762,4058775,3462254,2122028,2479207,4618871,3090774,3145457,3144058,2962630,3039994,3271498,3213979,3236331,3117761,3090479,1984401,2858630,3384283,3581461,4118675,3403174,4036183,2653980,2413827,3778323,4639681,3226460,1918858,3193474,2614813,2851864,2660747,2922762,2569817,2970537,2782331,2391451,2871627,2310728,2100923,2288356,1942961,3082218,2982490,2504078]},"start":{"count":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,766,849,1129,1264,1046,1363,1403,1421,1746,1675,1757,2558,1380,1120,2025,1955,2053,1558,1777,1571,1826,2054,2166,2222,2049,1300,2368,1865,2138,1841,1954,2202,2270,2195,2178,2689,1495,2008,2379,2015,1886,2087,2090,2080,1871,2200,2217,2205,2296,1424,2327,2259,2262,1958,2428,1701,1977,2526,2745,2441,1953,1669,2440,2090,2332,1912,2043,1589,2080,2305,1973,2111,2193,1371,2167,1715,1539,1684,1584,1292,1435,1746,1767,1951,1506,928,1887,1545,1523,1394,1480,1236,1287,1478,1576,1893,1239,1307,1965,1405,1595,1484,1638,1577,1406,1615,1806,1622,1677,1281,1687,1246,1726,1407,1465,1603,1331,1777,1532,1737,1412,826,1458,1308,1568,1473,1713,1275,1388,1733,1508,1857,1030,1445,1417,1610,1285,1642,1406,1676,1540,1701,1628,2143,1193,981,1615,1575,1386,1274,1463,1270,1471,1638,1575,1636,1138,1085,1690,1308,1570,1170,1311,1316,1538,1405,1345,1480,1115,1178,1617,1203,1345,1079,1177,1169,1229,1306,1549,1265,1172,935,1427,1148,1224,1062,1655,1223,1174,1215,1232,1546,1104,1133,1332,1394,1376,1260,1236,1142,1257,1253,1252,1347,1115,687,1017,1014,742,953,890],"area":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,931482,1353057,1453223,1597665,1288351,1349245,1356208,1304519,1383208,1696536,1444955,2063321,1734361,1401142,2145879,1952566,1867344,1487054,1564842,1945674,2411003,1768823,2194983,2691653,2142572,1353726,2630468,2087914,1848309,1882908,2121047,2566473,2297515,2341557,2031138,1983810,1537145,1927871,2662338,2455853,2217533,2131273,2696178,1656798,2180249,2277210,2559085,2593623,2290263,1297265,2248842,3065962,2394686,2159600,2903764,1984507,2023176,2897836,2798457,2625986,2923556,2036298,3110042,2921814,3251628,2060767,2989434,2199603,2335518,2310070,2391019,2815156,2607989,1909538,2420132,2179243,1678111,2650926,1934467,2022085,1702490,2147464,2005427,2096897,2342192,1036590,2392348,1680570,1702442,1718058,1511585,1535721,1520039,1646807,1558824,2171265,1507304,1067232,2477500,1581020,1989487,2323896,1946798,2289573,1734415,1801470,2057939,2447069,2183413,1180991,2031756,1980866,2737691,2291334,2404136,2192299,2332699,2183197,2479896,2263788,2323858,1493430,2292340,2351093,2276556,2611106,2443717,1921241,2359509,2408384,2301653,3060123,1888336,1962248,2409373,2444826,2411492,2997933,2830497,2831231,3051738,2912599,3300609,3362351,2076072,1778625,2784966,2113980,2771252,2498814,3031715,2341072,2091317,3390746,2709914,2911083,2464073,1594491,4134323,3875750,3608998,2383709,2619388,2894586,2917289,3172349,2663616,3111530,2285154,2833717,3183896,2868476,3027691,2403158,3416519,2892955,1884651,2517493,2561582,2692740,2936239,2074625,2583199,2724120,2781252,2030890,4238774,2618775,2535145,2227650,2571807,3377523,2467588,3083871,2504110,2567026,2983044,2546750,2354304,1970708,1966067,2418774,2236885,2597410,2127856,1201947,2074034,2707034,1599819,1574403,1902151]},"uselic":{"count":[3918,1999,3415,3078,3173,2899,2734,3025,3291,3401,3618,3427,3504,2528,2926,2560,3111,2981,2885,2825,2503,3041,2975,2958,3404,1774,2450,2554,2461,2274,1993,2095,2072,2215,1840,2244,1950,1035,1386,1351,1259,1504,1423,1203,1277,1285,1422,1675,1613,1377,1527,1693,1604,1711,1838,2145,1876,2053,2104,2752,2722,1035,2147,1896,2537,2098,2114,2369,2086,2195,2482,2569,2241,1838,2163,2097,2475,2067,2276,2238,2034,2434,2696,2344,2693,1628,2334,2121,2390,2108,2841,1998,2320,2708,2175,2698,2689,1457,2279,2257,2323,2326,2293,2196,2547,2618,2591,3230,2305,2274,2154,2186,2568,2281,2683,1981,2362,2494,2757,2792,2165,1308,2087,1695,2149,1859,1875,2380,1652,1902,2198,2282,2002,1109,1999,1561,1953,2301,1698,1969,1907,1822,2214,1971,2208,1599,1777,1533,2107,1963,1937,1884,1719,1969,2111,2053,2266,1193,1631,1769,2219,1719,1876,1923,1342,1844,2036,2208,1634,1665,1975,1971,1837,1637,2087,1928,1893,1676,1860,2207,1772,1396,1875,1848,1806,2218,2030,1819,1832,1790,1876,2224,2237,1010,1869,1540,1669,1733,1699,1951,1752,1881,1729,2076,1614,1112,2039,1517,2104,1654,1654,1917,1572,1394,1851,1852,1991,1332,1449,1688,2016,1423,1605,1679,1441,1460,1543,1624,1637,1124,1624,1580,1617,1528,1475,1369,1386,1436,1471,1628,1479,1251,1267,1353,1486,1523,1567],"area":[3545195,1538164,3244267,2585472,3137537,2857093,2624745,3126360,3034321,3212167,3669449,3627459,2851244,3015153,2362566,2341643,3219701,3302095,3479042,3254404,2799363,2898999,3486655,3013520,3451848,2496898,2495950,2625250,2947354,2917409,2472098,2671791,2521583,3132748,2462405,2521800,2725025,1707375,2006825,2080970,2130301,2465940,2108080,1911559,2541019,2202226,1857411,2798199,1884752,2433489,1643971,1782110,1528229,2116844,1622257,1805567,2215008,1979132,1996625,3005850,2704279,989718,1690571,1813568,2174170,2402471,2200092,2153790,1901867,2115589,2572129,3166790,2356242,1302442,2149201,1968393,2288775,2214146,2509234,2379134,2012110,2601866,3492507,2486974,2639170,1858908,2010838,1663860,2247921,2186117,2978603,2049811,2280379,3047010,2748332,3060860,2803289,1414795,1873980,2277059,2904054,2273692,2442512,2447468,2771242,4079667,2791852,3638510,2017748,2004735,2124330,2745683,2982453,2236928,3101042,2548724,2691102,3552309,3276214,3587194,2612585,2501179,2231323,2131947,2602889,2136732,2185125,3254827,2193264,2317813,2943483,2877183,2937298,1400326,2248700,2092935,2557068,2400657,1996947,2584195,2615904,2435363,2415984,3132654,3189883,2129186,1852828,1587055,2233456,2633382,2386688,2239671,2451571,2420011,2902175,2340102,2872654,1432698,2435536,2011059,2292192,1782560,2154814,2469850,2051166,2282249,2173900,2529928,2406634,1492613,2596958,1927720,2151036,2175530,2429448,2831192,2400357,2061766,2804510,2969412,2557347,1462071,2286765,2353334,2490393,2323073,2499608,2243522,2285789,2478934,2465151,2576731,2733284,1163439,2532385,2394036,1955039,2331833,2176602,2669820,2554028,2590771,2260941,3351558,2235602,1733097,3080419,1919064,3095319,2435572,3013845,2817436,2746893,2652640,3513502,2712644,3061721,2161691,2637278,2847454,2628274,2699395,2983571,2718133,2733745,2961333,2769475,3688921,3499860,1561053,2689595,2929438,2644582,2980816,3335438,3491554,2631650,3014298,2300108,3274397,2965392,2750182,2475453,2787932,2659880,2831904,3110243]}}},"annual":{"labels":[{"y":95,"m":null},{"y":96,"m":null},{"y":97,"m":null},{"y":98,"m":null},{"y":99,"m":null},{"y":100,"m":null},{"y":101,"m":null},{"y":102,"m":null},{"y":103,"m":null},{"y":104,"m":null},{"y":105,"m":null},{"y":106,"m":null},{"y":107,"m":null},{"y":108,"m":null},{"y":109,"m":null},{"y":110,"m":null},{"y":111,"m":null},{"y":112,"m":null},{"y":113,"m":null},{"y":114,"m":null}],"series":{"permit":{"count":[35184,31704,19484,20517,29696,33161,31237,33531,31994,27643,22511,25035,27344,27143,25980,26089,23257,18542,19523,17919],"area":[36664413,34732493,26166355,19915953,31174017,34148423,32882939,39760495,38634904,32595657,26235287,29883925,33984220,36927792,41521034,43425428,45827240,37442588,39943097,32974741]},"start":{"count":[null,null,null,16977,21707,25049,24533,26344,24497,20444,17733,18659,18469,17519,18523,17077,16356,15232,15013,15086],"area":[null,null,null,17221770,23165324,25287437,26895156,28690344,31344905,25354769,20816441,23223703,26262066,27843010,32403233,30499556,35440102,32568032,32699999,29696537]},"uselic":{"count":[37978,34797,27376,16770,22293,26250,26903,28014,28806,28837,23552,22506,22860,22026,22370,22486,21146,20280,19251,17875],"area":[36202229,36024385,32717134,26534930,24013834,25885034,27761024,28771809,31718120,32868462,29988350,28818031,28366008,26488606,28247176,28022718,28713736,31956033,33890991,34352789]}}}},"cities":{"names":["新北市","臺北市","桃園市","臺中市","臺南市","高雄市","宜蘭縣","新竹縣","苗栗縣","彰化縣","南投縣","雲林縣","嘉義縣","屏東縣","臺東縣","花蓮縣","澎湖縣","基隆市","新竹市","嘉義市","金門縣","連江縣"],"annual":{"count":{"新北市":[855,942,684,577,646,703,690,769,670,567,465,395,540,556,579,644,516,437,427,348],"臺北市":[563,619,533,455,418,310,303,305,282,266,200,205,223,228,263,336,324,266,238,198],"桃園市":[2578,2514,1540,1455,1946,2225,2136,2229,1930,1777,1434,1452,1430,1591,1672,1802,1454,1299,1730,2268],"臺中市":[4802,3835,2383,2472,3911,3408,3431,3673,3344,2680,2202,2660,2966,2599,2873,2630,2605,2038,2182,1865],"臺南市":[6325,5143,3112,3002,5194,5712,5145,6154,6186,4582,3804,4884,5459,5468,4674,4605,3710,2672,3169,2681],"高雄市":[5587,5286,2238,2658,3663,3655,3160,3548,2968,2483,2136,2295,2842,2832,2134,2187,2117,1645,1585,1596],"宜蘭縣":[1047,1440,1023,1246,1639,2973,2096,2253,2031,1320,1016,1114,1200,1085,1106,1315,1220,1077,720,622],"新竹縣":[1158,961,787,650,989,1181,843,907,977,965,711,698,652,776,717,696,663,533,524,414],"苗栗縣":[1572,1600,1077,925,1338,1412,1636,1430,1189,1214,912,887,858,923,819,911,818,402,690,540],"彰化縣":[2051,1623,959,1296,1630,1988,2097,2156,2426,2665,2064,2430,2519,2274,2259,2156,1942,1512,1551,1218],"南投縣":[1156,716,516,536,1234,1841,1695,1621,1128,1112,873,1000,1119,1156,1104,1110,997,1157,863,771],"雲林縣":[1229,1493,996,1028,1429,1551,1735,1642,2330,2065,1750,1721,2143,1948,1999,1829,1712,1365,1346,1333],"嘉義縣":[818,823,498,693,1021,1061,1040,983,1396,1181,1257,975,1179,1462,1299,1415,1303,846,808,851],"屏東縣":[1681,1691,1019,1060,1510,1767,1608,2226,1823,1376,1286,1727,1550,1502,1632,1611,1403,1214,1303,1009],"臺東縣":[532,423,299,419,515,568,625,728,594,770,383,366,427,307,410,505,465,375,395,312],"花蓮縣":[1146,673,442,580,746,796,836,966,852,781,510,338,394,564,468,611,525,344,471,382],"澎湖縣":[380,353,275,306,296,323,419,362,454,452,432,424,443,485,613,557,500,581,581,761],"基隆市":[145,101,100,86,92,88,74,82,57,51,41,45,54,51,49,35,28,55,34,40],"新竹市":[455,463,315,352,345,474,412,394,369,280,224,289,346,298,298,300,238,199,213,171],"嘉義市":[715,586,319,405,780,682,702,565,490,502,374,732,619,719,669,489,400,211,382,314],"金門縣":[167,211,180,184,168,237,311,320,264,357,246,204,223,175,182,190,203,215,229,168],"連江縣":[6,8,11,13,5,15,8,10,17,16,4,25,26,22,18,20,9,20,16,14]},"area":{"新北市":[7182221,6079152,4347287,3052315,3389579,4704124,4904056,5641432,5028413,3757384,2429772,3571323,3921764,4566699,5166796,4913307,5190313,4799302,4001867,3308006],"臺北市":[3207998,3800928,2833200,2536484,3519574,2673260,1667655,1853978,2161993,1671236,1924181,1864278,2478680,2630916,2461225,2742710,4734502,3482335,3160617,1937423],"桃園市":[4117757,3610642,2953899,2074362,3667127,3979736,4681351,7961594,4743577,5946028,4262496,4962244,4165521,5288867,6021099,5839453,6003481,4599883,6718589,5092475],"臺中市":[3812356,4542452,3302953,2225101,4482709,4820229,3805441,5567668,5752690,3783073,3905920,4148236,5052058,5578556,6642952,7422897,7097391,5801384,6709887,5154254],"臺南市":[3280968,2372887,1781296,1303280,2451182,2769729,3001241,3704399,4088889,3739908,2536505,2900483,3299544,4059530,3890868,5202176,5500046,3757619,5004287,4053978],"高雄市":[3860716,3613976,2754376,2000105,3532660,4018191,3589274,4126293,4220661,2614145,1773276,2493988,3399082,4045964,2758685,3645966,3418695,3429954,3508439,3514207],"宜蘭縣":[682686,672740,520591,662529,629394,1018738,913580,913480,1251443,718046,653246,720473,591760,519298,644345,708688,660337,745478,627573,554747],"新竹縣":[1390815,1697820,1291816,859643,2127592,2118271,1318186,1467090,1880813,1488742,1191272,1044102,1226758,1350882,2113420,1607322,1832702,1542572,1233500,1014766],"苗栗縣":[722417,846891,637670,482850,726082,763254,1074427,1042405,1124607,1109098,746460,663533,637902,630016,1050146,893477,1040069,762456,886648,818558],"彰化縣":[1108524,885286,591162,679215,1109163,1250996,1350202,1304413,1476942,1533262,1433978,1533928,1758903,1733660,2023397,2238490,2060603,1685166,1386246,1711352],"南投縣":[501246,374300,369058,168592,360083,503423,497649,630728,520357,507014,524075,563111,570842,714044,757098,825262,696894,724436,682494,720241],"雲林縣":[952365,791338,607762,476922,776911,830399,909237,898765,1732680,1235270,1032300,1264357,1473981,1190517,1247984,1448659,1478840,1144058,1424438,1038612],"嘉義縣":[644076,444568,240759,309697,444198,480832,498438,535533,779921,787520,753260,809608,836115,846006,922629,1197239,1418131,1176665,1446788,1110067],"屏東縣":[710389,746266,572652,584156,551994,781846,868377,956170,900258,594300,656169,831748,978944,990650,1147263,1556094,1022103,1098002,903326,795050],"臺東縣":[206867,117846,90081,164519,252824,190017,242353,257350,256687,376161,165007,163374,207470,133120,156313,185213,187814,252698,182517,160656],"花蓮縣":[425681,333129,167415,345644,327898,386167,375438,366011,566023,380640,311865,252926,249963,422800,386214,466499,406164,372549,288771,255258],"澎湖縣":[154944,152834,163442,98149,110699,109455,165302,124425,214945,163970,160652,135340,133113,178582,184001,198176,177634,136287,129472,180020],"基隆市":[232226,293522,251398,231237,258027,185784,120626,252034,229851,148940,212473,141868,395373,175238,126140,122082,61713,267860,247117,299295],"新竹市":[734719,1105060,1000025,891324,547320,1060423,1094144,818374,621661,540755,389496,591934,691900,577769,590674,640866,597269,501813,442374,535794],"嘉義市":[257776,318656,171928,190536,283116,248069,260756,290514,224961,236385,154556,219122,206807,263600,408040,308012,219813,123617,235081,307299],"金門縣":[60138,110309,136607,88098,104857,166360,234124,270725,250363,161316,166035,208052,168940,102369,108149,112735,183123,164367,189990,143648],"連江縣":[5457,8034,14144,6284,2035,5871,13685,9266,11980,8895,2407,21660,47795,32480,24331,35253,5816,29543,18794,11671]}},"years":[95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114]},"structure":{"year":114,"permitUse":{"count":[{"cat":"公共集會類(A類)","v":10},{"cat":"商業類(B類)","v":103},{"cat":"工業、倉儲類(C類)","v":1761},{"cat":"休閒、文教類(D類)","v":286},{"cat":"宗教、殯葬類(E類)","v":127},{"cat":"衛生、福利、更生類(F類)","v":102},{"cat":"辦公、服務類(G類)","v":1725},{"cat":"住宿類(H類)/宿舍安養","v":67},{"cat":"住宿類(H類)/住宅","v":11913},{"cat":"危險物品類(I類)","v":33},{"cat":"其他(含農業設施)","v":1792}],"area":[{"cat":"公共集會類(A類)","v":14921},{"cat":"商業類(B類)","v":451704},{"cat":"工業、倉儲類(C類)","v":5767156},{"cat":"休閒、文教類(D類)","v":543371},{"cat":"宗教、殯葬類(E類)","v":154474},{"cat":"衛生、福利、更生類(F類)","v":728411},{"cat":"辦公、服務類(G類)","v":3637797},{"cat":"住宿類(H類)/宿舍安養","v":239222},{"cat":"住宿類(H類)/住宅","v":17933551},{"cat":"危險物品類(I類)","v":27975},{"cat":"其他(含農業設施)","v":3476159}]},"permitStruct":{"count":[{"cat":"磚構造","v":158},{"cat":"木構造","v":14},{"cat":"鋼構造","v":4561},{"cat":"混凝土(含鋼筋混凝土)構造","v":12480},{"cat":"鋼骨鋼筋混凝土構造","v":648},{"cat":"冷軋型鋼構造","v":10},{"cat":"其他","v":48}],"area":[{"cat":"磚構造","v":190667},{"cat":"木構造","v":7815},{"cat":"鋼構造","v":7157284},{"cat":"混凝土(含鋼筋混凝土)構造","v":23533589},{"cat":"鋼骨鋼筋混凝土構造","v":1983632},{"cat":"冷軋型鋼構造","v":13009},{"cat":"其他","v":88745}]}},"fusion":{"counties":{"臺北市":{"presalePing":1204067,"rentPing":1583},"臺中市":{"presalePing":549206,"rentPing":697},"基隆市":{"presalePing":504141,"rentPing":477},"新北市":{"presalePing":724700,"rentPing":836},"臺南市":{"presalePing":368130,"rentPing":663},"桃園市":{"presalePing":435659,"rentPing":590},"新竹市":{"presalePing":588128,"rentPing":880},"高雄市":{"presalePing":416716,"rentPing":686},"宜蘭縣":{"presalePing":274695,"rentPing":519},"新竹縣":{"presalePing":489981,"rentPing":751},"苗栗縣":{"presalePing":334392,"rentPing":555},"屏東縣":{"presalePing":269204,"rentPing":541},"雲林縣":{"presalePing":268908,"rentPing":758},"南投縣":{"presalePing":296746,"rentPing":504},"金門縣":{"presalePing":312318,"rentPing":428},"花蓮縣":{"presalePing":315786,"rentPing":638},"嘉義縣":{"presalePing":306848,"rentPing":685},"嘉義市":{"presalePing":319858,"rentPing":542},"彰化縣":{"presalePing":304681,"rentPing":536},"臺東縣":{"presalePing":298931,"rentPing":581},"澎湖縣":{"presalePing":326078,"rentPing":1065}},"byYear":{"2012":{"臺北市":{"presalePing":749963,"presaleN":461,"rentPing":1286,"rentN":838},"臺中市":{"presalePing":159164,"presaleN":1100,"rentPing":521,"rentN":452},"基隆市":{"presalePing":154890,"presaleN":101,"rentPing":327,"rentN":32},"新北市":{"presalePing":182245,"presaleN":6868,"rentPing":593,"rentN":597},"臺南市":{"presalePing":160966,"presaleN":41,"rentPing":352,"rentN":131},"桃園市":{"presalePing":180403,"presaleN":1788,"rentPing":443,"rentN":323},"新竹市":{"presalePing":261208,"presaleN":142,"rentPing":679,"rentN":91},"高雄市":{"presalePing":176666,"presaleN":314,"rentPing":429,"rentN":337},"宜蘭縣":{"presalePing":151624,"presaleN":54,"rentPing":366,"rentN":47},"新竹縣":{"presalePing":198694,"presaleN":153,"rentPing":527,"rentN":97},"苗栗縣":{"presalePing":144834,"presaleN":40,"rentPing":310,"rentN":24},"嘉義市":{"presalePing":null,"presaleN":null,"rentPing":284,"rentN":13},"南投縣":{"presalePing":null,"presaleN":null,"rentPing":261,"rentN":13},"彰化縣":{"presalePing":null,"presaleN":null,"rentPing":207,"rentN":22},"雲林縣":{"presalePing":null,"presaleN":null,"rentPing":300,"rentN":14},"嘉義縣":{"presalePing":null,"presaleN":null,"rentPing":1157,"rentN":6},"屏東縣":{"presalePing":null,"presaleN":null,"rentPing":263,"rentN":11},"花蓮縣":{"presalePing":null,"presaleN":null,"rentPing":302,"rentN":70},"臺東縣":{"presalePing":null,"presaleN":null,"rentPing":261,"rentN":14},"澎湖縣":{"presalePing":null,"presaleN":null,"rentPing":296,"rentN":1}},"2013":{"臺北市":{"presalePing":790276,"presaleN":1212,"rentPing":1317,"rentN":4631},"臺中市":{"presalePing":173532,"presaleN":3147,"rentPing":513,"rentN":2001},"基隆市":{"presalePing":158777,"presaleN":289,"rentPing":319,"rentN":73},"新北市":{"presalePing":335120,"presaleN":8725,"rentPing":599,"rentN":2345},"臺南市":{"presalePing":149567,"presaleN":41,"rentPing":382,"rentN":807},"桃園市":{"presalePing":179764,"presaleN":8519,"rentPing":487,"rentN":1338},"新竹市":{"presalePing":247272,"presaleN":251,"rentPing":581,"rentN":447},"高雄市":{"presalePing":229174,"presaleN":713,"rentPing":448,"rentN":1605},"宜蘭縣":{"presalePing":174050,"presaleN":116,"rentPing":402,"rentN":130},"新竹縣":{"presalePing":241401,"presaleN":793,"rentPing":509,"rentN":398},"苗栗縣":{"presalePing":135894,"presaleN":42,"rentPing":314,"rentN":60},"嘉義市":{"presalePing":null,"presaleN":null,"rentPing":313,"rentN":59},"南投縣":{"presalePing":null,"presaleN":null,"rentPing":317,"rentN":64},"彰化縣":{"presalePing":null,"presaleN":null,"rentPing":293,"rentN":59},"雲林縣":{"presalePing":null,"presaleN":null,"rentPing":214,"rentN":30},"嘉義縣":{"presalePing":null,"presaleN":null,"rentPing":265,"rentN":60},"屏東縣":{"presalePing":null,"presaleN":null,"rentPing":252,"rentN":81},"花蓮縣":{"presalePing":null,"presaleN":null,"rentPing":321,"rentN":290},"臺東縣":{"presalePing":null,"presaleN":null,"rentPing":309,"rentN":33},"澎湖縣":{"presalePing":null,"presaleN":null,"rentPing":250,"rentN":4},"金門縣":{"presalePing":null,"presaleN":null,"rentPing":747,"rentN":6}},"2014":{"臺北市":{"presalePing":807962,"presaleN":1010,"rentPing":1374,"rentN":4989},"臺中市":{"presalePing":210344,"presaleN":1405,"rentPing":544,"rentN":1538},"基隆市":{"presalePing":200431,"presaleN":77,"rentPing":353,"rentN":72},"新北市":{"presalePing":346896,"presaleN":5458,"rentPing":627,"rentN":2048},"臺南市":{"presalePing":258766,"presaleN":283,"rentPing":436,"rentN":882},"桃園市":{"presalePing":203356,"presaleN":2610,"rentPing":449,"rentN":1147},"新竹市":{"presalePing":255631,"presaleN":96,"rentPing":601,"rentN":440},"高雄市":{"presalePing":189144,"presaleN":413,"rentPing":496,"rentN":1571},"宜蘭縣":{"presalePing":293937,"presaleN":280,"rentPing":381,"rentN":151},"新竹縣":{"presalePing":212591,"presaleN":586,"rentPing":484,"rentN":456},"苗栗縣":{"presalePing":203454,"presaleN":80,"rentPing":328,"rentN":49},"屏東縣":{"presalePing":136712,"presaleN":4,"rentPing":230,"rentN":47},"嘉義縣":{"presalePing":137036,"presaleN":116,"rentPing":265,"rentN":33},"嘉義市":{"presalePing":null,"presaleN":null,"rentPing":313,"rentN":80},"南投縣":{"presalePing":null,"presaleN":null,"rentPing":246,"rentN":48},"彰化縣":{"presalePing":null,"presaleN":null,"rentPing":304,"rentN":47},"雲林縣":{"presalePing":null,"presaleN":null,"rentPing":586,"rentN":17},"花蓮縣":{"presalePing":null,"presaleN":null,"rentPing":355,"rentN":235},"臺東縣":{"presalePing":null,"presaleN":null,"rentPing":403,"rentN":24},"澎湖縣":{"presalePing":null,"presaleN":null,"rentPing":401,"rentN":4},"金門縣":{"presalePing":null,"presaleN":null,"rentPing":605,"rentN":2}},"2015":{"臺北市":{"presalePing":759704,"presaleN":295,"rentPing":1356,"rentN":4986},"臺中市":{"presalePing":287663,"presaleN":720,"rentPing":567,"rentN":1660},"基隆市":{"presalePing":206394,"presaleN":288,"rentPing":382,"rentN":40},"新北市":{"presalePing":391775,"presaleN":2735,"rentPing":660,"rentN":1957},"臺南市":{"presalePing":162566,"presaleN":144,"rentPing":423,"rentN":830},"桃園市":{"presalePing":213954,"presaleN":1870,"rentPing":457,"rentN":1068},"新竹市":{"presalePing":247586,"presaleN":158,"rentPing":586,"rentN":374},"高雄市":{"presalePing":160001,"presaleN":259,"rentPing":537,"rentN":1596},"宜蘭縣":{"presalePing":260443,"presaleN":81,"rentPing":433,"rentN":123},"新竹縣":{"presalePing":224226,"presaleN":239,"rentPing":502,"rentN":375},"苗栗縣":{"presalePing":152006,"presaleN":5,"rentPing":397,"rentN":36},"屏東縣":{"presalePing":136965,"presaleN":4,"rentPing":513,"rentN":18},"雲林縣":{"presalePing":107543,"presaleN":29,"rentPing":365,"rentN":14},"嘉義縣":{"presalePing":139178,"presaleN":207,"rentPing":266,"rentN":40},"嘉義市":{"presalePing":null,"presaleN":null,"rentPing":314,"rentN":70},"南投縣":{"presalePing":null,"presaleN":null,"rentPing":298,"rentN":36},"彰化縣":{"presalePing":null,"presaleN":null,"rentPing":328,"rentN":40},"花蓮縣":{"presalePing":null,"presaleN":null,"rentPing":398,"rentN":209},"臺東縣":{"presalePing":null,"presaleN":null,"rentPing":357,"rentN":8},"澎湖縣":{"presalePing":null,"presaleN":null,"rentPing":269,"rentN":6},"金門縣":{"presalePing":null,"presaleN":null,"rentPing":327,"rentN":1}},"2016":{"臺北市":{"presalePing":743440,"presaleN":273,"rentPing":1342,"rentN":5530},"臺中市":{"presalePing":258666,"presaleN":824,"rentPing":602,"rentN":1947},"基隆市":{"presalePing":192971,"presaleN":364,"rentPing":493,"rentN":41},"新北市":{"presalePing":386697,"presaleN":1561,"rentPing":664,"rentN":2366},"臺南市":{"presalePing":165196,"presaleN":192,"rentPing":444,"rentN":814},"桃園市":{"presalePing":187879,"presaleN":1188,"rentPing":457,"rentN":1665},"新竹市":{"presalePing":225400,"presaleN":403,"rentPing":557,"rentN":415},"高雄市":{"presalePing":147162,"presaleN":57,"rentPing":534,"rentN":1972},"宜蘭縣":{"presalePing":169522,"presaleN":84,"rentPing":440,"rentN":100},"新竹縣":{"presalePing":183240,"presaleN":232,"rentPing":498,"rentN":319},"雲林縣":{"presalePing":126687,"presaleN":63,"rentPing":268,"rentN":3},"嘉義縣":{"presalePing":136267,"presaleN":13,"rentPing":266,"rentN":42},"嘉義市":{"presalePing":null,"presaleN":null,"rentPing":327,"rentN":126},"苗栗縣":{"presalePing":null,"presaleN":null,"rentPing":389,"rentN":16},"南投縣":{"presalePing":null,"presaleN":null,"rentPing":335,"rentN":46},"彰化縣":{"presalePing":null,"presaleN":null,"rentPing":341,"rentN":37},"屏東縣":{"presalePing":null,"presaleN":null,"rentPing":298,"rentN":45},"花蓮縣":{"presalePing":null,"presaleN":null,"rentPing":430,"rentN":197},"臺東縣":{"presalePing":null,"presaleN":null,"rentPing":378,"rentN":7},"澎湖縣":{"presalePing":null,"presaleN":null,"rentPing":452,"rentN":1},"金門縣":{"presalePing":null,"presaleN":null,"rentPing":791,"rentN":1}},"2017":{"臺北市":{"presalePing":724913,"presaleN":404,"rentPing":1342,"rentN":5495},"臺中市":{"presalePing":252982,"presaleN":1377,"rentPing":641,"rentN":1929},"基隆市":{"presalePing":181120,"presaleN":383,"rentPing":536,"rentN":38},"新北市":{"presalePing":406730,"presaleN":3114,"rentPing":684,"rentN":2662},"臺南市":{"presalePing":208752,"presaleN":241,"rentPing":486,"rentN":876},"桃園市":{"presalePing":221364,"presaleN":1454,"rentPing":465,"rentN":1646},"新竹市":{"presalePing":288243,"presaleN":510,"rentPing":588,"rentN":358},"高雄市":{"presalePing":289969,"presaleN":542,"rentPing":565,"rentN":2349},"宜蘭縣":{"presalePing":177886,"presaleN":114,"rentPing":466,"rentN":111},"新竹縣":{"presalePing":174675,"presaleN":770,"rentPing":494,"rentN":334},"雲林縣":{"presalePing":128131,"presaleN":51,"rentPing":247,"rentN":13},"南投縣":{"presalePing":191273,"presaleN":16,"rentPing":315,"rentN":38},"嘉義市":{"presalePing":null,"presaleN":null,"rentPing":352,"rentN":127},"苗栗縣":{"presalePing":null,"presaleN":null,"rentPing":325,"rentN":20},"彰化縣":{"presalePing":null,"presaleN":null,"rentPing":413,"rentN":27},"嘉義縣":{"presalePing":null,"presaleN":null,"rentPing":318,"rentN":23},"屏東縣":{"presalePing":null,"presaleN":null,"rentPing":350,"rentN":31},"花蓮縣":{"presalePing":null,"presaleN":null,"rentPing":430,"rentN":253},"臺東縣":{"presalePing":null,"presaleN":null,"rentPing":413,"rentN":5},"澎湖縣":{"presalePing":null,"presaleN":null,"rentPing":567,"rentN":1},"金門縣":{"presalePing":null,"presaleN":null,"rentPing":299,"rentN":1}},"2018":{"臺北市":{"presalePing":682467,"presaleN":572,"rentPing":1370,"rentN":5615},"臺中市":{"presalePing":229083,"presaleN":2697,"rentPing":661,"rentN":2944},"基隆市":{"presalePing":361625,"presaleN":84,"rentPing":505,"rentN":37},"新北市":{"presalePing":427473,"presaleN":4495,"rentPing":700,"rentN":3580},"臺南市":{"presalePing":158714,"presaleN":317,"rentPing":480,"rentN":1163},"桃園市":{"presalePing":227926,"presaleN":3740,"rentPing":459,"rentN":1682},"新竹市":{"presalePing":260468,"presaleN":903,"rentPing":621,"rentN":320},"高雄市":{"presalePing":184494,"presaleN":423,"rentPing":559,"rentN":2624},"宜蘭縣":{"presalePing":318804,"presaleN":143,"rentPing":483,"rentN":140},"新竹縣":{"presalePing":162800,"presaleN":600,"rentPing":519,"rentN":252},"苗栗縣":{"presalePing":159485,"presaleN":69,"rentPing":349,"rentN":26},"雲林縣":{"presalePing":127518,"presaleN":23,"rentPing":626,"rentN":19},"南投縣":{"presalePing":201028,"presaleN":31,"rentPing":298,"rentN":66},"嘉義市":{"presalePing":null,"presaleN":null,"rentPing":354,"rentN":171},"彰化縣":{"presalePing":null,"presaleN":null,"rentPing":466,"rentN":58},"嘉義縣":{"presalePing":null,"presaleN":null,"rentPing":282,"rentN":47},"屏東縣":{"presalePing":null,"presaleN":null,"rentPing":368,"rentN":35},"花蓮縣":{"presalePing":null,"presaleN":null,"rentPing":439,"rentN":216},"臺東縣":{"presalePing":null,"presaleN":null,"rentPing":414,"rentN":7},"澎湖縣":{"presalePing":null,"presaleN":null,"rentPing":503,"rentN":3},"金門縣":{"presalePing":null,"presaleN":null,"rentPing":970,"rentN":1}},"2019":{"臺北市":{"presalePing":720772,"presaleN":711,"rentPing":1348,"rentN":5616},"臺中市":{"presalePing":224594,"presaleN":4138,"rentPing":633,"rentN":2605},"基隆市":{"presalePing":298719,"presaleN":34,"rentPing":424,"rentN":70},"新北市":{"presalePing":417639,"presaleN":5881,"rentPing":717,"rentN":4554},"臺南市":{"presalePing":172746,"presaleN":1598,"rentPing":472,"rentN":1419},"桃園市":{"presalePing":227089,"presaleN":4319,"rentPing":449,"rentN":2161},"新竹市":{"presalePing":282130,"presaleN":575,"rentPing":572,"rentN":261},"高雄市":{"presalePing":181262,"presaleN":1257,"rentPing":596,"rentN":3440},"宜蘭縣":{"presalePing":217779,"presaleN":115,"rentPing":547,"rentN":120},"新竹縣":{"presalePing":181369,"presaleN":496,"rentPing":566,"rentN":257},"苗栗縣":{"presalePing":163566,"presaleN":120,"rentPing":364,"rentN":48},"雲林縣":{"presalePing":203358,"presaleN":41,"rentPing":318,"rentN":24},"南投縣":{"presalePing":206690,"presaleN":112,"rentPing":332,"rentN":30},"金門縣":{"presalePing":312918,"presaleN":1,"rentPing":394,"rentN":3},"花蓮縣":{"presalePing":194888,"presaleN":10,"rentPing":503,"rentN":331},"嘉義市":{"presalePing":null,"presaleN":null,"rentPing":362,"rentN":126},"彰化縣":{"presalePing":null,"presaleN":null,"rentPing":395,"rentN":58},"嘉義縣":{"presalePing":null,"presaleN":null,"rentPing":304,"rentN":32},"屏東縣":{"presalePing":null,"presaleN":null,"rentPing":339,"rentN":29},"臺東縣":{"presalePing":null,"presaleN":null,"rentPing":424,"rentN":15}},"2020":{"臺北市":{"presalePing":820932,"presaleN":1385,"rentPing":1351,"rentN":6116},"臺中市":{"presalePing":231155,"presaleN":4461,"rentPing":628,"rentN":3022},"基隆市":{"presalePing":282525,"presaleN":38,"rentPing":417,"rentN":310},"新北市":{"presalePing":428023,"presaleN":6907,"rentPing":705,"rentN":5199},"臺南市":{"presalePing":239716,"presaleN":3057,"rentPing":484,"rentN":2041},"桃園市":{"presalePing":249552,"presaleN":3330,"rentPing":445,"rentN":4539},"新竹市":{"presalePing":281285,"presaleN":266,"rentPing":538,"rentN":369},"高雄市":{"presalePing":216380,"presaleN":2645,"rentPing":609,"rentN":3987},"宜蘭縣":{"presalePing":189657,"presaleN":41,"rentPing":463,"rentN":160},"新竹縣":{"presalePing":292359,"presaleN":930,"rentPing":599,"rentN":379},"苗栗縣":{"presalePing":165200,"presaleN":246,"rentPing":410,"rentN":54},"屏東縣":{"presalePing":125088,"presaleN":5,"rentPing":588,"rentN":323},"雲林縣":{"presalePing":153886,"presaleN":46,"rentPing":401,"rentN":57},"南投縣":{"presalePing":208544,"presaleN":4,"rentPing":375,"rentN":27},"花蓮縣":{"presalePing":236601,"presaleN":30,"rentPing":529,"rentN":332},"嘉義市":{"presalePing":247721,"presaleN":47,"rentPing":378,"rentN":181},"彰化縣":{"presalePing":null,"presaleN":null,"rentPing":421,"rentN":89},"嘉義縣":{"presalePing":null,"presaleN":null,"rentPing":383,"rentN":61},"臺東縣":{"presalePing":null,"presaleN":null,"rentPing":444,"rentN":17},"澎湖縣":{"presalePing":null,"presaleN":null,"rentPing":317,"rentN":1},"金門縣":{"presalePing":null,"presaleN":null,"rentPing":428,"rentN":5}},"2021":{"臺北市":{"presalePing":855530,"presaleN":2043,"rentPing":1355,"rentN":6077},"臺中市":{"presalePing":305108,"presaleN":7093,"rentPing":620,"rentN":3981},"基隆市":{"presalePing":278734,"presaleN":799,"rentPing":448,"rentN":910},"新北市":{"presalePing":473362,"presaleN":8272,"rentPing":711,"rentN":6619},"臺南市":{"presalePing":251061,"presaleN":5550,"rentPing":535,"rentN":2681},"桃園市":{"presalePing":304885,"presaleN":11726,"rentPing":481,"rentN":8071},"新竹市":{"presalePing":274908,"presaleN":919,"rentPing":570,"rentN":479},"高雄市":{"presalePing":269858,"presaleN":7620,"rentPing":602,"rentN":5115},"宜蘭縣":{"presalePing":196748,"presaleN":1002,"rentPing":454,"rentN":276},"新竹縣":{"presalePing":264172,"presaleN":2474,"rentPing":563,"rentN":396},"苗栗縣":{"presalePing":195589,"presaleN":1232,"rentPing":419,"rentN":108},"屏東縣":{"presalePing":196873,"presaleN":511,"rentPing":521,"rentN":509},"雲林縣":{"presalePing":180668,"presaleN":1035,"rentPing":651,"rentN":96},"南投縣":{"presalePing":219071,"presaleN":413,"rentPing":464,"rentN":52},"金門縣":{"presalePing":225754,"presaleN":18,"rentPing":526,"rentN":4},"花蓮縣":{"presalePing":249965,"presaleN":373,"rentPing":537,"rentN":345},"嘉義縣":{"presalePing":207357,"presaleN":872,"rentPing":421,"rentN":64},"嘉義市":{"presalePing":232653,"presaleN":325,"rentPing":426,"rentN":328},"彰化縣":{"presalePing":208940,"presaleN":1207,"rentPing":423,"rentN":91},"臺東縣":{"presalePing":203873,"presaleN":113,"rentPing":793,"rentN":25},"澎湖縣":{"presalePing":285462,"presaleN":26,"rentPing":438,"rentN":2}},"2022":{"臺北市":{"presalePing":944469,"presaleN":3198,"rentPing":1349,"rentN":7730},"臺中市":{"presalePing":356798,"presaleN":14643,"rentPing":625,"rentN":6441},"基隆市":{"presalePing":286408,"presaleN":1268,"rentPing":444,"rentN":1135},"新北市":{"presalePing":509526,"presaleN":14631,"rentPing":749,"rentN":9260},"臺南市":{"presalePing":293333,"presaleN":6552,"rentPing":606,"rentN":4120},"桃園市":{"presalePing":335301,"presaleN":16045,"rentPing":506,"rentN":11784},"新竹市":{"presalePing":412557,"presaleN":1126,"rentPing":636,"rentN":628},"高雄市":{"presalePing":306885,"presaleN":6398,"rentPing":622,"rentN":7493},"宜蘭縣":{"presalePing":215099,"presaleN":2377,"rentPing":442,"rentN":567},"新竹縣":{"presalePing":346721,"presaleN":3440,"rentPing":604,"rentN":522},"苗栗縣":{"presalePing":254254,"presaleN":2599,"rentPing":451,"rentN":274},"屏東縣":{"presalePing":218149,"presaleN":1084,"rentPing":509,"rentN":659},"雲林縣":{"presalePing":195299,"presaleN":1537,"rentPing":781,"rentN":247},"南投縣":{"presalePing":220062,"presaleN":682,"rentPing":534,"rentN":120},"金門縣":{"presalePing":223211,"presaleN":34,"rentPing":486,"rentN":6},"花蓮縣":{"presalePing":257231,"presaleN":653,"rentPing":558,"rentN":356},"嘉義縣":{"presalePing":232950,"presaleN":1077,"rentPing":489,"rentN":152},"嘉義市":{"presalePing":260734,"presaleN":558,"rentPing":452,"rentN":624},"彰化縣":{"presalePing":237766,"presaleN":2438,"rentPing":454,"rentN":104},"臺東縣":{"presalePing":229777,"presaleN":271,"rentPing":510,"rentN":30},"澎湖縣":{"presalePing":271191,"presaleN":29,"rentPing":175,"rentN":2}},"2023":{"臺北市":{"presalePing":1021488,"presaleN":3344,"rentPing":1392,"rentN":10362},"臺中市":{"presalePing":406943,"presaleN":18736,"rentPing":659,"rentN":10940},"基隆市":{"presalePing":319542,"presaleN":844,"rentPing":447,"rentN":1753},"新北市":{"presalePing":570834,"presaleN":19590,"rentPing":767,"rentN":14994},"臺南市":{"presalePing":333475,"presaleN":8563,"rentPing":613,"rentN":5793},"桃園市":{"presalePing":361142,"presaleN":20468,"rentPing":533,"rentN":19202},"新竹市":{"presalePing":515923,"presaleN":1592,"rentPing":676,"rentN":593},"高雄市":{"presalePing":317220,"presaleN":9596,"rentPing":639,"rentN":10796},"宜蘭縣":{"presalePing":238874,"presaleN":2559,"rentPing":441,"rentN":801},"新竹縣":{"presalePing":387937,"presaleN":4341,"rentPing":704,"rentN":733},"苗栗縣":{"presalePing":316098,"presaleN":2813,"rentPing":503,"rentN":374},"屏東縣":{"presalePing":234694,"presaleN":655,"rentPing":514,"rentN":994},"雲林縣":{"presalePing":225523,"presaleN":1603,"rentPing":861,"rentN":362},"南投縣":{"presalePing":257055,"presaleN":875,"rentPing":496,"rentN":113},"金門縣":{"presalePing":237932,"presaleN":68,"rentPing":433,"rentN":1},"花蓮縣":{"presalePing":265643,"presaleN":564,"rentPing":589,"rentN":588},"嘉義縣":{"presalePing":269804,"presaleN":1566,"rentPing":451,"rentN":199},"嘉義市":{"presalePing":265125,"presaleN":563,"rentPing":480,"rentN":776},"彰化縣":{"presalePing":289540,"presaleN":2611,"rentPing":514,"rentN":207},"臺東縣":{"presalePing":274021,"presaleN":224,"rentPing":813,"rentN":40},"澎湖縣":{"presalePing":279300,"presaleN":24,"rentPing":1116,"rentN":25}},"2024":{"臺北市":{"presalePing":1214490,"presaleN":6403,"rentPing":1462,"rentN":16021},"臺中市":{"presalePing":453717,"presaleN":24538,"rentPing":699,"rentN":17786},"基隆市":{"presalePing":424920,"presaleN":1201,"rentPing":463,"rentN":2854},"新北市":{"presalePing":638715,"presaleN":17959,"rentPing":808,"rentN":26661},"臺南市":{"presalePing":349857,"presaleN":10510,"rentPing":644,"rentN":9978},"桃園市":{"presalePing":384082,"presaleN":23331,"rentPing":566,"rentN":30742},"新竹市":{"presalePing":588880,"presaleN":2061,"rentPing":811,"rentN":1184},"高雄市":{"presalePing":372934,"presaleN":15228,"rentPing":670,"rentN":17189},"宜蘭縣":{"presalePing":262500,"presaleN":2646,"rentPing":472,"rentN":1230},"新竹縣":{"presalePing":448486,"presaleN":5219,"rentPing":733,"rentN":1113},"苗栗縣":{"presalePing":380008,"presaleN":3980,"rentPing":518,"rentN":784},"屏東縣":{"presalePing":252912,"presaleN":1111,"rentPing":526,"rentN":1374},"雲林縣":{"presalePing":259723,"presaleN":2338,"rentPing":768,"rentN":659},"南投縣":{"presalePing":285406,"presaleN":1067,"rentPing":513,"rentN":522},"金門縣":{"presalePing":267595,"presaleN":98,"rentPing":434,"rentN":5},"花蓮縣":{"presalePing":293244,"presaleN":497,"rentPing":658,"rentN":881},"嘉義縣":{"presalePing":312305,"presaleN":1703,"rentPing":548,"rentN":341},"嘉義市":{"presalePing":307114,"presaleN":941,"rentPing":509,"rentN":1300},"彰化縣":{"presalePing":298866,"presaleN":3255,"rentPing":553,"rentN":1020},"臺東縣":{"presalePing":291204,"presaleN":175,"rentPing":614,"rentN":129},"澎湖縣":{"presalePing":281655,"presaleN":37,"rentPing":993,"rentN":96}},"2025":{"臺北市":{"presalePing":1175756,"presaleN":3956,"rentPing":1550,"rentN":19202},"臺中市":{"presalePing":535638,"presaleN":5856,"rentPing":702,"rentN":22916},"基隆市":{"presalePing":409316,"presaleN":229,"rentPing":477,"rentN":2996},"新北市":{"presalePing":729299,"presaleN":9065,"rentPing":826,"rentN":33901},"臺南市":{"presalePing":366104,"presaleN":2875,"rentPing":668,"rentN":13662},"桃園市":{"presalePing":429059,"presaleN":7461,"rentPing":586,"rentN":37810},"新竹市":{"presalePing":577997,"presaleN":478,"rentPing":885,"rentN":1498},"高雄市":{"presalePing":407465,"presaleN":3212,"rentPing":688,"rentN":22891},"宜蘭縣":{"presalePing":279239,"presaleN":1384,"rentPing":512,"rentN":1634},"新竹縣":{"presalePing":431614,"presaleN":1026,"rentPing":765,"rentN":1256},"苗栗縣":{"presalePing":356439,"presaleN":912,"rentPing":552,"rentN":991},"屏東縣":{"presalePing":252578,"presaleN":425,"rentPing":540,"rentN":1822},"雲林縣":{"presalePing":266637,"presaleN":771,"rentPing":811,"rentN":1060},"南投縣":{"presalePing":296981,"presaleN":373,"rentPing":495,"rentN":777},"金門縣":{"presalePing":286315,"presaleN":48,"rentPing":428,"rentN":12},"花蓮縣":{"presalePing":306794,"presaleN":177,"rentPing":636,"rentN":1066},"嘉義縣":{"presalePing":302930,"presaleN":423,"rentPing":727,"rentN":901},"嘉義市":{"presalePing":342000,"presaleN":376,"rentPing":549,"rentN":1673},"彰化縣":{"presalePing":302790,"presaleN":1089,"rentPing":537,"rentN":1543},"臺東縣":{"presalePing":300780,"presaleN":154,"rentPing":591,"rentN":353},"澎湖縣":{"presalePing":283832,"presaleN":2,"rentPing":1011,"rentN":113}},"2026":{"臺北市":{"presalePing":1209150,"presaleN":1308,"rentPing":1624,"rentN":7530},"臺中市":{"presalePing":535037,"presaleN":1592,"rentPing":679,"rentN":8646},"基隆市":{"presalePing":514146,"presaleN":71,"rentPing":469,"rentN":1107},"新北市":{"presalePing":731447,"presaleN":3010,"rentPing":838,"rentN":13384},"臺南市":{"presalePing":357361,"presaleN":829,"rentPing":650,"rentN":5506},"桃園市":{"presalePing":436215,"presaleN":2352,"rentPing":586,"rentN":14122},"新竹市":{"presalePing":640623,"presaleN":296,"rentPing":838,"rentN":568},"高雄市":{"presalePing":413635,"presaleN":703,"rentPing":680,"rentN":8703},"宜蘭縣":{"presalePing":266502,"presaleN":404,"rentPing":515,"rentN":720},"新竹縣":{"presalePing":521726,"presaleN":393,"rentPing":720,"rentN":549},"苗栗縣":{"presalePing":345338,"presaleN":375,"rentPing":550,"rentN":406},"屏東縣":{"presalePing":288274,"presaleN":104,"rentPing":532,"rentN":621},"雲林縣":{"presalePing":282102,"presaleN":188,"rentPing":862,"rentN":471},"南投縣":{"presalePing":304061,"presaleN":83,"rentPing":529,"rentN":257},"金門縣":{"presalePing":323963,"presaleN":8,"rentPing":363,"rentN":4},"花蓮縣":{"presalePing":321021,"presaleN":38,"rentPing":666,"rentN":387},"嘉義縣":{"presalePing":289789,"presaleN":87,"rentPing":637,"rentN":367},"嘉義市":{"presalePing":337613,"presaleN":152,"rentPing":526,"rentN":730},"彰化縣":{"presalePing":323264,"presaleN":354,"rentPing":526,"rentN":655},"臺東縣":{"presalePing":303424,"presaleN":33,"rentPing":555,"rentN":127},"澎湖縣":{"presalePing":null,"presaleN":null,"rentPing":1072,"rentN":19}}},"years":[2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026],"presale":{"source":"TaiwanPresale 預售屋市場觀測（內政部地政司 不動產交易實價查詢服務系統（plvr.land.moi.gov.tw 每季開放資料 ZIP，預售屋主檔＋買賣主檔對照））","asOf":"2026-Q2","window":"近 4 季中位單價（元/坪，車位剔除重算）","yearWindow":"該年全年中位單價（元/坪，車位剔除重算）","regimeNote":"110年7月（2021-Q3）起預售屋銷售全面納管即時申報；之前僅代銷等部分案件登錄，涵蓋不全，跨期比較以 2021-Q3 後為準"},"rent":{"source":"TaiwanRent 全台租屋行情觀測（內政部地政司 不動產交易實價查詢服務系統（plvr.land.moi.gov.tw 每季開放資料 ZIP，租賃主檔））","asOf":"2026-05","window":"近 12 個月中位單價（元/坪/月，車位剔除重算）","yearWindow":"該年全年中位單價（元/坪/月，車位剔除重算）"},"note":"建照、預售、租金三者資料截至期別可能不同步（各站更新節奏各自獨立、非同期精確勾稽），屬正常現象；本表僅供同縣市數量級對照。"}};
 
 boot();
 </script>

@@ -13,7 +13,7 @@ gtag('config', 'G-JVW9ZBDT3Y');
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>自然課本數據即時站</title>
+<title>刑案治安統計｜警政署 8 大案類</title>
 <script>/**
  * Skipped minification because the original files appears to be already minified.
  * Original file: /npm/chart.js@4.4.1/dist/chart.umd.js
@@ -37,182 +37,317 @@ gtag('config', 'G-JVW9ZBDT3Y');
 </script>
 <style>
   :root{
-    --red:#e5484d; --yellow:#e08a00; --green:#2b9a66; --info:#8b8b8b;
-    --ink:#1a1a1a; --sub:#5b6470; --line:#e6e8eb; --bg:#f6f7f9; --card:#fff;
+    --bg:#f7f8fa; --card:#fff; --ink:#1a1d24; --muted:#6b7280; --line:#e5e7eb;
+    --accent:#2e5e8c; --accent-soft:#eaf1f8;
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);
-    font:16px/1.65 system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
-  #app{max-width:1000px;margin:0 auto;padding:20px 16px 64px}
-  .loaderr{padding:16px;border:1px solid var(--red);color:#c00;border-radius:8px;background:#fff5f5}
-
-  header.hero{background:linear-gradient(135deg,#1a237e 0%,#4527a0 100%);color:#fff;
-    border-radius:16px;padding:26px 24px;margin-bottom:18px}
-  header.hero h1{font-size:26px;margin:0 0 6px;font-weight:800;letter-spacing:.5px}
-  header.hero p{margin:0;opacity:.92;font-size:15px}
-  .scoreboard{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
-  .score{background:rgba(255,255,255,.14);border-radius:10px;padding:8px 14px;font-size:14px;font-weight:600}
-  .score b{font-size:20px;margin-right:4px}
-
-  .callout{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--red);
-    border-radius:12px;padding:16px 18px;margin-bottom:22px}
-  .callout .k{font-size:13px;color:var(--red);font-weight:700;letter-spacing:1px}
-  .callout .big{font-size:19px;font-weight:800;margin:4px 0}
-  .callout .flip{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:15px;margin-top:6px}
-  .flip .was{color:var(--sub);text-decoration:line-through}
-  .flip .arrow{color:var(--red);font-weight:800}
-  .flip .now{color:var(--ink);font-weight:800;background:#fdeaea;padding:2px 10px;border-radius:20px}
-
-  h2.chap{font-size:19px;margin:26px 0 4px;display:flex;align-items:center;gap:8px}
-  h2.chap .g{font-size:12px;color:var(--sub);font-weight:500;background:#eef1f4;padding:2px 8px;border-radius:12px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:12px}
-
-  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:15px 16px;
-    display:flex;flex-direction:column;box-shadow:0 1px 2px rgba(0,0,0,.03)}
-  .card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
-  .card .name{font-size:15.5px;font-weight:700;line-height:1.35}
-  .badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap;color:#fff}
-  .badge.red{background:var(--red)} .badge.yellow{background:var(--yellow)}
-  .badge.green{background:var(--green)} .badge.info{background:var(--info)}
-
-  .cmp{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:stretch;margin:12px 0 8px}
-  .cell{border-radius:10px;padding:9px 11px;font-size:13.5px}
-  .cell .lab{font-size:11px;font-weight:700;letter-spacing:.5px;margin-bottom:3px;opacity:.75}
-  .cell.tb{background:#f0f2f5;color:#42484f}
-  .cell.now{background:#eef0ff;color:#28226e}
-  .cell .val{font-weight:700;font-size:14px;line-height:1.4}
-  .cell .sub2{font-size:11.5px;color:var(--sub);margin-top:3px}
-  .mid{display:flex;align-items:center;font-size:20px;color:#b6bcc4}
-
-  .chartbox{margin:6px 0 4px;height:150px}
-  .chartcap{font-size:10.5px;color:#9aa2ab;text-align:center;margin:-2px 0 4px}
-  .meta{font-size:11.5px;color:var(--sub);border-top:1px dashed var(--line);padding-top:8px;margin-top:auto;line-height:1.5}
-  .meta a{color:#4527a0;text-decoration:none}
-  .mode{display:inline-block;font-size:10px;font-weight:700;padding:1px 6px;border-radius:8px;margin-right:5px;vertical-align:1px}
-  .mode.auto{background:#e6f6ee;color:#1a7a47} .mode.semi{background:#fdf3e3;color:#9a6400}
-  .mode.live{background:#e9f0fe;color:#1f5fce}
-
-  footer.foot{margin-top:34px;font-size:12.5px;color:var(--sub);border-top:1px solid var(--line);padding-top:16px}
-  footer.foot b{color:var(--ink)}
-  .fetchwarn{background:#fff8e6;border:1px solid #f0d488;color:#7a5a00;border-radius:8px;padding:8px 12px;font-size:12.5px;margin-top:10px}
-  @media(max-width:520px){ .cmp{grid-template-columns:1fr}.mid{display:none} }
+    font:16px/1.65 system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif;-webkit-text-size-adjust:100%}
+  #app{max-width:1040px;margin:0 auto;padding:20px 16px 64px}
+  h1{font-size:26px;margin:0 0 6px;letter-spacing:.5px}
+  h2{font-size:20px;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:14px;margin:0}
+  section{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:20px;margin:18px 0;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+  .hero{background:linear-gradient(135deg,#243b53,#2e5e8c);color:#fff;border:none}
+  .hero h1{color:#fff}
+  .hero .sub{color:#cdddf0}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+  .kpi{background:rgba(255,255,255,.12);border-radius:10px;padding:12px 14px}
+  .kpi .n{font-size:22px;font-weight:700;line-height:1.2}
+  .kpi .l{font-size:12px;color:#cdddf0;margin-top:2px}
+  .ctl{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0 16px}
+  label.f{font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:3px}
+  select{font:15px system-ui;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+  .chartbox{position:relative;height:340px}
+  .chartbox.tall{height:400px}
+  table.heat{border-collapse:collapse;width:100%;font-size:13px}
+  table.heat th,table.heat td{border:1px solid var(--line);padding:5px 7px;text-align:center;white-space:nowrap}
+  table.heat th.city{text-align:left;position:sticky;left:0;background:#fafbfc;z-index:1}
+  table.heat td.city{text-align:left;font-weight:600;position:sticky;left:0;background:#fafbfc;z-index:1}
+  table.heat thead th{background:#f2f5f8;font-weight:600}
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .note{font-size:13px;color:var(--muted);margin-top:10px}
+  .badge{display:inline-block;background:var(--accent-soft);color:var(--accent);
+    font-size:12px;padding:2px 8px;border-radius:99px;margin-left:6px;vertical-align:middle}
+  ul.caveat{margin:8px 0 0;padding-left:20px;font-size:14px;color:#444}
+  ul.caveat li{margin:4px 0}
+  a{color:var(--accent)}
+  .loaderr{padding:16px;border:1px solid #e33;color:#c00;border-radius:8px;background:#fff5f5}
+  @media(max-width:640px){
+    .kpis{grid-template-columns:repeat(2,1fr)}
+    #app{padding:16px 10px 48px}
+    .chartbox{height:300px}
+  }
 </style>
 </head>
 <body>
 <div id="app"><div class="loading">載入中…</div></div>
 <script>
-// 所有數字來自 window.SCIENCE_DATA（build 產出），勿寫死在 HTML。
-var CHARTS = [];
-function esc(s){ return String(s==null?'':s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];}); }
+// 所有數字來自 window.CRIME_DATA（build 產出），勿寫死在 HTML。
+var TYPE_COLORS = {
+  '毒品':'#d1495b','機車竊盜':'#edae49','汽車竊盜':'#66a182','住宅竊盜':'#2e86ab',
+  '強制性交':'#8f5aa8','強盜':'#e07a5f','搶奪':'#3d5a80','組織犯罪':'#8a7d5a'
+};
+var charts = {};
+function fmt(n){ return (n||0).toLocaleString('en-US'); }
+function el(html){ var t=document.createElement('template'); t.innerHTML=html.trim(); return t.content.firstChild; }
 
 function boot(){
-  var d = window.SCIENCE_DATA;
+  var d = window.CRIME_DATA;
   var app = document.getElementById('app');
-  if(!d){ app.innerHTML = '<div class="loaderr">⚠ 無資料</div>'; return; }
-  var c = d.meta.counts || {};
-
-  var html = '';
-  // Hero + 計分板
-  html += '<header class="hero"><h1>🔬 '+esc(d.meta.title)+'</h1>'+
-          '<p>'+esc(d.meta.subtitle)+'</p>'+
-          '<div class="scoreboard">'+
-            score('red','🔴',c.red,'已改寫')+
-            score('yellow','🟡',c.yellow,'需更新')+
-            score('green','🟢',c.green,'仍準')+
-            score('info','⚪',c.info,'補充')+
-          '</div></header>';
-
-  // 旗艦對照：太陽系行星數（冥王星降級）
-  var flag1 = d.points.find(function(p){return p.id==='planets';});
-  if(flag1){
-    html += '<div class="callout"><div class="k">課本最容易記錯的一題</div>'+
-      '<div class="big">'+esc(flag1.name)+'</div>'+
-      '<div class="flip"><span class="was">課本：'+esc(flag1.textbook.display)+'</span>'+
-      '<span class="arrow">→ 已改寫 →</span>'+
-      '<span class="now">現在：'+esc(flag1.current.display)+'</span></div>'+
-      '<div style="font-size:13px;color:var(--sub);margin-top:8px">'+esc(flag1.current.note)+'</div></div>';
+  if(!d || d.meta && d.meta.fetchError){
+    app.innerHTML = '<div class="loaderr">⚠ 資料載入失敗：'+((d&&d.meta&&d.meta.fetchError)||'無 CRIME_DATA')+'</div>';
+    return;
   }
+  var m = d.meta, latest = d.years[d.years.length-1];
+  var grandTotal = 0; d.types.forEach(function(t){ grandTotal += (d.typeTotal[t]||0); });
+  // 最新完整年（倒數第二年，因當年累計不完整）
+  var lastFull = d.years.length>=2 ? d.years[d.years.length-2] : latest;
 
-  // 各章節
-  d.chapters.forEach(function(ch){
-    var pts = d.points.filter(function(p){return p.chapter===ch.key;});
-    if(!pts.length) return;
-    html += '<h2 class="chap">'+esc(ch.icon)+' '+esc(ch.name)+' <span class="g">'+esc(ch.grade)+'</span></h2>';
-    html += '<div class="grid">'+pts.map(cardHtml).join('')+'</div>';
-  });
-
-  // footer
-  html += '<footer class="foot">'+
-    '<p><b>怎麼看：</b>'+esc(d.meta.flag_rule)+'</p>'+
-    '<p><b>資料模式：</b><span class="mode auto">auto</span>程式自動抓權威源（每次更新即最新）　'+
-    '<span class="mode semi">semi</span>科學界權威值人工年查。'+esc(d.meta.verify_policy)+'</p>'+
-    '<p><b>課本基準值</b>為國中小自然（理化／生物／地科）課本常見的科學「數字或分類事實」（非課文重製），標示對應版本年代，供對照「課本 vs 現在」。'+
-    '各數字均附權威來源（IUPAC／IAU／NASA／IUCN／CODATA 等）；紅黃綠僅在同一統計範圍下比較。'+
-    '本站<b>只收會隨科學進展改變的項目</b>，不含牛頓定律、光合作用等恆定不變的科學原理。</p>'+
-    '<p style="color:#9aa2ab">資料產生時間：'+esc(d.meta.generatedAt)+'</p>'+
-    (d.meta.fetchError?'<div class="fetchwarn">⚠ 本次自動來源狀態：'+esc(d.meta.fetchError)+'</div>':'')+
-    '</footer>';
-
-  app.innerHTML = html;
-  // 畫圖
-  CHARTS.forEach(function(cfg){ drawChart(cfg); });
-  CHARTS = [];
-}
-
-function score(cls,emoji,n,txt){
-  return '<div class="score"><b>'+(n||0)+'</b>'+emoji+' '+txt+'</div>';
-}
-
-function cardHtml(p){
-  var chartId = null, cap = '';
-  var hasSeries = p.series && (p.series.length || p.series.milestones); // 陣列或里程碑物件
-  if(hasSeries){ chartId = 'chart_'+p.id; CHARTS.push({id:chartId, p:p});
-    if(p.id==='exoplanets') cap='累積確認顆數（NASA Exoplanet Archive，真實資料）';
-    if(p.id==='element_count') cap='已知元素數成長（化學史里程碑，示意）';
+  // ── 通用規則：趨勢圖起迄年 ──
+  // 規則：所有「趨勢」圖一律提供 起/迄 兩個下拉；迄預設最近一期(latest)，起預設五年前(latest-5，不早於資料首年)。
+  // 各趨勢圖統一呼叫 setupYearRange，勿各自寫死，避免預設不一致的錯誤再發生。
+  var defaultFrom = Math.max(d.years[0], latest - 5);
+  function setupYearRange(fromSel, toSel, onChange){
+    d.years.forEach(function(y){
+      fromSel.appendChild(el('<option value="'+y+'">民國 '+y+'</option>'));
+      toSel.appendChild(el('<option value="'+y+'">民國 '+y+'</option>'));
+    });
+    fromSel.value = defaultFrom;   // 起 = 五年前
+    toSel.value = latest;          // 迄 = 最近期
+    function fire(e){
+      var f=+fromSel.value, t=+toSel.value;
+      if(f>t){ // 防呆：起晚於迄時，把另一個夾住
+        if(e && e.target===fromSel){ t=f; toSel.value=f; } else { f=t; fromSel.value=t; }
+      }
+      onChange(f, t);
+    }
+    fromSel.addEventListener('change', fire);
+    toSel.addEventListener('change', fire);
+    return function(){ return { from:+fromSel.value, to:+toSel.value }; };
   }
-  var tb = p.textbook||{}, now = p.current||{};
-  return '<div class="card">'+
-    '<div class="top"><div class="name">'+esc(p.name)+'</div>'+
-      '<span class="badge '+p.flag.level+'">'+esc(p.flag.label)+'</span></div>'+
-    '<div class="cmp">'+
-      '<div class="cell tb"><div class="lab">課本說</div>'+
-        '<div class="val">'+esc(tb.display||'—')+'</div>'+
-        (tb.note?'<div class="sub2">'+esc(tb.note)+'</div>':'')+'</div>'+
-      '<div class="mid">➜</div>'+
-      '<div class="cell now"><div class="lab">科學界最新</div>'+
-        '<div class="val">'+esc(now.display||'—')+'</div>'+
-        '<div class="sub2">事實／版本時間：'+esc(now.effectiveAsOf||now.asof||'未知')+(now.lastReviewed?'｜最後查證：'+esc(now.lastReviewed):'｜最後查證日未知')+(now.note?'｜'+esc(now.note):'')+'</div></div>'+
+  // 依 [from,to] 篩出範圍內年度陣列
+  function yearsInRange(from, to){ return d.years.filter(function(y){ return y>=from && y<=to; }); }
+
+  app.innerHTML = '';
+  // ── Hero ──
+  var topType = d.types.slice().sort(function(a,b){return d.typeTotal[b]-d.typeTotal[a];})[0];
+  app.appendChild(el(
+    '<section class="hero">'+
+      '<h1>刑案治安統計</h1>'+
+      '<p class="sub">內政部警政署 8 大案類犯罪發生資料 · '+m.yearRange+' · '+m.updateFreq+'</p>'+
+      '<div class="kpis">'+
+        '<div class="kpi"><div class="n">'+fmt(grandTotal)+'</div><div class="l">總案件數（'+m.yearRange+'）</div></div>'+
+        '<div class="kpi"><div class="n">'+d.types.length+' 類</div><div class="l">涵蓋案類</div></div>'+
+        '<div class="kpi"><div class="n">'+d.cities.length+' 縣市</div><div class="l">全國涵蓋</div></div>'+
+        '<div class="kpi"><div class="n">'+topType+'</div><div class="l">案量最高案類</div></div>'+
+      '</div>'+
+    '</section>'
+  ));
+
+  // ── 章節 1：縣市總覽（熱力表 + 全國趨勢）──
+  var s1 = el('<section id="s1"><h2>① 縣市總覽 <span class="badge">案類 × 縣市</span></h2>'+
+    '<p class="sub">各縣市 8 大案類案件數。顏色越深＝案量越高（同案類欄內比較）。</p>'+
+    '<div class="ctl"><label class="f">統計期間<select id="heatYear"></select></label></div>'+
+    '<div class="scroll"><div id="heatTable"></div></div>'+
+    '<p class="note" id="heatNote"></p>'+
+    '<h3 style="margin:22px 0 0;font-size:16px">全國年度趨勢</h3>'+
+    '<div class="ctl"><label class="f">案類<select id="trendType"></select></label>'+
+      '<label class="f">起<select id="trendFrom"></select></label>'+
+      '<label class="f">迄<select id="trendTo"></select></label></div>'+
+    '<div class="chartbox"><canvas id="trendChart"></canvas></div>'+
+    '</section>');
+  app.appendChild(s1);
+
+  // ── 章節 2：案類深掘 ──
+  var s2 = el('<section id="s2"><h2>② 案類深掘 <span class="badge">縣市排行 · 鄉鎮熱區 · 月份</span></h2>'+
+    '<div class="ctl">'+
+      '<label class="f">案類<select id="digType"></select></label>'+
+      '<label class="f">縣市（看鄉鎮熱區）<select id="digCity"></select></label>'+
     '</div>'+
-    (chartId?'<div class="chartbox"><canvas id="'+chartId+'"></canvas></div>'+(cap?'<div class="chartcap">'+esc(cap)+'</div>':''):'')+
-    '<div class="meta"><span class="mode '+p.mode+'">'+p.mode+'</span>'+
-      '統計範圍：'+esc(p.caliber||'—')+'<br>來源：'+
-      (p.source_url?'<a href="'+esc(p.source_url)+'" target="_blank" rel="noopener">'+esc(p.source)+'</a>':esc(p.source))+
-      '（'+esc(p.freq)+'）</div>'+
-  '</div>';
+    '<h3 style="margin:6px 0 0;font-size:16px">縣市排行（全期合計）</h3>'+
+    '<div class="chartbox tall"><canvas id="cityRankChart"></canvas></div>'+
+    '<h3 style="margin:22px 0 0;font-size:16px" id="regionTitle">鄉鎮熱區</h3>'+
+    '<div class="chartbox"><canvas id="regionChart"></canvas></div>'+
+    '<h3 style="margin:22px 0 0;font-size:16px" id="monthTitle">發生月份分布</h3>'+
+    '<div class="ctl"><label class="f">年度<select id="monthYear"></select></label></div>'+
+    '<div class="chartbox"><canvas id="monthChart"></canvas></div>'+
+    '<p class="note">「發生月份分布」受查獲／登錄時點影響（尤以毒品案為然），非等同真實犯罪時序。</p>'+
+    '</section>');
+  app.appendChild(s2);
+
+  // ── 章節 3：全國結構變化 ──
+  var s3 = el('<section id="s3"><h2>③ 全國趨勢與結構 <span class="badge">逐年堆疊</span></h2>'+
+    '<p class="sub">各年 8 大案類案件數堆疊，觀察總量升降與案類結構變化。</p>'+
+    '<div class="ctl"><label class="f">起<select id="stackFrom"></select></label>'+
+      '<label class="f">迄<select id="stackTo"></select></label></div>'+
+    '<div class="chartbox tall"><canvas id="stackChart"></canvas></div>'+
+    '<p class="note" id="stackNote"></p>'+
+    '</section>');
+  app.appendChild(s3);
+
+  // ── 章節 4：統計範圍說明 ──
+  app.appendChild(el('<section id="s4"><h2>④ 統計範圍與資料來源</h2>'+
+    '<ul class="caveat">'+
+      '<li>資料來源：'+m.source+'（<a href="'+m.sourceUrl+'" target="_blank" rel="noopener">data.gov.tw dataset 14200</a>），授權：'+m.license+'。</li>'+
+      '<li><b>非全刑案</b>：僅涵蓋毒品、強盜、搶奪、住宅竊盜、汽車竊盜、機車竊盜、強制性交、組織犯罪共 8 大案類，<b>不含</b>殺人、傷害、詐欺等其他刑案，不代表台灣治安全貌。</li>'+
+      '<li>為每季<b>初步統計</b>，來源批次已檢查季度連續與同季單一版本；目前取得至 '+((m.sourceBatch&&m.sourceBatch.completeThrough)||'未知')+'，共 '+((m.sourceBatch&&m.sourceBatch.fileCount)||0)+' 個來源檔。正確數字以警政署<a href="https://www.npa.gov.tw/ch/app/data/list?module=wg057&id=2218" target="_blank" rel="noopener">年度刑案統計</a>為準。</li>'+
+      '<li>組織犯罪自民國 107 年 10 月起提供；'+latest+' 年為當年累計、統計未完整，趨勢末端下降屬正常。</li>'+
+      '<li>機車竊盜於路界／縣界模糊或報案地點不明時，發生地僅到縣市層級，鄉鎮熱區可能低估；'+fmt(m.otherCityRows)+' 筆縣市不明（外國／海域／代碼）已歸「其他」不計入縣市圖。</li>'+
+      '<li>清洗：已濾除檔內表頭與說明列，台／臺地名正規化為 22 標準縣市；資料筆數 '+fmt(m.totalRows)+' 筆。</li>'+
+    '</ul>'+
+    '<p class="note">資料產出時間：'+ (m.generatedAt||'').slice(0,10) +'。本頁所有數字由官方 CSV 解析彙總，無人工估算。</p>'+
+    '</section>'));
+
+  /* ===== 章節 1 邏輯 ===== */
+  var heatYear = document.getElementById('heatYear');
+  heatYear.appendChild(el('<option value="ALL">全期合計</option>'));
+  d.years.forEach(function(y){ heatYear.appendChild(el('<option value="'+y+'">民國 '+y+' 年</option>')); });
+  heatYear.value = latest;   // 統計期間預設最近一期（非全期合計）
+  function cellVal(city,type,yearSel){
+    var byY = (d.cityTypeYear[city]||{})[type]||{};
+    if(yearSel==='ALL'){ var s=0; for(var k in byY) s+=byY[k]; return s; }
+    return byY[yearSel]||0;
+  }
+  function renderHeat(){
+    var yr = heatYear.value;
+    // 各案類欄的最大值（供色階）
+    var colMax = {}; d.types.forEach(function(t){
+      var mx=0; d.cities.forEach(function(c){ mx=Math.max(mx,cellVal(c,t,yr)); }); colMax[t]=mx||1;
+    });
+    var html = '<table class="heat"><thead><tr><th class="city">縣市</th>';
+    d.types.forEach(function(t){ html+='<th>'+t+'</th>'; });
+    html+='</tr></thead><tbody>';
+    // 依當前選擇的總量排序縣市
+    var order = d.cities.slice().sort(function(a,b){
+      var sa=0,sb=0; d.types.forEach(function(t){sa+=cellVal(a,t,yr);sb+=cellVal(b,t,yr);}); return sb-sa;
+    });
+    order.forEach(function(c){
+      html+='<tr><td class="city">'+c+'</td>';
+      d.types.forEach(function(t){
+        var v=cellVal(c,t,yr), ratio=v/colMax[t];
+        var col=TYPE_COLORS[t], alpha=v?(0.12+ratio*0.78).toFixed(2):0;
+        html+='<td style="background:'+hexA(col,alpha)+';color:'+(ratio>0.55?'#fff':'#1a1d24')+'">'+fmt(v)+'</td>';
+      });
+      html+='</tr>';
+    });
+    html+='</tbody></table>';
+    document.getElementById('heatTable').innerHTML=html;
+    document.getElementById('heatNote').textContent =
+      (yr==='ALL'?'全期合計':'民國 '+yr+' 年')+'；每欄獨立色階（同案類跨縣市比較）。'+
+      (yr===latest?'（'+latest+' 年為當年累計，尚未完整）':'');
+  }
+  heatYear.addEventListener('change', renderHeat);
+  renderHeat();
+
+  var trendType = document.getElementById('trendType');
+  var trendFrom = document.getElementById('trendFrom'), trendTo = document.getElementById('trendTo');
+  trendType.appendChild(el('<option value="ALL">全部案類（總計）</option>'));
+  d.types.forEach(function(t){ trendType.appendChild(el('<option value="'+t+'">'+t+'</option>')); });
+  function renderTrend(){
+    var t=trendType.value;
+    var yrs=yearsInRange(+trendFrom.value, +trendTo.value);
+    var vals=yrs.map(function(y){
+      if(t==='ALL'){ var s=0,yt=d.yearType[y]||{}; for(var k in yt) s+=yt[k]; return s; }
+      return (d.yearType[y]||{})[t]||0;
+    });
+    var col = t==='ALL'? '#2e5e8c' : TYPE_COLORS[t];
+    drawLine('trendChart', yrs.map(function(y){return '民國'+y;}), [{
+      label: t==='ALL'?'全部案類':t, data:vals, borderColor:col,
+      backgroundColor:hexA(col,0.12), fill:true, tension:.25, pointRadius:3
+    }], latest);
+  }
+  trendType.addEventListener('change', renderTrend);
+  setupYearRange(trendFrom, trendTo, renderTrend);  // 起=五年前、迄=最近期
+  renderTrend();
+
+  /* ===== 章節 2 邏輯 ===== */
+  var digType=document.getElementById('digType'), digCity=document.getElementById('digCity');
+  var monthYear=document.getElementById('monthYear');
+  d.types.forEach(function(t){ digType.appendChild(el('<option value="'+t+'">'+t+'</option>')); });
+  d.cities.forEach(function(c){ digCity.appendChild(el('<option value="'+c+'">'+c+'</option>')); });
+  d.years.forEach(function(y){ monthYear.appendChild(el('<option value="'+y+'">民國 '+y+' 年</option>')); });
+  monthYear.value = latest;   // 發生月份分布預設最近一期
+  function renderDig(){
+    var t=digType.value, city=digCity.value, col=TYPE_COLORS[t];
+    // 縣市排行
+    var ranked=d.cities.map(function(c){
+      var byY=(d.cityTypeYear[c]||{})[t]||{},s=0; for(var k in byY)s+=byY[k]; return {c:c,v:s};
+    }).sort(function(a,b){return b.v-a.v;});
+    drawBar('cityRankChart', ranked.map(function(r){return r.c;}), ranked.map(function(r){return r.v;}), col, 'y');
+    // 鄉鎮熱區 top12
+    var reg=(d.typeRegion[t]||{})[city]||{};
+    var regArr=Object.keys(reg).map(function(k){return {k:k,v:reg[k]};}).sort(function(a,b){return b.v-a.v;}).slice(0,12);
+    document.getElementById('regionTitle').textContent=t+'｜'+city+' 鄉鎮熱區（前 12，全期合計）';
+    if(regArr.length){
+      drawBar('regionChart', regArr.map(function(r){return r.k;}), regArr.map(function(r){return r.v;}), col, 'y');
+    } else {
+      clearChart('regionChart');
+    }
+    // 月份分布（依所選年度；預設最近期）
+    var yr=monthYear.value;
+    var mm=(d.typeMonthYear[t]||{})[yr]||{}, months=[]; for(var i=1;i<=12;i++) months.push(mm[i]||0);
+    document.getElementById('monthTitle').textContent=t+' 發生月份分布（民國 '+yr+' 年'+(yr===latest?'，當年累計未完整':'')+'）';
+    drawBar('monthChart', ['1','2','3','4','5','6','7','8','9','10','11','12'].map(function(x){return x+'月';}), months, col, 'x');
+  }
+  digType.addEventListener('change', renderDig);
+  digCity.addEventListener('change', renderDig);
+  monthYear.addEventListener('change', renderDig);
+  renderDig();
+
+  /* ===== 章節 3 邏輯 ===== */
+  (function(){
+    var stackFrom=document.getElementById('stackFrom'), stackTo=document.getElementById('stackTo');
+    function renderStack(){
+      var yrs=yearsInRange(+stackFrom.value, +stackTo.value);
+      var ds=d.types.map(function(t){
+        return { label:t, data:yrs.map(function(y){return (d.yearType[y]||{})[t]||0;}),
+          backgroundColor:TYPE_COLORS[t], borderWidth:0 };
+      });
+      drawStacked('stackChart', yrs.map(function(y){return '民國'+y;}), ds, latest);
+      document.getElementById('stackNote').textContent =
+        latest+' 年為當年累計、尚未完整，末端總量下降屬統計進度所致。最新完整年為民國 '+lastFull+' 年。';
+    }
+    setupYearRange(stackFrom, stackTo, renderStack);  // 起=五年前、迄=最近期
+    renderStack();
+  })();
 }
 
-function drawChart(cfg){
-  var el = document.getElementById(cfg.id); if(!el || !window.Chart) return;
-  var p = cfg.p, s = p.series;
-  var base = { responsive:true, maintainAspectRatio:false,
-    plugins:{legend:{display:false}}, scales:{x:{ticks:{maxTicksLimit:6,font:{size:10}},grid:{display:false}},
-      y:{ticks:{font:{size:10}},grid:{color:'#eef1f4'}}} };
-  var cfgObj;
-  if(p.id==='exoplanets'){
-    cfgObj={type:'line',data:{labels:s.map(function(r){return r.year;}),datasets:[
-      {data:s.map(function(r){return r.cum;}),borderColor:'#4527a0',backgroundColor:'rgba(69,39,160,.10)',fill:true,pointRadius:0,borderWidth:2}
-    ]},options:base};
-  } else if(p.id==='element_count'){
-    var mil = s.milestones||[];
-    cfgObj={type:'line',data:{labels:mil.map(function(m){return m.year;}),datasets:[
-      {data:mil.map(function(m){return m.n;}),borderColor:'#2b9a66',backgroundColor:'rgba(43,154,102,.10)',fill:true,
-       pointRadius:4,pointBackgroundColor:'#2b9a66',borderWidth:2}
-    ]},options:base};
-  } else { return; }
-  new Chart(el.getContext('2d'), cfgObj);
+/* ── Chart.js 輔助 ── */
+function hexA(hex,a){ var n=parseInt(hex.slice(1),16); return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')'; }
+function clearChart(id){ if(charts[id]){charts[id].destroy();delete charts[id];} }
+function baseOpts(extra){ return Object.assign({responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{display:false}},}, extra||{}); }
+function drawLine(id,labels,datasets,latest){
+  clearChart(id);
+  charts[id]=new Chart(document.getElementById(id),{type:'line',data:{labels:labels,datasets:datasets},
+    options:baseOpts({plugins:{legend:{display:datasets.length>1},
+      tooltip:{callbacks:{label:function(c){return c.dataset.label+'：'+c.parsed.y.toLocaleString();}}}},
+      scales:{y:{beginAtZero:true,ticks:{callback:function(v){return v.toLocaleString();}}}}})});
+}
+function drawBar(id,labels,data,color,axis){
+  clearChart(id);
+  var horizontal = axis==='y';
+  var valueScale = { beginAtZero:true, ticks:{callback:function(v){return v.toLocaleString();}} };
+  // 規則：類別軸一律 autoSkip:false，所有分類（如全部縣市）都完整列出、不得跳號間隔。
+  var catScale = { ticks:{ autoSkip:false } };
+  charts[id]=new Chart(document.getElementById(id),{type:'bar',
+    data:{labels:labels,datasets:[{label:'件數',data:data,backgroundColor:color,borderWidth:0}]},
+    options:baseOpts({indexAxis:horizontal?'y':'x',
+      plugins:{legend:{display:false},
+        tooltip:{callbacks:{label:function(c){return (horizontal?c.parsed.x:c.parsed.y).toLocaleString()+' 件';}}}},
+      scales: horizontal ? {x:valueScale,y:catScale} : {x:catScale,y:valueScale} })});
+}
+function drawStacked(id,labels,datasets,latest){
+  clearChart(id);
+  charts[id]=new Chart(document.getElementById(id),{type:'bar',data:{labels:labels,datasets:datasets},
+    options:baseOpts({plugins:{legend:{display:true,position:'bottom',labels:{boxWidth:12,font:{size:11}}},
+      tooltip:{callbacks:{label:function(c){return c.dataset.label+'：'+c.parsed.y.toLocaleString();}}}},
+      scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true,ticks:{callback:function(v){return v.toLocaleString();}}}}})});
 }
 
-window.SCIENCE_DATA = {"meta":{"generatedAt":"2026-10-06T12:08:16.561Z","title":"自然課本數據即時站","subtitle":"國中小自然（理化／生物／地科）課本上的科學數字，對照科學界最新共識","verify_policy":"auto：跑 apps/EduScience/update-eduscience.sh 自動刷新（NASA 系外行星）；semi：每年寒暑假人工查一輪（IUPAC 元素／CODATA 常數／IUCN 名錄等）；textbook：課本改版年重查，並確認舊翻轉是否已被新課本追上。","flag_rule":"打臉指數：分類／定義翻轉或量級改變 → 🔴 已改寫；表示法更新或估計值明顯修正 → 🟡 需更新；方向一致、僅精度提升或屬補充 → 🟢／⚪。自然科九成內容是不變的原理，本站只收會變的那一類。","counts":{"red":7,"info":4,"yellow":4,"green":4},"fetchError":null,"autoStatus":"ok"},"chapters":[{"key":"matter","name":"物質與元素","grade":"國中理化／自然","icon":"🧪"},{"key":"energy","name":"能量、宇宙與單位","grade":"國中理化／地球科學","icon":"🔭"},{"key":"life","name":"生命與演化","grade":"國中生物","icon":"🧬"},{"key":"earth","name":"地球與環境","grade":"國小自然／國中地科","icon":"🌏"}],"points":[{"id":"element_count","chapter":"matter","name":"元素週期表的元素種數","unit":"種","mode":"semi","source":"國際純粹與應用化學聯合會 IUPAC","source_url":"https://iupac.org/what-we-do/periodic-table-of-elements/","freq":"極罕變（新元素命名時）","caliber":"已正式命名並獲 IUPAC 承認的化學元素總數","textbook":{"value":109,"display":"約 109 種（或稱「一百多種」）","note":"較早課本常見；週期表第七週期尚未填滿"},"current":{"value":118,"display":"118 種（第七週期已填滿）","asof":"2016","note":"2016 年 IUPAC 正式命名 113 Nh、115 Mc、117 Ts、118 Og，週期表第七列補齊","effectiveAsOf":"2016","lastReviewed":null,"nextReview":null},"flag":{"level":"red","label":"已改寫"},"series":{"milestones":[{"year":1869,"n":63,"label":"門得列夫週期表"},{"year":1913,"n":85,"label":"莫斯利原子序"},{"year":1945,"n":96,"label":"超鈾元素時代"},{"year":1970,"n":105},{"year":2016,"n":118,"label":"第七週期填滿"}]}},{"id":"heaviest_element","chapter":"matter","name":"目前原子序最大的元素","unit":"元素","mode":"semi","source":"IUPAC 元素命名公告","source_url":"https://iupac.org/what-we-do/periodic-table-of-elements/","freq":"極罕變","caliber":"原子序最大、已獲正式命名的元素（含人工合成）","textbook":{"value":"鈾 U","display":"鈾（原子序 92）常被當成最重的元素","note":"課本多以鈾為最重天然元素的例子"},"current":{"value":"Og","display":"Oganesson（Og，原子序 118）","asof":"2016","note":"目前原子序最大的元素，人工合成、極不穩定；統計範圍不同（鈾仍是最重的天然元素）","effectiveAsOf":"2016","lastReviewed":null,"nextReview":null},"flag":{"level":"info","label":"補充"},"series":null},{"id":"atomic_weight_interval","chapter":"matter","name":"標準原子量的表示法","unit":"表示法","mode":"semi","source":"IUPAC 原子量委員會 CIAAW","source_url":"https://ciaaw.org/atomic-weights.htm","freq":"不定期（每 1–2 年審訂）","caliber":"IUPAC 公告的標準原子量呈現方式","textbook":{"value":null,"display":"原子量是單一固定值（如氫 1.008、碳 12.011）","note":"課本多給單一標準原子量"},"current":{"value":null,"display":"部分元素改用「區間」表示（如氫 [1.00784, 1.00811]）","asof":"2009 起陸續","note":"因同位素組成隨來源而異，IUPAC 對氫、碳、氯等十餘種元素改以區間公告標準原子量","effectiveAsOf":"2009 起陸續","lastReviewed":null,"nextReview":null},"flag":{"level":"yellow","label":"表示法更新"},"series":null},{"id":"avogadro","chapter":"matter","name":"亞佛加厥常數","unit":"／mol","mode":"semi","source":"CODATA／國際度量衡局 BIPM","source_url":"https://physics.nist.gov/cgi-bin/cuu/Value?na","freq":"已固定（定義值）","caliber":"1 莫耳所含基本粒子數；2019 後為定義精確值","textbook":{"value":null,"display":"約 6.02×10²³／mol（實驗測得值）","note":"課本多述為由實驗測定、帶不確定度"},"current":{"value":null,"display":"6.02214076×10²³／mol（定義精確值）","asof":"2019-05-20","note":"2019 SI 改制後，亞佛加厥常數成為定義值，不再有測量不確定度","effectiveAsOf":"2019-05-20","lastReviewed":null,"nextReview":null},"flag":{"level":"info","label":"已改為定義值"},"series":null},{"id":"planets","chapter":"energy","name":"太陽系的行星數","unit":"顆","mode":"semi","source":"國際天文聯合會 IAU","source_url":"https://www.iau.org/public/themes/pluto/","freq":"極罕變（分類決議）","caliber":"符合 IAU 行星定義的太陽系大行星數","textbook":{"value":9,"display":"9 大行星（含冥王星）","note":"2006 年前課本；水金地火木土天海冥"},"current":{"value":8,"display":"8 大行星（冥王星除外）","asof":"2006","note":"2006 年 IAU 決議將冥王星重新歸類為「矮行星」，太陽系大行星剩 8 顆","effectiveAsOf":"2006","lastReviewed":null,"nextReview":null},"flag":{"level":"red","label":"已改寫"},"series":null},{"id":"si_kg","chapter":"energy","name":"1 公斤的定義基準","unit":"定義","mode":"semi","source":"國際度量衡局 BIPM","source_url":"https://www.bipm.org/en/measurement-units","freq":"極罕變（單位制改制）","caliber":"國際單位制 (SI) 對公斤的定義基準","textbook":{"value":null,"display":"1 公斤＝巴黎「國際公斤原器」（鉑銥圓柱）","note":"2019 年前的定義；以一個實體砝碼為準"},"current":{"value":null,"display":"1 公斤由普朗克常數 h 定義","asof":"2019-05-20","note":"SI 七大基本單位改由物理常數定義，公斤脫離實體砝碼；公尺、安培、莫耳、克耳文等一併重新定義","effectiveAsOf":"2019-05-20","lastReviewed":null,"nextReview":null},"flag":{"level":"red","label":"已改寫"},"series":null},{"id":"exoplanets","chapter":"energy","name":"已確認的太陽系外行星數","unit":"顆","mode":"auto","source":"NASA Exoplanet Archive","source_url":"https://exoplanetarchive.ipac.caltech.edu/","freq":"即時（build 自動抓取；每週有新確認）","caliber":"NASA Exoplanet Archive 綜合表 (pscomppars) 中已確認的系外行星數","textbook":{"value":null,"display":"太陽系外「發現了一些」／數百顆","note":"早期課本；1995 年才首度確認繞主序星的系外行星"},"current":{"value":6375,"display":"6,375 顆（且持續增加）","asof":null,"note":"數量持續增加，2014、2016 年因 Kepler 任務批次確認而大增","effectiveAsOf":"2026","lastReviewed":null,"autoStatus":"supported","nextReview":null},"flag":{"level":"red","label":"已改寫"},"series":[{"year":1992,"cum":2},{"year":1994,"cum":3},{"year":1995,"cum":4},{"year":1996,"cum":10},{"year":1997,"cum":11},{"year":1998,"cum":17},{"year":1999,"cum":30},{"year":2000,"cum":46},{"year":2001,"cum":58},{"year":2002,"cum":87},{"year":2003,"cum":109},{"year":2004,"cum":136},{"year":2005,"cum":172},{"year":2006,"cum":204},{"year":2007,"cum":256},{"year":2008,"cum":318},{"year":2009,"cum":405},{"year":2010,"cum":498},{"year":2011,"cum":639},{"year":2012,"cum":783},{"year":2013,"cum":911},{"year":2014,"cum":1783},{"year":2015,"cum":1938},{"year":2016,"cum":3442},{"year":2017,"cum":3594},{"year":2018,"cum":3902},{"year":2019,"cum":4096},{"year":2020,"cum":4330},{"year":2021,"cum":4894},{"year":2022,"cum":5261},{"year":2023,"cum":5584},{"year":2024,"cum":5844},{"year":2025,"cum":6090},{"year":2026,"cum":6375}]},{"id":"speed_of_light","chapter":"energy","name":"光速","unit":"m/s","mode":"semi","source":"CODATA／BIPM","source_url":"https://physics.nist.gov/cgi-bin/cuu/Value?c","freq":"已固定（定義值）","caliber":"真空中光速；1983 年起為定義精確值","textbook":{"value":null,"display":"約 3×10⁸ m/s（每秒約 30 萬公里）","note":"課本常用的近似值"},"current":{"value":null,"display":"299,792,458 m/s（定義精確值）","asof":"1983 起","note":"光速為定義值，公尺反過來由光速定義；課本近似值方向正確，僅精度提升","effectiveAsOf":"1983 起","lastReviewed":null,"nextReview":null},"flag":{"level":"green","label":"大致仍準"},"series":null},{"id":"saturn_moons","chapter":"energy","name":"衛星最多的行星","unit":"行星","mode":"semi","source":"IAU 小行星中心 MPC／NASA JPL","source_url":"https://science.nasa.gov/saturn/moons/","freq":"不定期（新衛星確認時）","caliber":"已確認並編號的天然衛星數最多者","textbook":{"value":"木星","display":"木星是衛星最多的行星","note":"課本常見敘述（木星曾長期居冠）"},"current":{"value":"土星","display":"土星衛星最多（已確認 140+ 顆）","asof":"2023","note":"2023 年起土星確認衛星數躍升至逾 140 顆，超越木星（約 90+）；數字隨新發現持續變動","effectiveAsOf":"2023","lastReviewed":null,"nextReview":null},"flag":{"level":"yellow","label":"已翻轉"},"series":null},{"id":"universe_age","chapter":"energy","name":"宇宙年齡","unit":"億年","mode":"semi","source":"ESA 普朗克衛星 (Planck 2018)","source_url":"https://www.esa.int/Science_Exploration/Space_Science/Planck","freq":"隨新觀測微調","caliber":"由宇宙微波背景輻射推估的宇宙年齡","textbook":{"value":137,"display":"約 137 億年","note":"較早課本常見值"},"current":{"value":138,"display":"約 138 億年（137.9±0.2）","asof":"2018","note":"ESA 普朗克衛星 2018 年結果；與課本量級一致，精度提升","effectiveAsOf":"2018","lastReviewed":null,"nextReview":null},"flag":{"level":"green","label":"大致仍準"},"series":null},{"id":"human_genes","chapter":"life","name":"人類的基因數","unit":"個","mode":"semi","source":"Ensembl／GENCODE（人類基因體註解）","source_url":"https://www.ensembl.org/Homo_sapiens/Info/Annotation","freq":"隨註解版本微調","caliber":"人類蛋白質編碼基因數（protein-coding genes）","textbook":{"value":100000,"display":"約 10 萬個基因","note":"人類基因體計畫完成前的估計"},"current":{"value":20000,"display":"約 2 萬個蛋白質編碼基因","asof":"2020s","note":"人類基因體計畫後估計大幅下修至約 19,000–20,000；非編碼 RNA 基因另計","effectiveAsOf":"2020s","lastReviewed":null,"nextReview":null},"flag":{"level":"red","label":"已改寫"},"series":null},{"id":"domains_kingdoms","chapter":"life","name":"生物的分類系統","unit":"分類","mode":"semi","source":"學界共識（Woese 三域系統，1990）","source_url":"https://en.wikipedia.org/wiki/Three-domain_system","freq":"教科書改版時採用","caliber":"生物最高階分類架構","textbook":{"value":null,"display":"分成五界（原核、原生生物、真菌、植物、動物）","note":"Whittaker 五界系統"},"current":{"value":null,"display":"改以「三域」系統為主流（細菌、古菌、真核）","asof":"1990 提出、近代教科書採用","note":"Woese 依 rRNA 提出三域；古菌 (Archaea) 自成一域，是五界系統所沒有的層級","effectiveAsOf":"1990 提出、近代教科書採用","lastReviewed":null,"nextReview":null},"flag":{"level":"yellow","label":"分類更新"},"series":null},{"id":"described_species","chapter":"life","name":"已描述（命名）的生物種數","unit":"種","mode":"semi","source":"Catalogue of Life","source_url":"https://www.catalogueoflife.org/","freq":"年更（持續收錄）","caliber":"已被科學描述並命名的有效物種數（估計總數 800 萬–1000 萬，多數尚未描述）","textbook":{"value":1500000,"display":"約 150 萬種已知生物","note":"課本常見量級"},"current":{"value":2100000,"display":"約 210 萬種已描述","asof":"2024","note":"Catalogue of Life 收錄逾 200 萬有效物種；估計實際總數達 800 萬–1000 萬，多數仍未被發現","effectiveAsOf":"2024","lastReviewed":null,"nextReview":null},"flag":{"level":"red","label":"已改寫","diffPct":40},"series":null},{"id":"taiwan_species","chapter":"life","name":"臺灣已記錄的物種數","unit":"種","mode":"semi","source":"臺灣物種名錄 TaiCOL／TaiBIF","source_url":"https://taibif.tw/","freq":"年更（持續增補）","caliber":"臺灣物種名錄收錄之已記錄物種數","textbook":{"value":null,"display":"臺灣生物多樣性高、特有種比例高","note":"課本多為定性描述，少列總數"},"current":{"value":60000,"display":"已記錄逾 6 萬種（且持續增補）","asof":"2024","note":"臺灣物種名錄 (TaiCOL) 收錄；面積雖小但物種數可觀，特有種比例高","effectiveAsOf":"2024","lastReviewed":null,"nextReview":null},"flag":{"level":"info","label":"補充"},"series":null},{"id":"iucn_threatened","chapter":"life","name":"全球受威脅（瀕危）物種數","unit":"種","mode":"semi","source":"IUCN 紅皮書 Red List","source_url":"https://www.iucnredlist.org/","freq":"年更（每年至少更新兩次）","caliber":"IUCN 評估為受威脅（易危 VU 以上）的物種數","textbook":{"value":null,"display":"許多生物瀕臨絕種","note":"課本多為定性描述"},"current":{"value":46000,"display":"逾 4.6 萬種被列為受威脅","asof":"2024","note":"IUCN 已評估逾 16 萬物種，其中逾 4.6 萬種受威脅；數字逐年上升","effectiveAsOf":"2024","lastReviewed":null,"nextReview":null},"flag":{"level":"info","label":"補充"},"series":null},{"id":"human_cells","chapter":"life","name":"人體的細胞數","unit":"兆個","mode":"semi","source":"學界估計（Bianconi et al. 2013 等）","source_url":"https://pubmed.ncbi.nlm.nih.gov/23829164/","freq":"隨研究修正","caliber":"人體細胞總數估計（單位：兆＝10¹²）","textbook":{"value":60,"display":"人體約有數十兆個細胞（常見約 60 兆）","note":"課本常見估計"},"current":{"value":37,"display":"約 37 兆個細胞","asof":"2013","note":"2013 年較嚴謹估計約 3.7×10¹³ 個（含大量紅血球）","effectiveAsOf":"2013","lastReviewed":null,"nextReview":null},"flag":{"level":"yellow","label":"已修正"},"series":null},{"id":"microbiome_ratio","chapter":"life","name":"人體細菌數 vs 自身細胞數","unit":"倍","mode":"semi","source":"Sender, Fuchs & Milo 2016（Cell）","source_url":"https://pubmed.ncbi.nlm.nih.gov/26824647/","freq":"隨研究修正","caliber":"人體內細菌總數 ÷ 人體自身細胞數","textbook":{"value":10,"display":"體內細菌約為自身細胞的 10 倍","note":"長年流傳的 10:1 說法"},"current":{"value":1,"display":"約 1:1（菌數與人體細胞相當）","asof":"2016","note":"2016 年重新估算推翻 10:1，兩者數量相近","effectiveAsOf":"2016","lastReviewed":null,"nextReview":null},"flag":{"level":"red","label":"已推翻"},"series":null},{"id":"everest","chapter":"earth","name":"聖母峰（珠穆朗瑪峰）高度","unit":"公尺","mode":"semi","source":"中國與尼泊爾聯合公告（2020）","source_url":"https://en.wikipedia.org/wiki/Mount_Everest","freq":"極罕變（重新測量時）","caliber":"聖母峰海拔高度（含雪蓋）","textbook":{"value":8848,"display":"8,848 公尺","note":"課本沿用多年的高度"},"current":{"value":8848.86,"display":"8,848.86 公尺","asof":"2020","note":"2020 年中國與尼泊爾聯合公布最新測量結果","effectiveAsOf":"2020","lastReviewed":null,"nextReview":null},"flag":{"level":"green","label":"微幅更新"},"series":null},{"id":"taiwan_highest","chapter":"earth","name":"臺灣最高峰（玉山）高度","unit":"公尺","mode":"semi","source":"內政部國土測繪","source_url":"https://www.nlsc.gov.tw/","freq":"極罕變","caliber":"玉山主峰海拔高度","textbook":{"value":3952,"display":"玉山 3,952 公尺","note":"課本常見值"},"current":{"value":3952,"display":"玉山 3,952 公尺","asof":"現行","note":"與課本一致；為東北亞第一高峰。此點示範「課本仍準」的對照","effectiveAsOf":"現行","lastReviewed":null,"nextReview":null},"flag":{"level":"green","label":"大致仍準","diffPct":0},"series":null}]};
+window.CRIME_DATA = {"meta":{"generatedAt":"2026-09-08T12:25:55.696Z","fetchError":null,"title":"刑案治安統計","source":"內政部警政署「犯罪資料」（data.gov.tw dataset 14200）","sourceUrl":"https://data.gov.tw/dataset/14200","license":"政府資料開放授權條款-第1版","updateFreq":"季更（每季初步統計）","totalRows":436574,"yearRange":"民國 104–115 年","caveat":"僅涵蓋 8 大案類（毒品、強盜、搶奪、住宅竊盜、汽車竊盜、機車竊盜、強制性交、組織犯罪），為每季初步統計非全刑案；正確數字以警政署年度刑案統計為準。組織犯罪自民國 107 年 10 月起提供。機車竊盜於路界/縣界模糊時僅到縣市層級，鄉鎮可能從缺。","dirtyFiltered":{"header":45,"note":26,"unknownType":26},"otherCityRows":104,"badDateRows":0,"sourceBatch":{"fileCount":45,"files":[{"file":"res-01-0D62BDB3-2F9A-49CD-A8A3-02B2CDE4CB91.csv","sha256":"9d626fe605978cf96428ec354f66000db88c6a629d7b3c82f7db501f593d74d2","periods":["104-Q3"]},{"file":"res-02-A74F2602-8559-4D64-B098-038C08F6B3F5.csv","sha256":"7efc0ee609a33d7101423dca891573021866bc4f97c6ecfcc7267029c980c34e","periods":["108-Q1"]},{"file":"res-03-CFBA4E7F-DAA9-434C-9E97-074AFAC1895B.csv","sha256":"1592613e43cf77422c3bacbc7d70e811a794e59602b4fa511c581751fb5af1ce","periods":["105-Q4"]},{"file":"res-04-9F601C6C-103F-4464-9CD1-0C8ED9E94043.csv","sha256":"6b8abe18f6fbe7ac1821879226139d9bead5c9326257b1a471f747d8eb70eccf","periods":["107-Q1"]},{"file":"res-05-735BE24F-CA47-473F-9103-0E2B6D72DAF3.csv","sha256":"e53657288d3decf9d1980d4ac1c6e7d1cc64d220d59a45a553bdfcc7c79b8927","periods":["108-Q3"]},{"file":"res-06-55D5DB82-29F7-48EF-8A52-133223F2D073.csv","sha256":"fbaee5babd4bc559b2a47fbb0d3c71200a0eafb2cbe0f52545dac09dd2710cc4","periods":["112-Q2"]},{"file":"res-07-A4B70F9D-A749-465D-9F2E-25412ACCA506.csv","sha256":"3883c5c1b91d75cf5fc37588e32d7739480e4563de5b0ee3655aaf4bf9cdcfa5","periods":["109-Q2"]},{"file":"res-08-25E12EC9-0F57-492F-AC7D-2D16B2237484.csv","sha256":"e23cf981e02e8deb2412e938edb1394d237f4e509e42628076c52e98b8933e07","periods":["106-Q4"]},{"file":"res-09-6447BAE1-805C-422B-A626-37F25D19B8D0.csv","sha256":"dc8fe9cdc07583362636e7ac5fab424acda7db25667cca2d3cb26d825d415be3","periods":["114-Q2"]},{"file":"res-10-83046436-F89E-4FAF-A2DB-393BC04D6701.csv","sha256":"5291a4f5315a167d692a40df79e50a13614fd94ae8e674aaa584ef40ccff66a9","periods":["104-Q4"]},{"file":"res-11-2167093B-1929-4DFB-84BF-3CCD2396567F.csv","sha256":"b3b1d8e0a9410673143e073f0e6f29c716d3e0ffc088f25beeaa875a4cb252e8","periods":["108-Q2"]},{"file":"res-12-7CB07A57-01D4-4380-8B26-3E54F0723832.csv","sha256":"ba6aa680fea9f7024c10d09db2108787ce476fb1bcaec7596b096a6eeead6189","periods":["115-Q1"]},{"file":"res-13-3F939C71-2F36-467C-A367-4365DADFE442.csv","sha256":"9d3635b9180ff2592d583f5d58fb680dae6242b45e4772460820a4a8a78e59f5","periods":["113-Q3"]},{"file":"res-14-4BA21222-9173-4AED-AFAA-43EB15D425E2.csv","sha256":"eff446b527950282f2bef0b7bb6b383e87b1b46cfaa000b20efbff2d727583bd","periods":["110-Q1"]},{"file":"res-15-3DE014D3-7CF9-4409-969C-478D82F2041B.csv","sha256":"17f90456acd6697fcabf9e13bac31510b3d04b7cd66bae6abcca08078b6345ce","periods":["109-Q1"]},{"file":"res-16-83D3726F-1791-4E3B-A880-491B4D48DB91.csv","sha256":"da40d5f2178ca4b149932f265d04e192fe978dada1d45cfc1003790d29cc5e4b","periods":["104-Q1"]},{"file":"res-17-7A129F1D-2F3D-40CE-B009-4B5B5E665BF4.csv","sha256":"4086c16896f1a137fa00510d5cd616fc3e89265374a649f9263790a0f2bd75d2","periods":["104-Q2"]},{"file":"res-18-3F4680C7-5D7B-4598-A775-4D9D061CF805.csv","sha256":"7cce82b89e67d825567ccb42aa75ba9facdc7307102355b59de379ff2e494c52","periods":["110-Q3"]},{"file":"res-19-2C04A3F9-7DF8-4E85-81E4-4DC45B327AF5.csv","sha256":"1a2e027cf4eb1345b4bec10562cca159e005d88a6d4ab1d671ee6eb1c2a417ce","periods":["109-Q3"]},{"file":"res-20-3432D9E8-F482-42AB-8CB6-59776EF02A20.csv","sha256":"e6676d3b015cc7f520d80782bd48fd7506c6af020245a3b722fdb83ac45a465e","periods":["105-Q3"]},{"file":"res-21-96513D0F-7228-4BD3-A407-64B33D2C2573.csv","sha256":"051ab4433ce7cbf6b1445e695124d5af55660401d90c0d9f5365931d67b687d7","periods":["110-Q4"]},{"file":"res-22-3C1EADD3-FA57-4FAA-825F-682DA981C41F.csv","sha256":"1e1dccd6016fbbf36328662dd9c56f9c3daa5bf68eb9e3b9eddae4c124a6be0f","periods":["114-Q4"]},{"file":"res-23-03BE5C93-0631-4542-AE0C-683463AC42BF.csv","sha256":"022e8621fd4c4c533cd39f52832114282333df1dbea6c7bf784d1f4b7d9258fc","periods":["112-Q3"]},{"file":"res-24-94D50258-2BA9-4F28-9604-842B7B36C9DF.csv","sha256":"8bb1c12d9890a1a7d74f0102d95de4e78b697888861308b8a45da5b1a4e68377","periods":["113-Q1"]},{"file":"res-25-3CB414CF-604A-4BA4-97B2-9F2E3118EDD1.csv","sha256":"9c8e9334edc9ad43596a7d1e150f6069d1f0f666a4f62359f64f2a4845d81580","periods":["105-Q2"]},{"file":"res-26-BE7F7DAA-6E8B-4E02-A184-A36EEE77C15A.csv","sha256":"bf867b7486c9fcb00542d75f09a7c3fa54c8dfb662939b79a9da766e4075748a","periods":["106-Q3"]},{"file":"res-27-26641DBA-697A-4449-AF9D-B4052A985F5F.csv","sha256":"3c1c3ca6dfcef1cc5dde070478c660db2d7436c6f8ad48b04a91c6da4dbd9e88","periods":["107-Q2"]},{"file":"res-28-C831243A-E836-480E-BA06-B6B1DFCB2488.csv","sha256":"a477bf847e5b1bb43a3ca8899fd8a502ff2a6119ae478a2c2025a13d3b82c98c","periods":["114-Q1"]},{"file":"res-29-D6DF2449-1045-4430-917B-B8A5B99B6FAA.csv","sha256":"1e35a3776b9d8e75c7a96172e919e3761b7cda2418de7a471dc1931275a789f4","periods":["110-Q2"]},{"file":"res-30-3A7C7172-AA3F-49DA-8E65-C22524F2686E.csv","sha256":"d62fc41f83afe5362b23baa94b25e5ae532411142ebb608b560b2f463b206621","periods":["111-Q3"]},{"file":"res-31-AD6CD6CB-78CA-4C60-9F13-C33CDB85DE66.csv","sha256":"560f725b5105917087f7f5a0c3d79ffb955d9bfa94c50300d15e7eb39deaa3d5","periods":["112-Q4"]},{"file":"res-32-13F498F1-6C56-4DE5-AE2C-C48FE5DC1871.csv","sha256":"a005fd8cacad07f614c299402712aa438f9bad9ae103c170450b6e268bad48a8","periods":["113-Q4"]},{"file":"res-33-16E811EF-B80D-4288-80AF-C4F330E020BC.csv","sha256":"9314d903ca0e9766daca59e191de1508c385c3ad34fea06c5eb0080a1fe71260","periods":["108-Q4"]},{"file":"res-34-9BCD2BBB-63FC-4FD9-8636-C96F17BD5528.csv","sha256":"467363ceb05bb6932e9fd9a4ad620e6eea883a2e6de060695aec6beb26a98b17","periods":["113-Q2"]},{"file":"res-35-D0760A32-193F-4DF7-9B41-CCFA3EA84A19.csv","sha256":"e46463e3a6683230da01e072348903e14c812f7bf83f7263cce3f5086b289569","periods":["107-Q3"]},{"file":"res-36-BA22BAA9-1AFA-4387-8651-D357EBCE3E61.csv","sha256":"15be255bcbda6b200e5b64294cd8351e7523e7614b2611c89919906db01e1e7d","periods":["111-Q1"]},{"file":"res-37-45D97FFD-2852-423A-BC97-D360CE164816.csv","sha256":"64bea44871b1e86623709e67b29383eae2d9214ecc5d1f1b427797172bd1ff11","periods":["105-Q1"]},{"file":"res-38-81394739-B6C0-4B9F-944A-DEDE3860F70F.csv","sha256":"1e381832efffe70b3f3c0887df2da6185d00eef9629451dc08843a251defe395","periods":["106-Q2"]},{"file":"res-39-62702CB2-5169-44E0-8152-E16D2EC37FE5.csv","sha256":"fc106c53c56bb2b20c9171b4abee2f8ea9c540a39b94400351f47edbb37ed4e3","periods":["111-Q4"]},{"file":"res-40-55E36B01-764C-4B95-9010-E733768BD077.csv","sha256":"81c2113849c8dd0848f0a77648ec5c9c5621c5551f562dff3d07c2008bfc2ce4","periods":["107-Q4"]},{"file":"res-41-7D2D6836-B22C-4DD7-8923-EC6A0C7CEB3C.csv","sha256":"3fd29a0244d8442c68a73da7780ca999b15fd765883f7815d7cd81a9e4426342","periods":["109-Q4"]},{"file":"res-42-5471D3D5-A525-4FDF-9E35-ED6849021A23.csv","sha256":"b0a526fd82ee0800a7ec95d62f27413cded4ec89ad808685423ad5e3f60b170a","periods":["106-Q1"]},{"file":"res-43-BFEF14AD-1353-4208-AC01-F3E568BCD489.csv","sha256":"b7363e08fafc47f78a76f9dbd82823ec76d9b9edb3f6dc913f4024ae28db9af6","periods":["112-Q1"]},{"file":"res-44-627907FF-5A94-4B5D-BF9C-F481ABD10556.csv","sha256":"04a9b76deba99d170d8a229b85a5e7412e5880502efe8191368b57da810b1608","periods":["111-Q2"]},{"file":"res-45-62DEC883-2424-452F-A538-F61DAA8696B6.csv","sha256":"e93023bdd7e51321e44332cf8a4c4734851b486b6dfaf9e53de036982adab29e","periods":["114-Q3"]}],"periods":["104-Q1","104-Q2","104-Q3","104-Q4","105-Q1","105-Q2","105-Q3","105-Q4","106-Q1","106-Q2","106-Q3","106-Q4","107-Q1","107-Q2","107-Q3","107-Q4","108-Q1","108-Q2","108-Q3","108-Q4","109-Q1","109-Q2","109-Q3","109-Q4","110-Q1","110-Q2","110-Q3","110-Q4","111-Q1","111-Q2","111-Q3","111-Q4","112-Q1","112-Q2","112-Q3","112-Q4","113-Q1","113-Q2","113-Q3","113-Q4","114-Q1","114-Q2","114-Q3","114-Q4","115-Q1"],"completeThrough":"115-Q1"}},"types":["毒品","機車竊盜","汽車竊盜","住宅竊盜","強制性交","強盜","搶奪","組織犯罪"],"years":["104","105","106","107","108","109","110","111","112","113","114","115"],"cities":["新北市","桃園市","臺北市","高雄市","臺中市","臺南市","屏東縣","彰化縣","基隆市","雲林縣","新竹縣","苗栗縣","南投縣","宜蘭縣","新竹市","花蓮縣","嘉義市","嘉義縣","臺東縣","澎湖縣","金門縣","連江縣"],"cityTypeYear":{"桃園市":{"住宅竊盜":{"104":112,"105":146,"106":156,"107":106,"108":62,"109":57,"110":40,"111":108,"112":70,"113":386,"114":605,"115":153},"強制性交":{"104":14,"105":16,"106":4,"107":6,"108":8,"109":9,"110":4,"111":5,"112":3,"113":2,"114":21},"強盜":{"104":31,"105":28,"106":23,"107":15,"108":17,"109":16,"110":18,"111":16,"112":11,"113":7,"114":19,"115":3},"搶奪":{"104":12,"105":22,"106":12,"107":13,"108":5,"109":6,"110":10,"111":13,"112":2,"113":6,"114":11,"115":4},"機車竊盜":{"104":2718,"105":2688,"106":2120,"107":1777,"108":1224,"109":842,"110":551,"111":536,"112":541,"113":558,"114":425,"115":110},"毒品":{"104":4678,"105":4823,"106":5198,"107":5307,"108":4892,"109":4750,"110":3843,"111":3032,"112":2646,"113":2729,"114":3082,"115":1051},"汽車竊盜":{"104":745,"105":970,"106":607,"107":427,"108":222,"109":109,"110":100,"111":51,"112":49,"113":59,"114":145,"115":25},"組織犯罪":{"109":1,"111":1}},"臺中市":{"住宅竊盜":{"104":150,"105":144,"106":131,"107":104,"108":78,"109":70,"110":70,"111":50,"112":47,"113":129,"114":703,"115":215},"強制性交":{"104":22,"105":24,"106":33,"107":18,"109":6,"110":3,"111":1,"112":5,"113":2,"114":6},"強盜":{"104":30,"105":22,"106":14,"107":24,"108":17,"109":14,"110":14,"111":7,"112":3,"113":5,"114":10,"115":1},"搶奪":{"104":34,"105":24,"106":19,"107":17,"108":16,"109":8,"110":7,"111":6,"112":9,"113":4,"114":10,"115":2},"機車竊盜":{"104":1608,"105":1192,"106":964,"107":629,"108":526,"109":423,"110":432,"111":461,"112":488,"113":464,"114":457,"115":151},"毒品":{"104":2627,"105":3086,"106":3441,"107":3136,"108":2722,"109":2549,"110":2135,"111":1854,"112":1952,"113":1886,"114":2496,"115":490},"汽車竊盜":{"104":488,"105":238,"106":173,"107":135,"108":102,"109":91,"110":49,"111":41,"112":64,"113":74,"114":82,"115":20},"組織犯罪":{"107":1,"108":1,"110":1,"112":1,"113":1,"114":2}},"苗栗縣":{"住宅竊盜":{"104":107,"105":72,"106":102,"107":77,"108":49,"109":59,"110":76,"111":82,"112":59,"113":78,"114":282,"115":41},"強制性交":{"104":9,"105":4,"106":1,"107":1,"108":1,"109":7,"110":3,"111":6,"112":15,"113":6,"114":18,"115":4},"強盜":{"104":13,"105":7,"106":8,"107":7,"108":4,"109":3,"110":4,"111":7,"112":2,"113":3,"114":4,"115":2},"機車竊盜":{"104":309,"105":265,"106":172,"107":114,"108":77,"109":89,"110":97,"111":82,"112":88,"113":134,"114":82,"115":28},"毒品":{"104":658,"105":602,"106":636,"107":672,"108":684,"109":598,"110":550,"111":585,"112":535,"113":498,"114":460,"115":148},"汽車竊盜":{"104":234,"105":141,"106":100,"107":53,"108":27,"109":22,"110":15,"111":16,"112":11,"113":38,"114":27,"115":4},"搶奪":{"104":3,"105":4,"107":3,"108":1,"109":2,"110":1,"111":1,"112":3,"113":2,"114":4,"115":1}},"新北市":{"住宅竊盜":{"104":681,"105":549,"106":510,"107":361,"108":300,"109":193,"110":214,"111":228,"112":344,"113":653,"114":1462,"115":181},"強制性交":{"104":43,"105":38,"106":29,"107":22,"108":11,"109":10,"110":9,"111":5,"112":8,"113":16,"114":38,"115":8},"強盜":{"104":63,"105":59,"106":46,"107":27,"108":25,"109":23,"110":32,"111":23,"112":17,"113":14,"114":19,"115":4},"搶奪":{"104":65,"105":48,"106":32,"107":37,"108":28,"109":22,"110":25,"111":25,"112":18,"113":8,"114":15,"115":2},"機車竊盜":{"104":2603,"105":2202,"106":1965,"107":1624,"108":1219,"109":912,"110":795,"111":702,"112":819,"113":619,"114":534,"115":158},"毒品":{"104":7316,"105":7982,"106":7697,"107":6473,"108":4620,"109":4912,"110":3737,"111":3436,"112":3343,"113":3118,"114":5399,"115":1427},"汽車竊盜":{"104":401,"105":386,"106":275,"107":216,"108":128,"109":59,"110":63,"111":73,"112":81,"113":65,"114":97,"115":14},"組織犯罪":{"109":3,"110":1,"113":3,"114":1}},"臺北市":{"住宅竊盜":{"104":437,"105":468,"106":356,"107":352,"108":318,"109":243,"110":143,"111":127,"112":135,"113":145,"114":249,"115":51},"強制性交":{"104":83,"105":57,"106":34,"107":22,"108":14,"109":7,"110":5,"111":18,"112":13,"113":14,"114":11,"115":3},"強盜":{"104":21,"105":29,"106":21,"107":16,"108":14,"109":14,"110":15,"111":11,"112":10,"113":9,"114":12,"115":1},"搶奪":{"104":35,"105":25,"106":24,"107":13,"108":15,"109":14,"110":9,"111":8,"112":9,"113":13,"114":19,"115":6},"機車竊盜":{"104":903,"105":604,"106":685,"107":480,"108":365,"109":283,"110":292,"111":266,"112":205,"113":173,"114":165,"115":29},"毒品":{"104":4187,"105":3981,"106":3702,"107":3826,"108":3507,"109":3339,"110":2534,"111":2658,"112":2601,"113":2624,"114":3210,"115":693},"汽車竊盜":{"104":95,"105":87,"106":82,"107":91,"108":45,"109":35,"110":25,"111":21,"112":24,"113":19,"114":20,"115":7},"組織犯罪":{"108":1,"109":3,"110":2,"111":1,"112":2,"114":1,"115":2}},"臺南市":{"住宅竊盜":{"104":312,"105":382,"106":344,"107":296,"108":233,"109":165,"110":162,"111":79,"112":136,"113":122,"114":134,"115":23},"強制性交":{"104":70,"105":65,"106":13,"107":16,"108":13,"109":11,"110":24,"111":17,"112":10,"113":13,"114":19,"115":3},"強盜":{"104":30,"105":33,"106":29,"107":29,"108":21,"109":15,"110":15,"111":14,"112":21,"113":10,"114":18,"115":4},"搶奪":{"104":43,"105":23,"106":18,"107":9,"108":8,"109":19,"110":10,"111":10,"112":6,"113":8,"114":10,"115":1},"機車竊盜":{"104":1230,"105":1034,"106":666,"107":387,"108":333,"109":266,"110":252,"111":208,"112":186,"113":227,"114":214,"115":66},"毒品":{"104":1882,"105":1774,"106":2113,"107":2291,"108":1894,"109":1920,"110":1772,"111":1666,"112":1361,"113":1217,"114":1831,"115":467},"汽車竊盜":{"104":619,"105":287,"106":139,"107":88,"108":96,"109":51,"110":30,"111":15,"112":22,"113":38,"114":33,"115":14},"組織犯罪":{"111":1,"113":1,"114":3}},"花蓮縣":{"住宅竊盜":{"104":74,"105":65,"106":49,"107":44,"108":44,"109":30,"110":26,"111":11,"112":8,"113":7,"114":69,"115":24},"強盜":{"104":8,"105":3,"106":6,"107":3,"108":5,"109":3,"110":2,"111":1,"112":4,"113":2,"114":5},"搶奪":{"104":2,"105":1,"106":1,"107":4,"108":5,"109":2,"110":1,"111":5,"113":3,"114":7},"機車竊盜":{"104":136,"105":135,"106":76,"107":47,"108":75,"109":48,"110":80,"111":111,"112":75,"113":89,"114":105,"115":18},"毒品":{"104":583,"105":712,"106":663,"107":513,"108":482,"109":372,"110":298,"111":286,"112":284,"113":262,"114":301,"115":55},"汽車竊盜":{"104":59,"105":66,"106":29,"107":39,"108":9,"109":12,"110":9,"111":9,"112":1,"113":5,"114":23,"115":13},"強制性交":{"104":4,"105":11,"106":10,"107":7,"108":2,"109":2,"112":1,"114":2},"組織犯罪":{"112":2,"113":1}},"雲林縣":{"住宅竊盜":{"104":150,"105":118,"106":131,"107":95,"108":129,"109":76,"110":60,"111":85,"112":65,"113":163,"114":271,"115":111},"強制性交":{"104":1,"105":2,"106":5,"107":7,"108":6,"109":7,"110":3,"111":1,"112":3,"113":3,"114":5,"115":1},"強盜":{"104":13,"105":14,"106":12,"107":3,"108":4,"109":5,"110":1,"111":6,"112":4,"113":4,"114":1,"115":1},"機車竊盜":{"104":345,"105":254,"106":182,"107":129,"108":111,"109":87,"110":102,"111":100,"112":103,"113":139,"114":154,"115":34},"毒品":{"104":807,"105":1009,"106":911,"107":861,"108":877,"109":621,"110":482,"111":525,"112":512,"113":491,"114":694,"115":143},"汽車竊盜":{"104":165,"105":87,"106":66,"107":66,"108":35,"109":33,"110":15,"111":19,"112":20,"113":19,"114":50,"115":5},"搶奪":{"104":10,"105":9,"106":4,"107":1,"109":4,"110":3,"111":4,"113":1,"114":1},"組織犯罪":{"109":1}},"新竹縣":{"住宅竊盜":{"104":58,"105":68,"106":56,"107":53,"108":62,"109":30,"110":54,"111":37,"112":24,"113":82,"114":257,"115":22},"強制性交":{"104":6,"105":5,"106":1,"107":2,"108":3,"109":3,"111":3,"112":5,"113":11,"114":9},"強盜":{"104":10,"105":10,"106":9,"107":1,"108":4,"109":2,"110":7,"111":3,"112":2,"115":2},"搶奪":{"104":2,"105":11,"106":5,"107":5,"108":4,"109":2,"111":2,"112":1,"113":3,"114":3,"115":2},"機車竊盜":{"104":438,"105":445,"106":364,"107":327,"108":274,"109":195,"110":180,"111":151,"112":127,"113":138,"114":108,"115":47},"毒品":{"104":715,"105":825,"106":799,"107":573,"108":496,"109":598,"110":476,"111":429,"112":527,"113":425,"114":490,"115":141},"汽車竊盜":{"104":314,"105":342,"106":275,"107":198,"108":118,"109":59,"110":77,"111":40,"112":57,"113":36,"114":57,"115":14},"組織犯罪":{"109":1}},"新竹市":{"住宅竊盜":{"104":91,"105":73,"106":46,"107":30,"108":21,"109":23,"110":16,"111":26,"112":24,"113":35,"114":19,"115":5},"強制性交":{"104":10,"105":12,"106":4,"107":5,"108":3,"109":1,"110":1,"111":2,"112":1,"113":2,"114":3},"強盜":{"104":6,"105":2,"106":1,"107":1,"108":1,"109":3,"112":1,"113":1,"114":1},"機車竊盜":{"104":664,"105":378,"106":315,"107":276,"108":227,"109":155,"110":160,"111":128,"112":130,"113":141,"114":112,"115":24},"毒品":{"104":365,"105":372,"106":426,"107":345,"108":335,"109":302,"110":318,"111":258,"112":268,"113":320,"114":335,"115":102},"汽車竊盜":{"104":113,"105":105,"106":64,"107":39,"108":17,"109":21,"110":14,"111":11,"112":12,"113":20,"114":21,"115":5},"搶奪":{"104":7,"105":7,"106":3,"108":1,"109":2,"110":1,"113":1,"114":2,"115":2},"組織犯罪":{"108":1,"114":1}},"嘉義縣":{"住宅竊盜":{"104":35,"105":25,"106":14,"107":25,"108":13,"109":4,"110":20,"111":5,"112":2,"113":10,"114":34,"115":10},"強制性交":{"104":20,"105":13,"106":13,"107":3,"108":5,"109":3,"110":5,"111":4,"112":5,"113":3,"115":1},"強盜":{"104":8,"106":3,"107":4,"108":3,"109":3,"110":3,"112":3,"114":4},"機車竊盜":{"104":99,"105":126,"106":81,"107":64,"108":53,"109":57,"110":57,"111":44,"112":57,"113":34,"114":54,"115":6},"毒品":{"104":410,"105":514,"106":447,"107":514,"108":379,"109":448,"110":340,"111":280,"112":377,"113":383,"114":513,"115":121},"汽車竊盜":{"104":109,"105":72,"106":61,"107":53,"108":21,"109":18,"110":14,"111":14,"112":10,"113":7,"114":23,"115":1},"搶奪":{"104":1,"105":2,"106":6,"107":5,"109":1,"110":4,"112":2,"113":1,"114":2},"組織犯罪":{"110":1,"114":1}},"高雄市":{"住宅竊盜":{"104":87,"105":107,"106":153,"107":61,"108":45,"109":51,"110":15,"111":16,"112":18,"113":41,"114":143,"115":22},"強制性交":{"104":12,"105":15,"106":13,"107":11,"108":22,"109":31,"110":10,"111":17,"112":17,"113":18,"114":28,"115":1},"強盜":{"104":34,"105":27,"106":30,"107":17,"108":21,"109":14,"110":13,"111":7,"112":6,"113":7,"114":6},"搶奪":{"104":80,"105":81,"106":56,"107":41,"108":21,"109":29,"110":20,"111":9,"112":7,"113":8,"114":10,"115":3},"機車竊盜":{"104":2414,"105":1919,"106":1655,"107":956,"108":622,"109":458,"110":448,"111":430,"112":470,"113":444,"114":455,"115":104},"毒品":{"104":3172,"105":3506,"106":3234,"107":2988,"108":2769,"109":2544,"110":2108,"111":1491,"112":1355,"113":1797,"114":2931,"115":816},"汽車竊盜":{"104":727,"105":619,"106":447,"107":220,"108":132,"109":86,"110":41,"111":25,"112":30,"113":33,"114":59,"115":13},"組織犯罪":{"111":2,"113":1,"114":1}},"屏東縣":{"住宅竊盜":{"104":74,"105":53,"106":57,"107":32,"108":29,"109":7,"110":13,"111":2,"112":4,"113":63,"114":657,"115":76},"強制性交":{"104":3,"105":1,"106":4,"107":6,"108":5,"109":4,"110":4,"111":6,"112":3,"114":6,"115":1},"強盜":{"104":9,"105":7,"106":8,"107":7,"108":5,"109":2,"110":1,"111":7,"112":6,"113":3,"114":6,"115":1},"搶奪":{"104":10,"105":15,"106":5,"107":7,"108":5,"109":2,"110":6,"112":2,"113":1,"114":6},"機車竊盜":{"104":412,"105":469,"106":355,"107":202,"108":209,"109":106,"110":185,"111":142,"112":167,"113":172,"114":183,"115":42},"毒品":{"104":1494,"105":1538,"106":1603,"107":1467,"108":1218,"109":1209,"110":884,"111":884,"112":751,"113":699,"114":660,"115":147},"汽車竊盜":{"104":200,"105":232,"106":142,"107":74,"108":57,"109":23,"110":32,"111":21,"112":33,"113":18,"114":48,"115":12},"組織犯罪":{"108":1}},"金門縣":{"住宅竊盜":{"104":15,"105":31,"106":19,"107":25,"108":27,"109":33,"110":32,"111":34,"112":32,"113":22,"114":18,"115":3},"強制性交":{"104":3,"105":7,"106":5,"107":6,"108":4,"109":1,"110":3,"111":1,"112":7,"114":4,"115":2},"毒品":{"104":28,"105":36,"106":48,"107":23,"108":33,"109":44,"110":50,"111":24,"112":13,"113":44,"114":35,"115":17},"機車竊盜":{"104":11,"105":27,"106":5,"107":5,"108":3,"109":4,"110":16,"111":9,"112":8,"113":6,"114":9,"115":1},"汽車竊盜":{"105":3,"106":2,"108":2,"109":4,"111":1,"112":3,"113":3,"114":4,"115":1},"組織犯罪":{"108":1},"搶奪":{"105":2,"106":1,"112":1},"強盜":{"106":1,"110":1,"113":1}},"基隆市":{"住宅竊盜":{"104":101,"105":71,"106":55,"107":59,"108":67,"109":59,"110":40,"111":48,"112":45,"113":70,"114":97,"115":14},"強制性交":{"104":24,"105":15,"106":12,"107":11,"108":12,"109":12,"110":7,"111":1,"112":2,"113":2,"114":7},"強盜":{"104":15,"105":8,"106":11,"107":5,"108":3,"109":3,"110":7,"111":1,"112":10,"114":6,"115":2},"機車竊盜":{"104":224,"105":228,"106":176,"107":116,"108":51,"109":50,"110":90,"111":85,"112":79,"113":75,"114":59,"115":10},"毒品":{"104":1213,"105":1254,"106":1235,"107":1313,"108":903,"109":804,"110":738,"111":624,"112":507,"113":579,"114":978,"115":243},"汽車竊盜":{"104":36,"105":22,"106":23,"107":16,"108":11,"109":11,"110":9,"111":19,"112":11,"113":9,"114":10,"115":2},"搶奪":{"104":11,"105":3,"106":6,"107":5,"108":3,"109":1,"111":4,"112":2,"113":1,"114":2},"組織犯罪":{"108":1,"112":1,"114":1}},"澎湖縣":{"住宅竊盜":{"104":15,"105":26,"106":21,"107":26,"108":34,"109":39,"110":34,"111":43,"112":39,"113":44,"114":65,"115":18},"機車竊盜":{"104":23,"105":21,"106":14,"107":23,"108":7,"109":7,"110":7,"111":7,"112":10,"113":11,"114":9,"115":3},"毒品":{"104":24,"105":36,"106":17,"107":23,"108":17,"109":25,"110":30,"111":28,"112":28,"113":30,"114":63,"115":18},"汽車竊盜":{"104":2,"105":8,"106":1,"108":2,"109":1,"110":1,"111":2,"112":3,"113":2,"114":2},"強制性交":{"104":3,"105":4,"106":5,"107":3,"108":4,"109":4,"110":4,"111":9,"112":4,"113":4,"114":6,"115":4},"強盜":{"108":3,"109":1,"110":1,"111":2,"112":2},"組織犯罪":{"111":1}},"南投縣":{"住宅竊盜":{"104":124,"105":103,"106":98,"107":90,"108":95,"109":90,"110":117,"111":127,"112":118,"113":165,"114":139,"115":32},"強制性交":{"104":14,"105":15,"106":16,"107":16,"108":20,"109":11,"110":4,"111":2,"112":6,"113":6,"114":12,"115":5},"強盜":{"104":15,"105":6,"106":10,"107":5,"108":5,"109":3,"110":4,"111":2,"112":7,"113":8,"114":7,"115":1},"搶奪":{"104":4,"105":6,"106":8,"107":9,"108":4,"109":1,"110":2,"111":3,"112":2,"113":4,"114":3},"機車竊盜":{"104":353,"105":298,"106":203,"107":162,"108":128,"109":82,"110":100,"111":82,"112":119,"113":103,"114":132,"115":28},"毒品":{"104":776,"105":810,"106":674,"107":585,"108":531,"109":498,"110":407,"111":480,"112":353,"113":429,"114":453,"115":84},"汽車竊盜":{"104":132,"105":127,"106":60,"107":55,"108":51,"109":27,"110":21,"111":22,"112":24,"113":18,"114":36,"115":9},"組織犯罪":{"108":1}},"彰化縣":{"住宅竊盜":{"104":69,"105":92,"106":65,"107":61,"108":42,"109":44,"110":37,"111":36,"112":17,"113":26,"114":33,"115":32},"強制性交":{"104":46,"105":27,"106":14,"107":13,"108":5,"109":3,"110":6,"111":9,"112":4,"113":2,"114":4,"115":4},"強盜":{"104":19,"105":12,"106":15,"107":12,"108":11,"109":5,"110":3,"111":7,"112":4,"113":1,"114":1,"115":1},"搶奪":{"104":19,"105":18,"106":12,"107":6,"108":7,"109":6,"110":4,"111":6,"112":8,"113":1,"114":6,"115":1},"機車竊盜":{"104":680,"105":319,"106":234,"107":190,"108":153,"109":135,"110":130,"111":158,"112":168,"113":179,"114":185,"115":34},"毒品":{"104":1260,"105":1413,"106":1306,"107":1125,"108":1019,"109":1016,"110":789,"111":740,"112":773,"113":794,"114":957,"115":194},"汽車竊盜":{"104":264,"105":134,"106":91,"107":87,"108":44,"109":47,"110":40,"111":35,"112":38,"113":27,"114":51,"115":15},"組織犯罪":{"107":1,"109":1,"112":1,"114":1}},"宜蘭縣":{"住宅竊盜":{"104":99,"105":95,"106":70,"107":38,"108":34,"109":15,"110":6,"111":6,"112":47,"113":73,"114":91,"115":17},"強制性交":{"104":13,"105":11,"106":9,"107":5,"108":9,"109":6,"110":2,"111":1,"112":5,"114":6,"115":2},"強盜":{"104":11,"105":6,"106":5,"107":7,"108":4,"109":6,"110":1,"111":1,"112":3,"114":1},"機車竊盜":{"104":219,"105":199,"106":107,"107":97,"108":104,"109":104,"110":108,"111":113,"112":68,"113":56,"114":54,"115":20},"毒品":{"104":618,"105":700,"106":772,"107":693,"108":537,"109":495,"110":430,"111":384,"112":398,"113":355,"114":464,"115":106},"汽車竊盜":{"104":103,"105":108,"106":57,"107":57,"108":56,"109":48,"110":62,"111":32,"112":10,"113":8,"114":31,"115":1},"搶奪":{"104":2,"105":5,"106":1,"107":3,"108":3,"109":1,"110":2,"111":1,"112":4,"114":3},"組織犯罪":{"110":2,"112":1,"114":1}},"嘉義市":{"住宅竊盜":{"104":26,"105":19,"106":13,"107":18,"108":9,"109":7,"110":10,"111":5,"112":8,"113":5,"114":5,"115":2},"強制性交":{"104":17,"105":12,"106":13,"107":15,"108":11,"109":6,"110":2,"111":4,"112":5,"113":4,"114":3},"強盜":{"104":4,"105":4,"106":2,"107":3,"108":3,"109":2,"110":3,"111":4,"112":3,"113":2,"114":3},"機車竊盜":{"104":104,"105":106,"106":76,"107":50,"108":25,"109":37,"110":20,"111":18,"112":15,"113":31,"114":35,"115":4},"毒品":{"104":566,"105":494,"106":416,"107":440,"108":392,"109":386,"110":429,"111":412,"112":463,"113":478,"114":596,"115":152},"汽車竊盜":{"104":98,"105":76,"106":22,"107":22,"108":16,"109":12,"110":4,"111":3,"112":2,"113":6,"114":13},"搶奪":{"104":2,"106":3,"107":1,"108":3,"109":2,"111":1,"112":3,"113":1,"114":1,"115":2}},"臺東縣":{"住宅竊盜":{"104":20,"105":15,"106":8,"107":3,"108":3,"109":1,"110":3,"111":5,"112":21,"113":16,"114":91,"115":25},"機車竊盜":{"104":117,"105":118,"106":83,"107":53,"108":46,"109":37,"110":38,"111":68,"112":66,"113":53,"114":33,"115":8},"毒品":{"104":274,"105":278,"106":236,"107":270,"108":266,"109":238,"110":176,"111":198,"112":180,"113":91,"114":134,"115":60},"汽車竊盜":{"104":5,"105":14,"106":5,"107":3,"108":1,"109":4,"110":3,"111":4,"112":14,"113":6,"114":7,"115":7},"強制性交":{"105":1,"109":1,"110":5,"111":9,"112":6,"113":4,"114":1},"強盜":{"104":1,"105":1,"106":1,"108":1,"110":2,"111":2,"114":1,"115":1},"搶奪":{"104":1,"106":1,"107":1,"110":3,"111":1}},"其他":{"毒品":{"104":1,"106":2,"108":1,"110":2,"112":1,"113":22,"114":36,"115":17},"住宅竊盜":{"105":1,"106":2,"108":1,"112":1,"113":1,"114":4},"搶奪":{"115":1},"機車竊盜":{"104":1,"107":2,"108":1,"109":1,"113":3},"強制性交":{"105":1,"109":1},"汽車竊盜":{"110":1}},"連江縣":{"毒品":{"104":5,"105":7,"106":4,"107":10,"108":5,"109":6,"110":5,"112":2,"113":1,"114":2},"住宅竊盜":{"104":2,"105":2,"106":3,"107":1,"108":1,"109":1,"110":2,"112":5,"113":5,"114":3,"115":2},"機車竊盜":{"105":1,"106":2,"108":2,"109":4,"111":2,"112":4,"113":3,"114":1},"強制性交":{"110":1,"112":2,"113":2,"114":1},"搶奪":{"106":1},"汽車竊盜":{"111":2}}},"typeRegion":{"住宅竊盜":{"桃園市":{"龜山區":324,"大園區":128,"平鎮區":121,"蘆竹區":122,"桃園區":277,"中壢區":363,"八德區":217,"大溪區":76,"觀音區":86,"龍潭區":128,"新屋區":41,"楊梅區":115,"復興區":3},"臺中市":{"北屯區":199,"太平區":70,"龍井區":98,"潭子區":83,"東區":91,"豐原區":99,"石岡區":6,"沙鹿區":101,"西屯區":116,"大雅區":82,"大甲區":61,"西區":56,"神岡區":46,"南區":76,"南屯區":57,"烏日區":59,"大里區":97,"后里區":50,"北區":123,"梧棲區":60,"東勢區":30,"中區":39,"大肚區":37,"清水區":58,"和平區":13,"霧峰區":39,"大安區":20,"外埔區":14,"新社區":11},"苗栗縣":{"苗栗市":171,"通霄鎮":90,"南庄鄉":17,"頭份市":151,"苑裡鎮":97,"三義鄉":27,"大湖鄉":42,"銅鑼鄉":27,"竹南鎮":189,"頭屋鄉":15,"卓蘭鎮":30,"後龍鎮":95,"造橋鄉":51,"三灣鄉":13,"泰安鄉":9,"公館鄉":39,"西湖鄉":15,"獅潭鄉":4,"頭份鎮":2},"新北市":{"新店區":422,"三重區":622,"石碇區":11,"永和區":325,"中和區":616,"三芝區":19,"汐止區":363,"新莊區":457,"蘆洲區":256,"樹林區":276,"淡水區":223,"深坑區":41,"板橋區":719,"三峽區":138,"石門區":16,"土城區":397,"萬里區":41,"瑞芳區":66,"五股區":113,"林口區":139,"貢寮區":13,"雙溪區":12,"泰山區":167,"金山區":49,"鶯歌區":94,"八里區":60,"坪林區":5,"烏來區":9,"平溪區":7},"臺北市":{"中山區":339,"士林區":382,"內湖區":253,"信義區":177,"萬華區":329,"北投區":308,"文山區":208,"中正區":213,"大安區":276,"松山區":169,"南港區":191,"大同區":179},"臺南市":{"西港區":30,"鹽水區":23,"楠西區":17,"佳里區":104,"白河區":69,"北區":272,"安平區":130,"麻豆區":40,"永康區":294,"安南區":84,"中西區":147,"後壁區":55,"善化區":51,"七股區":31,"南化區":20,"新市區":42,"新化區":46,"歸仁區":103,"下營區":27,"安定區":20,"南區":104,"新營區":90,"仁德區":122,"東區":71,"東山區":41,"柳營區":27,"學甲區":102,"官田區":33,"玉井區":38,"龍崎區":12,"關廟區":41,"六甲區":20,"山上區":7,"左鎮區":9,"大內區":6,"北門區":24,"將軍區":35},"花蓮縣":{"吉安鄉":79,"玉里鎮":21,"花蓮市":178,"瑞穗鄉":19,"富里鄉":5,"新城鄉":42,"壽豐鄉":19,"秀林鄉":24,"萬榮鄉":14,"鳳林鎮":23,"光復鄉":18,"卓溪鄉":7,"豐濱鄉":2},"雲林縣":{"土庫鎮":31,"古坑鄉":32,"崙背鄉":32,"二崙鄉":44,"麥寮鄉":130,"東勢鄉":26,"林內鄉":37,"西螺鎮":86,"褒忠鄉":13,"元長鄉":39,"虎尾鎮":135,"台西鄉":18,"四湖鄉":48,"口湖鄉":58,"斗六市":406,"水林鄉":49,"北港鎮":91,"斗南鎮":69,"莿桐鄉":69,"大埤鄉":14,"臺西鄉":27},"新竹縣":{"新豐鄉":83,"竹東鎮":152,"關西鎮":39,"橫山鄉":34,"竹北市":184,"芎林鄉":40,"寶山鄉":33,"湖口鄉":142,"北埔鄉":14,"新埔鎮":51,"峨眉鄉":19,"尖石鄉":10,"五峰鄉":2},"新竹市":{"東區":245,"北區":80,"香山區":84},"嘉義縣":{"太保市":17,"朴子市":30,"義竹鄉":12,"民雄鄉":19,"大林鎮":5,"水上鄉":11,"六腳鄉":12,"梅山鄉":6,"東石鄉":13,"竹崎鄉":23,"布袋鎮":14,"番路鄉":4,"中埔鄉":16,"新港鄉":6,"鹿草鄉":4,"溪口鄉":3,"阿里山鄉":2},"高雄市":{"大社區":21,"楠梓區":31,"鳳山區":151,"湖內區":23,"新興區":7,"梓官區":1,"前金區":8,"路竹區":24,"六龜區":8,"內門區":11,"阿蓮區":11,"茄萣區":13,"美濃區":55,"林園區":5,"杉林區":17,"旗山區":29,"鼓山區":54,"燕巢區":3,"三民區":51,"鳥松區":20,"左營區":39,"鹽埕區":16,"苓雅區":44,"桃源區":4,"旗津區":9,"仁武區":22,"大寮區":12,"前鎮區":23,"岡山區":7,"那瑪夏區":1,"小港區":15,"大樹區":12,"橋頭區":4,"茂林區":1,"甲仙區":5,"田寮區":1,"彌陀區":1},"屏東縣":{"萬丹鄉":56,"屏東市":365,"新園鄉":59,"竹田鄉":26,"內埔鄉":58,"三地門鄉":2,"鹽埔鄉":9,"潮州鎮":77,"東港鎮":85,"高樹鄉":6,"佳冬鄉":17,"長治鄉":23,"林邊鄉":23,"崁頂鄉":13,"里港鄉":10,"滿州鄉":11,"琉球鄉":7,"恆春鎮":85,"南州鄉":12,"車城鄉":14,"萬巒鄉":19,"泰武鄉":4,"枋寮鄉":27,"麟洛鄉":22,"枋山鄉":7,"獅子鄉":1,"九如鄉":7,"新埤鄉":8,"牡丹鄉":1,"春日鄉":7,"瑪家鄉":3,"來義鄉":3},"金門縣":{"金城鎮":90,"金湖鎮":87,"烈嶼鄉":12,"金沙鎮":37,"金寧鄉":64,"烏坵鄉":1},"基隆市":{"中正區":134,"七堵區":110,"安樂區":113,"中山區":105,"仁愛區":99,"暖暖區":70,"信義區":95},"澎湖縣":{"馬公市":277,"白沙鄉":30,"西嶼鄉":46,"湖西鄉":40,"七美鄉":7,"望安鄉":4},"南投縣":{"信義鄉":23,"埔里鎮":253,"南投市":234,"名間鄉":75,"草屯鎮":381,"中寮鄉":28,"竹山鎮":113,"國姓鄉":28,"水里鄉":49,"集集鎮":32,"魚池鄉":28,"仁愛鄉":25,"鹿谷鄉":29},"彰化縣":{"彰化市":80,"大村鄉":21,"溪湖鎮":18,"伸港鄉":21,"員林市":48,"二林鎮":36,"社頭鄉":6,"芳苑鄉":28,"永靖鄉":14,"秀水鄉":15,"鹿港鎮":47,"北斗鎮":13,"福興鄉":25,"埤頭鄉":13,"田中鎮":4,"二水鄉":4,"芬園鄉":9,"埔心鄉":17,"溪州鄉":14,"和美鎮":47,"埔鹽鄉":13,"大城鄉":16,"線西鄉":9,"花壇鄉":16,"竹塘鄉":4,"員林鎮":4,"田尾鄉":12},"宜蘭縣":{"頭城鎮":60,"羅東鎮":60,"蘇澳鎮":49,"五結鄉":57,"冬山鄉":37,"員山鄉":28,"礁溪鄉":99,"宜蘭市":80,"三星鄉":77,"壯圍鄉":31,"大同鄉":11,"南澳鄉":2},"嘉義市":{"西區":85,"東區":42},"臺東縣":{"台東市":24,"長濱鄉":5,"成功鎮":12,"海端鄉":5,"卑南鄉":8,"太麻里鄉":6,"東河鄉":7,"臺東市":94,"池上鄉":17,"延平鄉":1,"關山鎮":8,"金峰鄉":1,"鹿野鄉":13,"綠島鄉":3,"達仁鄉":5,"大武鄉":2},"連江縣":{"南竿鄉":20,"莒光鄉":3,"北竿鄉":4}},"強制性交":{"宜蘭縣":{"五結鄉":7,"礁溪鄉":8,"羅東鎮":12,"頭城鎮":3,"宜蘭市":18,"南澳鄉":2,"三星鄉":4,"冬山鄉":2,"蘇澳鎮":8,"大同鄉":2,"員山鄉":1,"壯圍鄉":2},"雲林縣":{"褒忠鄉":1,"林內鄉":1,"斗六市":16,"麥寮鄉":4,"西螺鎮":4,"水林鄉":1,"大埤鄉":1,"古坑鄉":3,"虎尾鎮":3,"口湖鄉":2,"北港鎮":1,"四湖鄉":1,"斗南鎮":1,"臺西鄉":1,"莿桐鄉":2,"二崙鄉":1,"元長鄉":1},"新北市":{"新莊區":23,"三峽區":10,"汐止區":29,"中和區":17,"樹林區":21,"萬里區":6,"土城區":16,"鶯歌區":5,"蘆洲區":16,"石門區":1,"新店區":6,"八里區":2,"三芝區":2,"五股區":6,"三重區":16,"板橋區":25,"烏來區":1,"瑞芳區":9,"泰山區":9,"林口區":3,"平溪區":2,"淡水區":7,"永和區":2,"深坑區":1,"貢寮區":1,"金山區":1},"臺南市":{"東區":16,"安南區":30,"中西區":19,"歸仁區":14,"新營區":16,"關廟區":5,"永康區":40,"麻豆區":4,"北區":22,"安平區":11,"新化區":10,"仁德區":18,"南區":18,"白河區":2,"將軍區":5,"東山區":4,"下營區":2,"學甲區":3,"佳里區":6,"後壁區":2,"七股區":2,"新市區":6,"龍崎區":1,"官田區":2,"西港區":5,"善化區":2,"柳營區":1,"山上區":1,"安定區":3,"玉井區":2,"南化區":1,"北門區":1},"臺北市":{"大安區":22,"中山區":44,"萬華區":23,"士林區":27,"北投區":40,"內湖區":19,"松山區":27,"文山區":16,"中正區":11,"大同區":13,"信義區":24,"南港區":15},"高雄市":{"左營區":14,"三民區":22,"小港區":11,"岡山區":7,"鳳山區":21,"大樹區":4,"大寮區":13,"鼓山區":10,"楠梓區":16,"苓雅區":15,"前金區":3,"路竹區":4,"旗津區":1,"湖內區":3,"大社區":6,"燕巢區":1,"前鎮區":9,"仁武區":4,"鳥松區":4,"林園區":6,"鹽埕區":1,"六龜區":2,"旗山區":2,"新興區":5,"阿蓮區":1,"橋頭區":2,"美濃區":1,"茄萣區":2,"桃源區":1,"梓官區":1,"彌陀區":1,"杉林區":2},"彰化縣":{"田中鎮":12,"埔心鄉":5,"和美鎮":10,"福興鄉":2,"大村鄉":4,"溪湖鎮":5,"秀水鄉":3,"彰化市":20,"溪州鄉":5,"伸港鄉":4,"員林市":19,"二水鄉":3,"大城鄉":2,"社頭鄉":4,"田尾鄉":2,"鹿港鎮":10,"北斗鎮":4,"芳苑鄉":3,"芬園鄉":2,"花壇鄉":2,"員林鎮":2,"永靖鄉":7,"埔鹽鄉":1,"埤頭鄉":1,"二林鎮":2,"線西鄉":3},"嘉義縣":{"民雄鄉":2,"新港鄉":2,"水上鄉":13,"中埔鄉":11,"大林鎮":2,"太保市":20,"大埔鄉":1,"番路鄉":5,"鹿草鄉":3,"朴子市":7,"義竹鄉":1,"布袋鎮":3,"梅山鄉":1,"阿里山鄉":1,"竹崎鄉":1,"六腳鄉":1,"東石鄉":1},"苗栗縣":{"公館鄉":7,"竹南鎮":15,"頭份市":11,"銅鑼鄉":5,"三義鄉":1,"後龍鎮":4,"頭屋鄉":2,"卓蘭鎮":3,"造橋鄉":4,"苗栗市":9,"大湖鄉":5,"泰安鄉":2,"苑裡鎮":3,"頭份鎮":1,"南庄鄉":2,"西湖鄉":1},"基隆市":{"中正區":22,"七堵區":13,"安樂區":25,"信義區":8,"仁愛區":24,"中山區":11,"暖暖區":2},"臺中市":{"西屯區":12,"南區":9,"南屯區":7,"西區":3,"梧棲區":4,"北區":1,"東區":15,"大里區":8,"大甲區":3,"北屯區":10,"太平區":3,"龍井區":6,"清水區":2,"豐原區":6,"后里區":3,"烏日區":6,"潭子區":3,"沙鹿區":6,"和平區":1,"東勢區":2,"大肚區":5,"神岡區":1,"霧峰區":1,"大安區":1,"中區":2},"南投縣":{"草屯鎮":26,"中寮鄉":2,"信義鄉":15,"仁愛鄉":15,"埔里鎮":20,"水里鄉":4,"名間鄉":5,"南投市":27,"竹山鎮":8,"國姓鄉":2,"集集鎮":2,"魚池鄉":1},"屏東縣":{"鹽埔鄉":2,"林邊鄉":1,"長治鄉":2,"南州鄉":3,"萬丹鄉":2,"屏東市":9,"佳冬鄉":1,"琉球鄉":1,"春日鄉":1,"萬巒鄉":1,"高樹鄉":1,"潮州鎮":2,"恆春鎮":4,"枋寮鄉":1,"東港鎮":4,"瑪家鄉":2,"獅子鄉":1,"內埔鄉":1,"新埤鄉":1,"新園鄉":1,"泰武鄉":1,"滿州鄉":1},"嘉義市":{"東區":40,"西區":52},"桃園市":{"龜山區":8,"龍潭區":5,"蘆竹區":8,"中壢區":13,"八德區":7,"大園區":6,"觀音區":5,"桃園區":15,"平鎮區":16,"楊梅區":6,"大溪區":2,"復興區":1},"新竹市":{"東區":21,"香山區":9,"北區":12},"金門縣":{"金湖鎮":11,"金城鎮":16,"金寧鄉":10,"烈嶼鄉":3,"金沙鎮":3},"新竹縣":{"尖石鄉":2,"竹東鎮":11,"竹北市":16,"寶山鄉":2,"關西鎮":5,"新埔鎮":2,"湖口鄉":3,"橫山鄉":1,"新豐鄉":5,"芎林鄉":1},"花蓮縣":{"秀林鄉":5,"花蓮市":19,"瑞穗鄉":2,"吉安鄉":5,"新城鄉":3,"光復鄉":2,"玉里鎮":1,"壽豐鄉":1,"鳳林鎮":1},"澎湖縣":{"馬公市":41,"湖西鄉":6,"白沙鄉":5,"西嶼鄉":2},"臺東縣":{"卑南鄉":3,"臺東市":9,"東河鄉":1,"成功鎮":4,"達仁鄉":1,"綠島鄉":1,"蘭嶼鄉":1,"太麻里鄉":4,"海端鄉":2,"鹿野鄉":1},"連江縣":{"南竿鄉":4,"莒光鄉":1,"北竿鄉":1}},"強盜":{"高雄市":{"路竹區":6,"美濃區":1,"鳳山區":24,"岡山區":9,"湖內區":5,"三民區":28,"前鎮區":15,"旗山區":2,"大寮區":11,"茄萣區":6,"梓官區":3,"新興區":6,"左營區":10,"大社區":6,"小港區":6,"永安區":1,"鳥松區":2,"燕巢區":1,"前金區":5,"橋頭區":2,"大樹區":3,"楠梓區":6,"林園區":4,"苓雅區":10,"仁武區":4,"鼓山區":3,"杉林區":1,"鹽埕區":1,"內門區":1},"嘉義縣":{"太保市":5,"六腳鄉":2,"水上鄉":4,"中埔鄉":6,"番路鄉":3,"大林鎮":2,"新港鄉":3,"竹崎鄉":1,"民雄鄉":1,"鹿草鄉":1,"朴子市":1,"梅山鄉":1,"義竹鄉":1},"彰化縣":{"社頭鄉":4,"鹿港鎮":8,"彰化市":17,"伸港鄉":4,"田中鎮":3,"大城鄉":2,"埔心鄉":5,"溪州鄉":4,"和美鎮":3,"線西鄉":2,"埤頭鄉":4,"二林鎮":4,"芳苑鄉":3,"大村鄉":5,"永靖鄉":2,"竹塘鄉":2,"田尾鄉":1,"秀水鄉":1,"花壇鄉":4,"福興鄉":4,"員林市":4,"埔鹽鄉":1,"溪湖鎮":3,"北斗鎮":1},"臺北市":{"松山區":6,"萬華區":26,"士林區":16,"文山區":11,"中山區":33,"內湖區":9,"北投區":20,"大安區":13,"信義區":18,"中正區":6,"大同區":11,"南港區":4},"宜蘭縣":{"宜蘭市":14,"羅東鎮":9,"蘇澳鎮":2,"五結鄉":4,"頭城鎮":6,"員山鄉":3,"礁溪鄉":4,"冬山鄉":2,"三星鄉":1},"新北市":{"汐止區":20,"萬里區":2,"土城區":18,"新莊區":47,"深坑區":1,"中和區":30,"瑞芳區":7,"樹林區":17,"永和區":14,"淡水區":13,"板橋區":62,"三重區":43,"林口區":7,"新店區":19,"蘆洲區":11,"石碇區":3,"三峽區":9,"鶯歌區":6,"泰山區":8,"五股區":10,"金山區":2,"三芝區":2,"雙溪區":1},"桃園市":{"桃園區":41,"龜山區":16,"平鎮區":17,"大溪區":9,"八德區":17,"中壢區":41,"大園區":21,"龍潭區":15,"蘆竹區":12,"楊梅區":6,"觀音區":8,"新屋區":1},"臺南市":{"安南區":12,"永康區":31,"中西區":19,"七股區":4,"佳里區":3,"南區":13,"麻豆區":8,"善化區":7,"北區":14,"新營區":18,"東區":14,"歸仁區":9,"柳營區":4,"東山區":3,"仁德區":23,"學甲區":4,"六甲區":3,"後壁區":2,"南化區":2,"安定區":2,"鹽水區":6,"關廟區":7,"山上區":1,"安平區":14,"新化區":7,"白河區":2,"新市區":4,"官田區":1,"北門區":1,"西港區":1},"臺中市":{"大里區":14,"太平區":12,"北屯區":17,"沙鹿區":14,"南屯區":9,"西屯區":15,"北區":15,"西區":7,"東區":2,"豐原區":11,"神岡區":3,"大雅區":5,"潭子區":3,"東勢區":1,"清水區":8,"新社區":1,"和平區":1,"中區":3,"烏日區":2,"梧棲區":6,"龍井區":3,"后里區":3,"南區":1,"霧峰區":2,"大甲區":2,"石岡區":1},"花蓮縣":{"吉安鄉":3,"富里鄉":3,"花蓮市":17,"玉里鎮":7,"萬榮鄉":1,"瑞穗鄉":2,"鳳林鎮":1,"秀林鄉":2,"光復鄉":1,"壽豐鄉":1,"新城鄉":4},"南投縣":{"名間鄉":6,"竹山鎮":10,"埔里鎮":7,"草屯鎮":17,"南投市":23,"集集鎮":2,"國姓鄉":1,"魚池鄉":2,"仁愛鄉":1,"中寮鄉":1,"鹿谷鄉":3},"苗栗縣":{"造橋鄉":7,"苗栗市":8,"後龍鎮":8,"三灣鄉":1,"公館鄉":2,"竹南鎮":11,"頭份市":6,"銅鑼鄉":2,"卓蘭鎮":1,"苑裡鎮":2,"通霄鎮":8,"頭份鎮":2,"大湖鄉":2,"頭屋鄉":1,"三義鄉":3},"基隆市":{"中正區":10,"中山區":9,"仁愛區":24,"暖暖區":6,"信義區":8,"安樂區":5,"七堵區":9},"雲林縣":{"虎尾鎮":12,"土庫鎮":2,"二崙鄉":3,"斗六市":10,"西螺鎮":4,"古坑鄉":3,"麥寮鄉":8,"斗南鎮":4,"大埤鄉":1,"莿桐鄉":2,"口湖鄉":3,"元長鄉":2,"水林鄉":2,"崙背鄉":2,"東勢鄉":1,"四湖鄉":4,"林內鄉":5},"嘉義市":{"西區":24,"東區":9},"新竹市":{"北區":8,"東區":5,"香山區":4},"新竹縣":{"新豐鄉":12,"湖口鄉":11,"關西鎮":2,"竹東鎮":7,"竹北市":10,"新埔鎮":3,"橫山鄉":2,"芎林鄉":1,"北埔鄉":2},"屏東縣":{"林邊鄉":3,"萬丹鄉":3,"新埤鄉":3,"萬巒鄉":2,"屏東市":14,"鹽埔鄉":4,"潮州鎮":3,"來義鄉":1,"東港鎮":3,"恆春鎮":1,"九如鄉":2,"長治鄉":4,"內埔鄉":8,"新園鄉":3,"三地門鄉":1,"枋寮鄉":2,"車城鄉":2,"高樹鄉":1,"崁頂鄉":1,"里港鄉":1},"澎湖縣":{"馬公市":7,"湖西鄉":2},"臺東縣":{"台東市":4,"成功鎮":2,"臺東市":4},"金門縣":{"金湖鎮":2,"金城鎮":1}},"搶奪":{"臺中市":{"西屯區":14,"太平區":7,"南區":11,"大里區":15,"東勢區":1,"北屯區":8,"中區":14,"霧峰區":3,"北區":16,"豐原區":11,"新社區":1,"烏日區":4,"南屯區":7,"東區":4,"潭子區":7,"梧棲區":3,"大甲區":2,"大肚區":2,"西區":12,"沙鹿區":4,"龍井區":2,"清水區":2,"大安區":1,"后里區":1,"神岡區":3,"石岡區":1},"花蓮縣":{"吉安鄉":15,"新城鄉":2,"花蓮市":9,"壽豐鄉":2,"鳳林鎮":2,"秀林鄉":1},"臺南市":{"安南區":11,"永康區":14,"仁德區":5,"善化區":2,"新營區":10,"北區":25,"歸仁區":3,"學甲區":2,"東區":14,"中西區":24,"柳營區":4,"南區":17,"新市區":1,"鹽水區":6,"後壁區":1,"佳里區":4,"西港區":1,"安平區":7,"麻豆區":4,"新化區":3,"山上區":1,"官田區":3,"下營區":1,"七股區":1,"將軍區":1},"臺北市":{"中山區":36,"文山區":9,"內湖區":8,"萬華區":39,"大安區":11,"士林區":14,"北投區":11,"中正區":22,"信義區":5,"大同區":22,"南港區":9,"松山區":3},"新北市":{"永和區":18,"土城區":19,"樹林區":19,"蘆洲區":13,"三重區":40,"汐止區":10,"板橋區":65,"五股區":9,"新莊區":39,"中和區":25,"鶯歌區":8,"淡水區":15,"新店區":10,"泰山區":10,"金山區":3,"三峽區":13,"林口區":5,"瑞芳區":2,"石門區":1,"八里區":1},"高雄市":{"鳳山區":59,"楠梓區":28,"新興區":16,"三民區":42,"林園區":9,"橋頭區":4,"左營區":32,"仁武區":6,"鳥松區":4,"岡山區":13,"小港區":11,"彌陀區":3,"梓官區":4,"前鎮區":38,"大樹區":2,"湖內區":4,"苓雅區":34,"前金區":8,"旗山區":4,"燕巢區":3,"路竹區":4,"茄萣區":3,"大寮區":14,"阿蓮區":3,"鼓山區":11,"鹽埕區":1,"大社區":2,"甲仙區":1,"美濃區":1,"旗津區":1},"屏東縣":{"竹田鄉":1,"恆春鎮":2,"潮州鎮":9,"東港鎮":8,"屏東市":21,"枋寮鄉":2,"崁頂鄉":1,"高樹鄉":4,"里港鄉":1,"長治鄉":2,"萬丹鄉":3,"新園鄉":3,"內埔鄉":2},"南投縣":{"南投市":19,"草屯鎮":10,"名間鄉":1,"中寮鄉":1,"鹿谷鄉":1,"信義鄉":1,"水里鄉":1,"埔里鎮":8,"魚池鄉":2,"竹山鎮":2},"新竹縣":{"湖口鄉":18,"芎林鄉":1,"寶山鄉":1,"竹北市":7,"新豐鄉":4,"竹東鎮":7,"新埔鎮":1,"關西鎮":1},"桃園市":{"中壢區":25,"八德區":14,"大園區":5,"桃園區":22,"平鎮區":6,"蘆竹區":7,"龍潭區":8,"大溪區":8,"觀音區":2,"龜山區":10,"新屋區":3,"楊梅區":6},"彰化縣":{"彰化市":18,"和美鎮":2,"鹿港鎮":9,"花壇鄉":3,"永靖鄉":3,"二林鎮":4,"社頭鄉":3,"溪湖鎮":12,"員林市":8,"二水鄉":2,"竹塘鄉":1,"田中鎮":7,"大村鄉":5,"伸港鄉":4,"福興鄉":4,"北斗鎮":4,"溪州鄉":2,"芳苑鄉":1,"埔心鄉":1,"線西鄉":1},"嘉義市":{"西區":11,"東區":8},"新竹市":{"東區":15,"北區":11},"宜蘭縣":{"壯圍鄉":1,"宜蘭市":10,"員山鄉":2,"五結鄉":2,"冬山鄉":1,"羅東鎮":5,"礁溪鄉":3,"頭城鎮":1},"雲林縣":{"大埤鄉":1,"斗六市":8,"北港鎮":5,"斗南鎮":3,"西螺鎮":2,"麥寮鄉":3,"二崙鄉":1,"莿桐鄉":1,"林內鄉":2,"元長鄉":3,"虎尾鎮":4,"褒忠鄉":1,"口湖鄉":1,"水林鄉":1,"東勢鄉":1},"金門縣":{"金城鎮":3,"金湖鎮":1},"基隆市":{"安樂區":8,"中山區":7,"仁愛區":14,"信義區":3,"中正區":3,"七堵區":3},"嘉義縣":{"中埔鄉":1,"民雄鄉":4,"竹崎鄉":1,"布袋鎮":3,"水上鄉":2,"新港鄉":2,"朴子市":5,"太保市":3,"鹿草鄉":2,"六腳鄉":1},"苗栗縣":{"竹南鎮":7,"頭份市":6,"西湖鄉":1,"造橋鄉":1,"苗栗市":4,"三義鄉":2,"後龍鎮":1,"公館鄉":2,"苑裡鎮":1},"臺東縣":{"臺東市":2,"成功鎮":1,"鹿野鄉":1,"大武鄉":1,"東河鄉":1,"台東市":1},"連江縣":{"南竿鄉":1}},"機車竊盜":{"臺北市":{"松山區":104,"南港區":111,"大同區":180,"萬華區":330,"大安區":182,"信義區":161,"中山區":210,"北投區":252,"內湖區":99,"文山區":157,"中正區":165,"士林區":330},"高雄市":{"三民區":592,"岡山區":164,"新興區":135,"旗山區":59,"林園區":148,"大寮區":277,"左營區":237,"苓雅區":305,"鼓山區":112,"路竹區":38,"小港區":235,"前金區":97,"燕巢區":62,"前鎮區":310,"大社區":63,"楠梓區":254,"彌陀區":15,"仁武區":102,"梓官區":32,"鹽埕區":38,"大樹區":48,"鳥松區":48,"內門區":7,"旗津區":31,"阿蓮區":31,"六龜區":9,"美濃區":43,"茄萣區":17,"杉林區":15,"湖內區":25,"永安區":8,"桃源區":1,"甲仙區":13,"橋頭區":58,"鳳山區":80,"田寮區":5,"那瑪夏區":1},"桃園市":{"八德區":384,"龍潭區":286,"中壢區":1649,"蘆竹區":211,"大園區":164,"龜山區":410,"桃園區":1257,"平鎮區":474,"觀音區":114,"大溪區":144,"楊梅區":325,"新屋區":85,"復興區":9},"新北市":{"中和區":647,"板橋區":882,"蘆洲區":291,"樹林區":347,"新莊區":684,"土城區":406,"淡水區":307,"新店區":288,"萬里區":19,"三重區":913,"永和區":260,"深坑區":18,"鶯歌區":392,"三峽區":349,"汐止區":267,"泰山區":142,"五股區":187,"林口區":115,"金山區":36,"八里區":52,"雙溪區":7,"瑞芳區":51,"三芝區":22,"烏來區":5,"坪林區":2,"平溪區":2,"石門區":5,"石碇區":4,"貢寮區":5},"臺中市":{"東區":256,"大里區":231,"北區":335,"西屯區":390,"太平區":244,"西區":197,"清水區":83,"南區":234,"大雅區":117,"大甲區":92,"豐原區":235,"沙鹿區":158,"中區":196,"霧峰區":100,"北屯區":405,"大肚區":46,"南屯區":87,"神岡區":46,"梧棲區":72,"龍井區":69,"潭子區":107,"烏日區":83,"后里區":72,"和平區":10,"新社區":41,"東勢區":64,"石岡區":23,"大安區":13,"外埔區":23},"新竹市":{"北區":286,"東區":453,"香山區":132},"南投縣":{"埔里鎮":313,"南投市":320,"草屯鎮":163,"竹山鎮":71,"中寮鄉":11,"名間鄉":61,"鹿谷鄉":8,"水里鄉":35,"信義鄉":19,"仁愛鄉":21,"魚池鄉":15,"國姓鄉":21,"集集鎮":7},"臺南市":{"南區":101,"安南區":212,"永康區":245,"東區":231,"仁德區":101,"北區":172,"安平區":45,"中西區":177,"鹽水區":26,"關廟區":50,"安定區":30,"新營區":108,"歸仁區":49,"官田區":22,"麻豆區":35,"七股區":15,"新化區":23,"柳營區":23,"東山區":18,"佳里區":36,"善化區":39,"新市區":34,"後壁區":17,"學甲區":10,"六甲區":15,"西港區":8,"楠西區":3,"下營區":11,"左鎮區":5,"龍崎區":4,"白河區":20,"北門區":4,"山上區":4,"玉井區":15,"南化區":5,"大內區":5,"將軍區":9},"雲林縣":{"斗六市":173,"麥寮鄉":85,"西螺鎮":67,"褒忠鄉":14,"北港鎮":31,"古坑鄉":16,"口湖鄉":21,"東勢鄉":21,"虎尾鎮":175,"斗南鎮":57,"莿桐鄉":28,"台西鄉":7,"水林鄉":18,"元長鄉":16,"土庫鎮":22,"四湖鄉":35,"大埤鄉":7,"二崙鄉":10,"林內鄉":22,"崙背鄉":24,"臺西鄉":15},"苗栗縣":{"苗栗市":168,"南庄鄉":5,"頭份市":117,"大湖鄉":17,"獅潭鄉":4,"苑裡鎮":21,"卓蘭鎮":15,"竹南鎮":87,"後龍鎮":19,"三灣鄉":10,"公館鄉":13,"頭屋鄉":8,"通霄鎮":9,"三義鄉":17,"造橋鄉":8,"西湖鄉":3,"銅鑼鄉":14,"泰安鄉":3,"頭份鎮":9},"花蓮縣":{"花蓮市":280,"吉安鄉":136,"玉里鎮":51,"瑞穗鄉":29,"鳳林鎮":13,"秀林鄉":14,"富里鄉":7,"新城鄉":47,"光復鄉":15,"萬榮鄉":10,"壽豐鄉":36,"豐濱鄉":4,"卓溪鄉":1},"屏東縣":{"東港鎮":95,"新園鄉":55,"潮州鎮":93,"屏東市":358,"內埔鄉":78,"林邊鄉":28,"鹽埔鄉":40,"麟洛鄉":28,"萬丹鄉":76,"竹田鄉":24,"枋寮鄉":46,"崁頂鄉":16,"三地門鄉":9,"佳冬鄉":24,"里港鄉":27,"萬巒鄉":31,"滿州鄉":11,"新埤鄉":9,"恆春鎮":56,"長治鄉":26,"九如鄉":16,"高樹鄉":26,"南州鄉":10,"來義鄉":5,"枋山鄉":7,"瑪家鄉":3,"琉球鄉":18,"春日鄉":10,"車城鄉":19,"泰武鄉":1,"獅子鄉":4,"牡丹鄉":3},"彰化縣":{"社頭鄉":52,"溪湖鎮":53,"員林市":238,"花壇鄉":61,"伸港鄉":48,"鹿港鎮":94,"彰化市":378,"秀水鄉":30,"竹塘鄉":10,"埔鹽鄉":18,"二林鎮":52,"芳苑鄉":38,"和美鎮":63,"北斗鎮":57,"大村鄉":57,"埔心鄉":57,"福興鄉":38,"埤頭鄉":31,"線西鄉":12,"永靖鄉":37,"田中鎮":64,"芬園鄉":25,"溪州鄉":32,"二水鄉":27,"大城鄉":16,"田尾鄉":22,"員林鎮":45},"宜蘭縣":{"羅東鎮":255,"宜蘭市":233,"五結鄉":65,"冬山鄉":53,"礁溪鄉":57,"員山鄉":33,"壯圍鄉":21,"頭城鎮":34,"蘇澳鎮":46,"三星鄉":13,"南澳鄉":5,"大同鄉":5},"基隆市":{"中山區":125,"暖暖區":58,"仁愛區":157,"中正區":120,"安樂區":97,"信義區":78,"七堵區":83},"嘉義市":{"東區":80,"西區":164},"臺東縣":{"台東市":72,"鹿野鄉":8,"太麻里鄉":8,"關山鎮":15,"臺東市":55,"海端鄉":8,"東河鄉":3,"池上鄉":5,"達仁鄉":3,"蘭嶼鄉":3,"成功鎮":9,"卑南鄉":10,"長濱鄉":3,"延平鄉":1,"綠島鄉":2},"新竹縣":{"關西鎮":69,"湖口鄉":270,"竹北市":270,"芎林鄉":30,"橫山鄉":22,"新豐鄉":163,"竹東鎮":240,"新埔鎮":50,"北埔鄉":16,"寶山鄉":16,"峨眉鄉":4,"尖石鄉":8,"五峰鄉":1},"嘉義縣":{"六腳鄉":13,"朴子市":38,"中埔鄉":20,"東石鄉":14,"義竹鄉":12,"民雄鄉":52,"鹿草鄉":15,"布袋鎮":20,"水上鄉":30,"大林鎮":32,"太保市":42,"溪口鄉":5,"竹崎鄉":18,"新港鄉":20,"梅山鄉":9,"大埔鄉":2,"番路鄉":4,"阿里山鄉":1},"澎湖縣":{"馬公市":47,"白沙鄉":5,"西嶼鄉":5,"望安鄉":1,"湖西鄉":3},"金門縣":{"金城鎮":31,"金沙鎮":6,"金寧鄉":10,"金湖鎮":11,"烈嶼鄉":2},"連江縣":{"南竿鄉":2,"北竿鄉":1}},"毒品":{"新北市":{"三重區":11172,"板橋區":9622,"林口區":891,"三芝區":302,"土城區":3710,"深坑區":218,"蘆洲區":3164,"永和區":1928,"樹林區":3384,"新店區":3142,"汐止區":2156,"五股區":1605,"三峽區":1335,"新莊區":5315,"淡水區":1318,"瑞芳區":1059,"鶯歌區":1053,"中和區":5374,"泰山區":921,"平溪區":70,"金山區":262,"石門區":130,"萬里區":288,"貢寮區":143,"烏來區":139,"八里區":598,"雙溪區":88,"石碇區":44,"坪林區":26},"桃園市":{"平鎮區":4079,"中壢區":10682,"蘆竹區":1761,"桃園區":11612,"龍潭區":1904,"楊梅區":2248,"大溪區":1648,"龜山區":3616,"大園區":1799,"八德區":4752,"觀音區":1108,"新屋區":681,"復興區":136},"臺北市":{"中山區":6143,"萬華區":8481,"松山區":2436,"內湖區":1711,"北投區":1744,"信義區":2117,"大同區":2982,"大安區":4304,"中正區":1608,"文山區":1956,"士林區":2203,"南港區":1175},"臺南市":{"歸仁區":570,"安平區":514,"永康區":4497,"東區":1211,"安南區":2035,"佳里區":350,"楠西區":82,"仁德區":984,"學甲區":270,"後壁區":177,"北區":2061,"鹽水區":221,"南區":978,"新市區":342,"中西區":1750,"關廟區":297,"安定區":298,"麻豆區":242,"六甲區":277,"新營區":621,"官田區":193,"東山區":175,"善化區":364,"將軍區":126,"七股區":109,"北門區":109,"西港區":162,"白河區":254,"新化區":322,"下營區":98,"龍崎區":16,"南化區":62,"柳營區":136,"大內區":55,"玉井區":125,"左鎮區":45,"山上區":58},"屏東縣":{"萬丹鄉":757,"屏東市":3241,"恆春鎮":434,"東港鎮":786,"潮州鎮":1174,"高樹鄉":464,"內埔鄉":1080,"林邊鄉":213,"新園鄉":452,"麟洛鄉":264,"滿州鄉":30,"車城鄉":134,"里港鄉":239,"長治鄉":450,"萬巒鄉":354,"佳冬鄉":190,"枋寮鄉":477,"鹽埔鄉":376,"九如鄉":244,"崁頂鄉":141,"琉球鄉":49,"南州鄉":105,"新埤鄉":123,"來義鄉":41,"竹田鄉":260,"枋山鄉":129,"瑪家鄉":93,"春日鄉":86,"獅子鄉":35,"牡丹鄉":4,"三地門鄉":83,"霧台鄉":14,"泰武鄉":23,"霧臺鄉":7},"基隆市":{"中正區":1549,"七堵區":1310,"中山區":1428,"仁愛區":2630,"安樂區":1484,"暖暖區":912,"信義區":1076},"雲林縣":{"斗六市":1572,"褒忠鄉":112,"麥寮鄉":873,"斗南鎮":515,"北港鎮":571,"水林鄉":280,"虎尾鎮":820,"崙背鄉":163,"大埤鄉":242,"元長鄉":225,"林內鄉":166,"口湖鄉":271,"台西鄉":173,"四湖鄉":228,"二崙鄉":136,"西螺鎮":372,"古坑鄉":471,"東勢鄉":135,"土庫鎮":181,"莿桐鄉":271,"臺西鄉":156},"臺中市":{"中區":1152,"西區":977,"豐原區":1325,"潭子區":929,"大里區":1721,"北屯區":3135,"東區":1005,"太平區":1697,"清水區":659,"和平區":63,"東勢區":392,"神岡區":454,"龍井區":566,"南屯區":1078,"梧棲區":479,"沙鹿區":878,"南區":691,"西屯區":3702,"大甲區":718,"北區":3526,"大雅區":677,"霧峰區":528,"大肚區":341,"烏日區":673,"后里區":465,"大安區":168,"石岡區":57,"外埔區":234,"新社區":83},"高雄市":{"美濃區":482,"三民區":3902,"苓雅區":2063,"大寮區":1314,"旗津區":513,"岡山區":1048,"新興區":1426,"前鎮區":1406,"林園區":863,"梓官區":424,"左營區":1436,"鳳山區":2903,"湖內區":305,"茄萣區":442,"鹽埕區":227,"小港區":1328,"橋頭區":416,"楠梓區":1250,"鼓山區":1214,"杉林區":261,"鳥松區":665,"仁武區":875,"六龜區":228,"路竹區":650,"大社區":497,"大樹區":436,"阿蓮區":338,"前金區":688,"旗山區":369,"永安區":102,"燕巢區":324,"田寮區":37,"彌陀區":135,"甲仙區":44,"內門區":75,"茂林區":8,"桃源區":9},"花蓮縣":{"瑞穗鄉":139,"光復鄉":92,"花蓮市":1809,"吉安鄉":1233,"新城鄉":402,"秀林鄉":251,"鳳林鎮":156,"玉里鎮":403,"卓溪鄉":30,"壽豐鄉":146,"豐濱鄉":5,"富里鄉":98,"萬榮鄉":46},"彰化縣":{"員林市":1496,"田中鎮":370,"二林鎮":445,"和美鎮":678,"線西鄉":131,"芬園鄉":211,"彰化市":1765,"鹿港鎮":728,"北斗鎮":340,"溪湖鎮":480,"大村鄉":485,"伸港鄉":384,"永靖鄉":314,"埔心鄉":479,"福興鄉":337,"社頭鄉":419,"田尾鄉":268,"溪州鄉":271,"二水鄉":170,"埤頭鄉":299,"芳苑鄉":198,"花壇鄉":369,"秀水鄉":246,"埔鹽鄉":270,"大城鄉":59,"竹塘鄉":68,"員林鎮":106},"新竹市":{"東區":1581,"北區":1514,"香山區":641},"宜蘭縣":{"宜蘭市":1173,"南澳鄉":95,"羅東鎮":1074,"蘇澳鎮":641,"頭城鎮":337,"礁溪鄉":661,"五結鄉":497,"員山鄉":445,"冬山鄉":519,"三星鄉":186,"壯圍鄉":261,"大同鄉":62},"嘉義縣":{"水上鄉":620,"太保市":408,"民雄鄉":788,"番路鄉":65,"鹿草鄉":108,"朴子市":365,"阿里山鄉":17,"義竹鄉":106,"東石鄉":214,"大林鎮":327,"中埔鄉":573,"新港鄉":230,"梅山鄉":156,"溪口鄉":86,"大埔鄉":3,"竹崎鄉":291,"六腳鄉":218,"布袋鎮":151},"苗栗縣":{"苗栗市":1088,"三義鄉":185,"頭份市":1529,"苑裡鎮":374,"公館鄉":300,"大湖鄉":196,"銅鑼鄉":178,"泰安鄉":75,"竹南鎮":1117,"後龍鎮":404,"南庄鄉":143,"三灣鄉":52,"頭屋鄉":90,"造橋鄉":212,"卓蘭鎮":123,"通霄鎮":392,"獅潭鄉":58,"西湖鄉":44,"頭份鎮":66},"新竹縣":{"竹北市":1630,"湖口鄉":1168,"竹東鎮":1311,"關西鎮":404,"新埔鎮":298,"寶山鄉":185,"橫山鄉":256,"五峰鄉":167,"新豐鄉":441,"芎林鄉":306,"尖石鄉":180,"北埔鄉":87,"峨眉鄉":61},"南投縣":{"魚池鄉":193,"草屯鎮":1065,"仁愛鄉":154,"埔里鎮":1495,"竹山鎮":590,"國姓鄉":268,"水里鄉":252,"南投市":1236,"鹿谷鄉":172,"名間鄉":358,"集集鎮":127,"中寮鄉":101,"信義鄉":68},"嘉義市":{"西區":3680,"東區":1539},"臺東縣":{"鹿野鄉":58,"池上鄉":101,"台東市":985,"太麻里鄉":67,"達仁鄉":31,"關山鎮":54,"卑南鄉":207,"東河鄉":26,"大武鄉":51,"成功鎮":73,"長濱鄉":15,"金峰鄉":1,"延平鄉":6,"臺東市":717,"蘭嶼鄉":3,"海端鄉":5},"澎湖縣":{"湖西鄉":61,"七美鄉":5,"馬公市":258,"西嶼鄉":4,"白沙鄉":9,"望安鄉":2},"金門縣":{"金城鎮":152,"金寧鄉":75,"金湖鎮":115,"金沙鎮":45,"烈嶼鄉":7,"烏坵鄉":1},"連江縣":{"南竿鄉":46,"東引鄉":1}},"汽車竊盜":{"新竹市":{"東區":199,"北區":153,"香山區":90},"苗栗縣":{"苗栗市":133,"苑裡鎮":44,"公館鄉":33,"竹南鎮":140,"銅鑼鄉":23,"卓蘭鎮":14,"頭份市":116,"頭屋鄉":8,"通霄鎮":21,"後龍鎮":49,"大湖鄉":9,"造橋鄉":13,"三義鄉":45,"泰安鄉":3,"頭份鎮":23,"西湖鄉":7,"獅潭鄉":2,"南庄鄉":2,"三灣鄉":3},"高雄市":{"鳳山區":339,"小港區":124,"旗山區":74,"茄萣區":12,"林園區":111,"仁武區":184,"楠梓區":227,"前鎮區":101,"三民區":182,"鼓山區":63,"苓雅區":64,"岡山區":132,"湖內區":24,"鳥松區":66,"大寮區":154,"美濃區":47,"燕巢區":79,"橋頭區":51,"前金區":10,"阿蓮區":23,"杉林區":9,"大樹區":39,"彌陀區":6,"大社區":63,"路竹區":35,"左營區":116,"甲仙區":15,"梓官區":18,"永安區":8,"內門區":16,"鹽埕區":9,"新興區":16,"六龜區":8,"田寮區":4,"茂林區":1,"旗津區":2},"雲林縣":{"斗六市":128,"麥寮鄉":63,"台西鄉":10,"口湖鄉":10,"四湖鄉":13,"北港鎮":43,"虎尾鎮":77,"斗南鎮":55,"元長鄉":14,"崙背鄉":20,"褒忠鄉":6,"西螺鎮":37,"東勢鄉":12,"莿桐鄉":20,"古坑鄉":12,"大埤鄉":8,"林內鄉":12,"二崙鄉":15,"水林鄉":10,"臺西鄉":7,"土庫鎮":8},"新竹縣":{"寶山鄉":24,"竹北市":436,"湖口鄉":443,"新豐鄉":236,"竹東鎮":193,"關西鎮":86,"新埔鎮":83,"芎林鄉":48,"橫山鄉":16,"北埔鄉":6,"尖石鄉":5,"峨眉鄉":9},"臺南市":{"永康區":261,"新營區":50,"後壁區":11,"歸仁區":59,"北區":149,"六甲區":12,"安平區":88,"麻豆區":23,"安南區":144,"仁德區":74,"中西區":58,"東區":112,"柳營區":12,"新化區":20,"南區":99,"佳里區":32,"白河區":29,"官田區":16,"關廟區":21,"西港區":16,"玉井區":10,"新市區":21,"學甲區":12,"下營區":8,"七股區":3,"南化區":7,"安定區":20,"大內區":1,"鹽水區":11,"龍崎區":1,"左鎮區":4,"善化區":21,"楠西區":1,"山上區":3,"東山區":13,"將軍區":7,"北門區":1},"嘉義縣":{"朴子市":53,"太保市":58,"梅山鄉":12,"水上鄉":46,"民雄鄉":69,"大埔鄉":2,"大林鎮":45,"新港鄉":22,"中埔鄉":27,"鹿草鄉":12,"六腳鄉":12,"溪口鄉":10,"東石鄉":4,"竹崎鄉":11,"義竹鄉":5,"布袋鎮":10,"番路鄉":3,"阿里山鄉":2},"嘉義市":{"西區":187,"東區":87},"桃園市":{"中壢區":694,"龜山區":312,"蘆竹區":179,"桃園區":267,"新屋區":106,"龍潭區":327,"八德區":304,"楊梅區":419,"觀音區":165,"大溪區":312,"平鎮區":270,"大園區":138,"復興區":16},"新北市":{"中和區":100,"林口區":132,"八里區":86,"淡水區":64,"汐止區":118,"五股區":95,"板橋區":142,"三重區":181,"土城區":122,"鶯歌區":117,"泰山區":53,"樹林區":153,"三峽區":132,"新莊區":145,"新店區":92,"蘆洲區":43,"金山區":8,"永和區":32,"石碇區":2,"三芝區":9,"萬里區":9,"深坑區":6,"瑞芳區":10,"平溪區":2,"雙溪區":3,"坪林區":1,"石門區":1},"臺中市":{"西區":39,"豐原區":108,"大里區":90,"東勢區":37,"沙鹿區":93,"大肚區":36,"西屯區":132,"太平區":74,"北屯區":141,"大甲區":71,"南屯區":80,"龍井區":50,"梧棲區":66,"大安區":5,"烏日區":58,"北區":56,"東區":74,"霧峰區":32,"大雅區":50,"神岡區":24,"潭子區":37,"南區":43,"后里區":42,"清水區":53,"中區":21,"石岡區":15,"外埔區":15,"新社區":12,"和平區":2},"屏東縣":{"高樹鄉":22,"東港鎮":61,"佳冬鄉":13,"新園鄉":38,"鹽埔鄉":8,"潮州鎮":71,"枋寮鄉":37,"屏東市":246,"竹田鄉":23,"九如鄉":21,"內埔鄉":51,"萬丹鄉":78,"崁頂鄉":6,"新埤鄉":12,"里港鄉":24,"恆春鎮":40,"滿州鄉":4,"麟洛鄉":19,"萬巒鄉":12,"長治鄉":43,"林邊鄉":25,"南州鄉":13,"車城鄉":11,"泰武鄉":3,"春日鄉":4,"瑪家鄉":2,"來義鄉":2,"獅子鄉":1,"三地門鄉":1,"枋山鄉":1},"宜蘭縣":{"員山鄉":33,"五結鄉":85,"冬山鄉":66,"宜蘭市":101,"礁溪鄉":44,"三星鄉":24,"南澳鄉":6,"羅東鎮":114,"壯圍鄉":21,"蘇澳鎮":55,"頭城鎮":19,"大同鄉":5},"彰化縣":{"二林鎮":62,"員林市":74,"彰化市":125,"北斗鎮":22,"秀水鄉":23,"鹿港鎮":72,"溪湖鎮":74,"和美鎮":46,"社頭鄉":25,"埔鹽鄉":20,"花壇鄉":39,"永靖鄉":14,"大村鄉":25,"芬園鄉":5,"埤頭鄉":24,"福興鄉":44,"大城鄉":6,"線西鄉":15,"伸港鄉":28,"埔心鄉":27,"田中鎮":22,"田尾鄉":12,"溪州鄉":24,"芳苑鄉":18,"竹塘鄉":8,"員林鎮":15,"二水鄉":4},"南投縣":{"仁愛鄉":5,"草屯鎮":128,"水里鄉":23,"埔里鎮":160,"南投市":94,"竹山鎮":56,"名間鄉":47,"魚池鄉":19,"國姓鄉":17,"信義鄉":11,"鹿谷鄉":9,"集集鎮":8,"中寮鄉":5},"花蓮縣":{"新城鄉":14,"吉安鄉":67,"瑞穗鄉":12,"鳳林鎮":7,"花蓮市":116,"秀林鄉":13,"光復鄉":14,"富里鄉":2,"玉里鎮":20,"壽豐鄉":7,"萬榮鄉":1,"豐濱鄉":1},"澎湖縣":{"馬公市":13,"湖西鄉":6,"七美鄉":2,"西嶼鄉":2,"白沙鄉":1},"臺北市":{"南港區":43,"文山區":41,"信義區":28,"萬華區":87,"北投區":107,"大同區":36,"士林區":71,"中山區":32,"中正區":18,"松山區":29,"大安區":26,"內湖區":33},"基隆市":{"安樂區":31,"中正區":27,"暖暖區":17,"七堵區":38,"中山區":21,"仁愛區":25,"信義區":20},"臺東縣":{"太麻里鄉":3,"台東市":16,"臺東市":27,"關山鎮":6,"海端鄉":2,"池上鄉":2,"卑南鄉":10,"鹿野鄉":5,"達仁鄉":1},"金門縣":{"金寧鄉":6,"金湖鎮":8,"金城鎮":6,"烈嶼鄉":2,"金沙鎮":1},"連江縣":{"南竿鄉":2}},"組織犯罪":{"金門縣":{"金沙鎮":1},"臺中市":{"沙鹿區":1,"豐原區":1,"后里區":1,"西屯區":1,"龍井區":1,"北屯區":1,"太平區":1},"基隆市":{"信義區":1,"中正區":1,"安樂區":1},"臺北市":{"中山區":4,"大安區":2,"士林區":3,"松山區":1,"大同區":1,"北投區":1},"雲林縣":{"斗六市":1},"嘉義縣":{"大林鎮":1,"新港鄉":1},"高雄市":{"鳳山區":1,"三民區":1,"鼓山區":1,"前鎮區":1},"新北市":{"三重區":3,"八里區":1,"蘆洲區":1,"五股區":1,"泰山區":1,"新莊區":1},"新竹市":{"北區":2},"南投縣":{"水里鄉":1},"宜蘭縣":{"羅東鎮":1,"蘇澳鎮":2,"冬山鄉":1},"桃園市":{"中壢區":1,"龜山區":1},"彰化縣":{"鹿港鎮":1,"員林市":2,"大村鄉":1},"花蓮縣":{"花蓮市":2,"光復鄉":1},"臺南市":{"關廟區":1,"南區":1,"安南區":1,"永康區":1,"北區":1},"澎湖縣":{"馬公市":1},"屏東縣":{"屏東市":1},"新竹縣":{"竹北市":1}}},"typeMonth":{"住宅竊盜":{"1":2808,"2":2237,"3":1871,"4":2568,"5":2049,"6":1266,"7":2477,"8":2027,"9":1595,"10":2821,"11":2164,"12":1560},"強制性交":{"1":224,"2":155,"3":120,"4":268,"5":202,"6":119,"7":225,"8":218,"9":140,"10":239,"11":186,"12":133},"強盜":{"1":191,"2":170,"3":166,"4":171,"5":171,"6":150,"7":160,"8":174,"9":163,"10":161,"11":150,"12":153},"搶奪":{"1":151,"2":149,"3":152,"4":177,"5":137,"6":165,"7":148,"8":144,"9":124,"10":183,"11":137,"12":127},"機車竊盜":{"1":6574,"2":6080,"3":6528,"4":6401,"5":6860,"6":6615,"7":7090,"8":6831,"9":6032,"10":6804,"11":6188,"12":5441},"毒品":{"1":32702,"2":23496,"3":21369,"4":33982,"5":25759,"6":14881,"7":41075,"8":28063,"9":16088,"10":33553,"11":24416,"12":13429},"汽車竊盜":{"1":1875,"2":1726,"3":1634,"4":1778,"5":1706,"6":1402,"7":1637,"8":1634,"9":1175,"10":1566,"11":1429,"12":1247},"組織犯罪":{"1":7,"2":3,"3":8,"4":5,"5":4,"6":1,"7":12,"8":5,"9":1,"10":8,"11":4,"12":4}},"typeMonthYear":{"住宅竊盜":{"104":{"1":367,"2":264,"3":169,"4":298,"5":232,"6":139,"7":269,"8":240,"9":164,"10":262,"11":231,"12":204},"105":{"1":260,"2":263,"3":173,"4":313,"5":251,"6":169,"7":281,"8":243,"9":154,"10":268,"11":211,"12":139},"106":{"1":242,"2":184,"3":171,"4":282,"5":242,"6":106,"7":282,"8":229,"9":155,"10":246,"11":199,"12":121},"107":{"1":223,"2":164,"3":121,"4":206,"5":167,"6":118,"7":201,"8":165,"9":105,"10":227,"11":158,"12":102},"108":{"1":211,"2":147,"3":83,"4":207,"5":143,"6":99,"7":223,"8":139,"9":72,"10":177,"11":137,"12":58},"109":{"1":130,"2":105,"3":66,"4":156,"5":103,"6":53,"7":126,"8":119,"9":40,"10":173,"11":161,"12":65},"110":{"1":157,"2":84,"3":63,"4":146,"5":89,"6":34,"7":143,"8":100,"9":63,"10":159,"11":97,"12":55},"111":{"1":94,"2":88,"3":55,"4":145,"5":106,"6":46,"7":149,"8":105,"9":39,"10":181,"11":103,"12":49},"112":{"1":182,"2":108,"3":34,"4":171,"5":123,"6":43,"7":207,"8":95,"9":26,"10":153,"11":107,"12":20},"113":{"1":94,"2":62,"3":31,"4":100,"5":68,"6":32,"7":129,"8":146,"9":393,"10":537,"11":370,"12":379},"114":{"1":434,"2":437,"3":571,"4":544,"5":525,"6":427,"7":467,"8":446,"9":384,"10":438,"11":390,"12":368},"115":{"1":414,"2":331,"3":334}},"強制性交":{"104":{"1":49,"2":21,"3":21,"4":41,"5":33,"6":28,"7":45,"8":33,"9":29,"10":49,"11":38,"12":30},"105":{"1":34,"2":24,"3":14,"4":44,"5":36,"6":24,"7":37,"8":33,"9":26,"10":38,"11":24,"12":22},"106":{"1":24,"2":22,"3":14,"4":21,"5":25,"6":10,"7":28,"8":30,"9":16,"10":23,"11":11,"12":14},"107":{"1":27,"2":17,"3":10,"4":25,"5":18,"6":6,"7":20,"8":14,"9":14,"10":16,"11":16,"12":12},"108":{"1":10,"2":11,"3":9,"4":20,"5":13,"6":9,"7":19,"8":22,"9":9,"10":16,"11":13,"12":7},"109":{"1":9,"2":9,"3":9,"4":20,"5":7,"6":7,"7":14,"8":17,"9":10,"10":17,"11":16,"12":11},"110":{"1":9,"2":6,"3":11,"4":20,"5":12,"6":2,"7":7,"8":9,"9":6,"10":11,"11":7,"12":5},"111":{"1":11,"2":6,"3":6,"4":21,"5":6,"6":4,"7":12,"8":7,"9":6,"10":15,"11":19,"12":8},"112":{"1":13,"2":7,"3":1,"4":19,"5":13,"6":8,"7":13,"8":13,"9":4,"10":18,"11":15,"12":6},"113":{"1":8,"2":6,"3":6,"4":15,"5":6,"6":5,"7":13,"8":14,"9":8,"10":15,"11":13,"12":5},"114":{"1":15,"2":12,"3":9,"4":22,"5":33,"6":16,"7":17,"8":26,"9":12,"10":21,"11":14,"12":13},"115":{"1":15,"2":14,"3":10}},"強盜":{"104":{"1":32,"2":22,"3":29,"4":33,"5":27,"6":26,"7":33,"8":28,"9":31,"10":31,"11":30,"12":19},"105":{"1":30,"2":31,"3":28,"4":24,"5":24,"6":18,"7":18,"8":17,"9":22,"10":21,"11":27,"12":18},"106":{"1":20,"2":15,"3":11,"4":25,"5":23,"6":25,"7":30,"8":33,"9":20,"10":18,"11":19,"12":16},"107":{"1":20,"2":17,"3":18,"4":15,"5":12,"6":14,"7":10,"8":23,"9":10,"10":21,"11":12,"12":14},"108":{"1":11,"2":10,"3":14,"4":17,"5":15,"6":13,"7":18,"8":13,"9":7,"10":15,"11":15,"12":23},"109":{"1":14,"2":18,"3":7,"4":17,"5":10,"6":12,"7":12,"8":7,"9":15,"10":6,"11":10,"12":9},"110":{"1":12,"2":12,"3":13,"4":14,"5":16,"6":9,"7":14,"8":13,"9":9,"10":11,"11":10,"12":14},"111":{"1":11,"2":8,"3":9,"4":8,"5":15,"6":13,"7":6,"8":11,"9":10,"10":9,"11":6,"12":15},"112":{"1":17,"2":13,"3":11,"4":6,"5":11,"6":7,"7":10,"8":8,"9":13,"10":10,"11":4,"12":9},"113":{"1":8,"2":8,"3":5,"4":9,"5":7,"6":1,"7":4,"8":6,"9":8,"10":6,"11":8,"12":7},"114":{"1":10,"2":4,"3":15,"4":3,"5":11,"6":12,"7":5,"8":15,"9":18,"10":13,"11":9,"12":9},"115":{"1":6,"2":12,"3":6}},"搶奪":{"104":{"1":29,"2":16,"3":28,"4":40,"5":29,"6":30,"7":17,"8":25,"9":16,"10":47,"11":36,"12":30},"105":{"1":28,"2":24,"3":19,"4":31,"5":22,"6":29,"7":24,"8":30,"9":18,"10":37,"11":24,"12":20},"106":{"1":18,"2":9,"3":20,"4":19,"5":17,"6":35,"7":21,"8":12,"9":15,"10":25,"11":18,"12":9},"107":{"1":12,"2":13,"3":18,"4":19,"5":18,"6":12,"7":23,"8":17,"9":12,"10":13,"11":14,"12":9},"108":{"1":18,"2":19,"3":8,"4":8,"5":10,"6":9,"7":15,"8":14,"9":4,"10":9,"11":6,"12":9},"109":{"1":10,"2":14,"3":14,"4":9,"5":9,"6":14,"7":10,"8":8,"9":6,"10":11,"11":9,"12":10},"110":{"1":6,"2":11,"3":9,"4":17,"5":9,"6":8,"7":4,"8":9,"9":10,"10":12,"11":7,"12":6},"111":{"1":8,"2":1,"3":14,"4":11,"5":5,"6":12,"7":7,"8":12,"9":5,"10":9,"11":6,"12":9},"112":{"1":3,"2":9,"3":6,"4":7,"5":8,"6":3,"7":10,"8":7,"9":9,"10":2,"11":8,"12":7},"113":{"1":4,"2":8,"3":1,"4":6,"5":4,"6":5,"7":6,"8":2,"9":11,"10":9,"11":3,"12":7},"114":{"1":10,"2":10,"3":8,"4":10,"5":6,"6":8,"7":11,"8":8,"9":18,"10":9,"11":6,"12":11},"115":{"1":5,"2":15,"3":7}},"機車竊盜":{"104":{"1":1354,"2":1149,"3":1377,"4":1298,"5":1402,"6":1332,"7":1506,"8":1347,"9":1217,"10":1245,"11":1260,"12":1124},"105":{"1":1011,"2":968,"3":1026,"4":1074,"5":1121,"6":1192,"7":1193,"8":1166,"9":1025,"10":1216,"11":1074,"12":962},"106":{"1":874,"2":767,"3":875,"4":915,"5":1026,"6":982,"7":1040,"8":907,"9":827,"10":940,"11":714,"12":633},"107":{"1":633,"2":550,"3":569,"4":628,"5":768,"6":601,"7":686,"8":682,"9":605,"10":703,"11":702,"12":583},"108":{"1":543,"2":464,"3":437,"4":434,"5":450,"6":498,"7":568,"8":546,"9":421,"10":512,"11":481,"12":481},"109":{"1":447,"2":409,"3":422,"4":413,"5":350,"6":341,"7":364,"8":373,"9":273,"10":347,"11":360,"12":283},"110":{"1":339,"2":367,"3":330,"4":363,"5":367,"6":325,"7":330,"8":386,"9":374,"10":361,"11":309,"12":289},"111":{"1":292,"2":254,"3":260,"4":320,"5":333,"6":363,"7":350,"8":400,"9":313,"10":401,"11":329,"12":288},"112":{"1":271,"2":335,"3":331,"4":342,"5":356,"6":340,"7":350,"8":347,"9":306,"10":370,"11":361,"12":284},"113":{"1":265,"2":255,"3":239,"4":336,"5":351,"6":283,"7":385,"8":373,"9":364,"10":382,"11":340,"12":279},"114":{"1":271,"2":255,"3":318,"4":278,"5":336,"6":358,"7":318,"8":304,"9":307,"10":327,"11":258,"12":235},"115":{"1":274,"2":307,"3":344}},"毒品":{"104":{"1":3054,"2":2367,"3":1440,"4":3573,"5":2790,"6":1980,"7":4477,"8":3257,"9":1980,"10":3931,"11":2966,"12":1844},"105":{"1":2817,"2":1918,"3":2222,"4":3824,"5":3378,"6":2012,"7":5727,"8":3193,"9":1674,"10":3976,"11":3187,"12":1824},"106":{"1":3150,"2":2736,"3":2652,"4":3649,"5":3235,"6":2053,"7":4847,"8":3461,"9":2001,"10":3082,"11":3033,"12":1681},"107":{"1":3912,"2":2196,"3":2083,"4":3748,"5":3138,"6":1841,"7":4440,"8":3611,"9":1743,"10":3105,"11":2221,"12":1410},"108":{"1":3665,"2":1964,"3":2286,"4":2945,"5":2478,"6":1379,"7":4065,"8":2342,"9":1383,"10":2804,"11":2185,"12":1083},"109":{"1":2245,"2":2553,"3":1686,"4":3484,"5":2602,"6":1503,"7":4195,"8":2102,"9":1300,"10":2928,"11":2058,"12":1018},"110":{"1":2798,"2":1652,"3":1365,"4":2941,"5":1323,"6":248,"7":2197,"8":2865,"9":1387,"10":2930,"11":1997,"12":830},"111":{"1":2438,"2":1591,"3":1286,"4":2492,"5":1442,"6":814,"7":3526,"8":1737,"9":720,"10":2188,"11":1311,"12":729},"112":{"1":1940,"2":1603,"3":1182,"4":2373,"5":1688,"6":879,"7":2526,"8":1640,"9":1003,"10":2220,"11":1491,"12":685},"113":{"1":1693,"2":1417,"3":1414,"4":1894,"5":1498,"6":813,"7":2087,"8":1592,"9":1221,"10":2827,"11":1706,"12":1110},"114":{"1":1956,"2":1716,"3":1878,"4":3059,"5":2187,"6":1359,"7":2988,"8":2263,"9":1676,"10":3562,"11":2261,"12":1215},"115":{"1":3034,"2":1783,"3":1875}},"汽車竊盜":{"104":{"1":440,"2":406,"3":434,"4":445,"5":483,"6":390,"7":449,"8":430,"9":281,"10":379,"11":344,"12":428},"105":{"1":430,"2":396,"3":376,"4":402,"5":382,"6":316,"7":354,"8":400,"9":272,"10":325,"11":285,"12":186},"106":{"1":213,"2":238,"3":265,"4":290,"5":234,"6":213,"7":216,"8":231,"9":188,"10":237,"11":207,"12":189},"107":{"1":218,"2":173,"3":148,"4":150,"5":160,"6":136,"7":196,"8":180,"9":123,"10":160,"11":157,"12":138},"108":{"1":154,"2":113,"3":95,"4":83,"5":109,"6":66,"7":108,"8":97,"9":77,"10":109,"11":104,"12":77},"109":{"1":82,"2":67,"3":75,"4":106,"5":88,"6":54,"7":48,"8":66,"9":40,"10":58,"11":54,"12":35},"110":{"1":50,"2":62,"3":41,"4":71,"5":60,"6":59,"7":53,"8":42,"9":42,"10":52,"11":57,"12":36},"111":{"1":39,"2":43,"3":29,"4":40,"5":60,"6":53,"7":46,"8":46,"9":17,"10":46,"11":38,"12":19},"112":{"1":84,"2":52,"3":39,"4":64,"5":35,"6":26,"7":72,"8":35,"9":20,"10":45,"11":33,"12":14},"113":{"1":29,"2":40,"3":17,"4":36,"5":31,"6":32,"7":27,"8":39,"9":65,"10":70,"11":70,"12":54},"114":{"1":84,"2":61,"3":60,"4":91,"5":64,"6":57,"7":68,"8":68,"9":50,"10":85,"11":80,"12":71},"115":{"1":52,"2":75,"3":55}},"組織犯罪":{"107":{"12":2},"108":{"1":1,"4":1,"5":1,"7":1,"10":2,"11":1},"109":{"1":1,"3":1,"4":1,"7":4,"8":1,"10":1,"11":1},"110":{"1":3,"7":1,"10":1,"12":2},"111":{"3":1,"4":1,"7":3,"8":1},"112":{"1":1,"2":1,"3":2,"5":2,"8":1,"10":1},"113":{"1":1,"2":2,"5":1,"8":1,"10":1,"11":1},"114":{"3":2,"4":2,"6":1,"7":3,"8":1,"9":1,"10":2,"11":1},"115":{"3":2}}},"yearType":{"104":{"住宅竊盜":2839,"強制性交":417,"強盜":341,"搶奪":343,"機車竊盜":15611,"毒品":33659,"汽車竊盜":4909},"105":{"住宅竊盜":2725,"強制性交":356,"強盜":278,"搶奪":306,"機車竊盜":13028,"毒品":35752,"汽車竊盜":4124},"106":{"住宅竊盜":2459,"強制性交":238,"強盜":255,"搶奪":218,"機車竊盜":10500,"毒品":35580,"汽車竊盜":2721},"107":{"住宅竊盜":1957,"強制性交":195,"強盜":186,"搶奪":180,"機車竊盜":7710,"毒品":33448,"汽車竊盜":1939,"組織犯罪":2},"108":{"住宅竊盜":1696,"強制性交":158,"強盜":171,"搶奪":129,"機車竊盜":5835,"毒品":28579,"汽車竊盜":1192,"組織犯罪":7},"109":{"住宅竊盜":1297,"強制性交":146,"強盜":137,"搶奪":124,"機車竊盜":4382,"毒品":27674,"汽車竊盜":773,"組織犯罪":10},"110":{"住宅竊盜":1190,"強制性交":105,"強盜":147,"搶奪":108,"機車竊盜":4140,"毒品":22533,"汽車竊盜":625,"組織犯罪":7},"111":{"住宅竊盜":1160,"強制性交":121,"強盜":121,"搶奪":99,"機車竊盜":3903,"毒品":20274,"汽車竊盜":476,"組織犯罪":6},"112":{"住宅竊盜":1269,"強制性交":130,"強盜":119,"搶奪":79,"機車竊盜":3993,"毒品":19230,"汽車竊盜":519,"組織犯罪":8},"113":{"住宅竊盜":2341,"強制性交":114,"強盜":77,"搶奪":66,"機車竊盜":3852,"毒品":19272,"汽車竊盜":510,"組織犯罪":7},"114":{"住宅竊盜":5431,"強制性交":210,"強盜":124,"搶奪":115,"機車竊盜":3565,"毒品":26120,"汽車竊盜":839,"組織犯罪":13},"115":{"住宅竊盜":1079,"強制性交":39,"強盜":24,"搶奪":27,"機車竊盜":925,"毒品":6692,"汽車竊盜":182,"組織犯罪":2}},"cityTotal":{"桃園市":66045,"臺中市":40061,"苗栗縣":10099,"新北市":82068,"臺北市":45543,"臺南市":29760,"花蓮縣":6646,"雲林縣":11857,"新竹縣":11817,"新竹市":7396,"嘉義縣":6190,"高雄市":43023,"屏東縣":17322,"金門縣":864,"基隆市":12756,"澎湖縣":973,"南投縣":9997,"彰化縣":15704,"宜蘭縣":8508,"嘉義市":6290,"臺東縣":3449,"其他":104,"連江縣":102},"typeTotal":{"住宅竊盜":25443,"強制性交":2229,"強盜":1980,"搶奪":1794,"機車竊盜":77444,"毒品":308813,"汽車竊盜":18809,"組織犯罪":62}};
 
 boot();
 </script>

@@ -13,7 +13,7 @@ gtag('config', 'G-JVW9ZBDT3Y');
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>自然課本數據即時站</title>
+<title>進出口與兩岸貿易</title>
 <script>/**
  * Skipped minification because the original files appears to be already minified.
  * Original file: /npm/chart.js@4.4.1/dist/chart.umd.js
@@ -36,183 +36,222 @@ gtag('config', 'G-JVW9ZBDT3Y');
 //# sourceMappingURL=chart.umd.js.map
 </script>
 <style>
-  :root{
-    --red:#e5484d; --yellow:#e08a00; --green:#2b9a66; --info:#8b8b8b;
-    --ink:#1a1a1a; --sub:#5b6470; --line:#e6e8eb; --bg:#f6f7f9; --card:#fff;
-  }
+  :root{--bg:#f7f8fa;--card:#fff;--ink:#1a1f26;--sub:#5b6572;--line:#e7ebf0;--accent:#0f766e;--accent2:#b45309;--pos:#15803d;--neg:#b91c1c}
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font:16px/1.65 system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif}
-  #app{max-width:1000px;margin:0 auto;padding:20px 16px 64px}
-  .loaderr{padding:16px;border:1px solid var(--red);color:#c00;border-radius:8px;background:#fff5f5}
-
-  header.hero{background:linear-gradient(135deg,#1a237e 0%,#4527a0 100%);color:#fff;
-    border-radius:16px;padding:26px 24px;margin-bottom:18px}
-  header.hero h1{font-size:26px;margin:0 0 6px;font-weight:800;letter-spacing:.5px}
-  header.hero p{margin:0;opacity:.92;font-size:15px}
-  .scoreboard{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
-  .score{background:rgba(255,255,255,.14);border-radius:10px;padding:8px 14px;font-size:14px;font-weight:600}
-  .score b{font-size:20px;margin-right:4px}
-
-  .callout{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--red);
-    border-radius:12px;padding:16px 18px;margin-bottom:22px}
-  .callout .k{font-size:13px;color:var(--red);font-weight:700;letter-spacing:1px}
-  .callout .big{font-size:19px;font-weight:800;margin:4px 0}
-  .callout .flip{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:15px;margin-top:6px}
-  .flip .was{color:var(--sub);text-decoration:line-through}
-  .flip .arrow{color:var(--red);font-weight:800}
-  .flip .now{color:var(--ink);font-weight:800;background:#fdeaea;padding:2px 10px;border-radius:20px}
-
-  h2.chap{font-size:19px;margin:26px 0 4px;display:flex;align-items:center;gap:8px}
-  h2.chap .g{font-size:12px;color:var(--sub);font-weight:500;background:#eef1f4;padding:2px 8px;border-radius:12px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:12px}
-
-  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:15px 16px;
-    display:flex;flex-direction:column;box-shadow:0 1px 2px rgba(0,0,0,.03)}
-  .card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
-  .card .name{font-size:15.5px;font-weight:700;line-height:1.35}
-  .badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap;color:#fff}
-  .badge.red{background:var(--red)} .badge.yellow{background:var(--yellow)}
-  .badge.green{background:var(--green)} .badge.info{background:var(--info)}
-
-  .cmp{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:stretch;margin:12px 0 8px}
-  .cell{border-radius:10px;padding:9px 11px;font-size:13.5px}
-  .cell .lab{font-size:11px;font-weight:700;letter-spacing:.5px;margin-bottom:3px;opacity:.75}
-  .cell.tb{background:#f0f2f5;color:#42484f}
-  .cell.now{background:#eef0ff;color:#28226e}
-  .cell .val{font-weight:700;font-size:14px;line-height:1.4}
-  .cell .sub2{font-size:11.5px;color:var(--sub);margin-top:3px}
-  .mid{display:flex;align-items:center;font-size:20px;color:#b6bcc4}
-
-  .chartbox{margin:6px 0 4px;height:150px}
-  .chartcap{font-size:10.5px;color:#9aa2ab;text-align:center;margin:-2px 0 4px}
-  .meta{font-size:11.5px;color:var(--sub);border-top:1px dashed var(--line);padding-top:8px;margin-top:auto;line-height:1.5}
-  .meta a{color:#4527a0;text-decoration:none}
-  .mode{display:inline-block;font-size:10px;font-weight:700;padding:1px 6px;border-radius:8px;margin-right:5px;vertical-align:1px}
-  .mode.auto{background:#e6f6ee;color:#1a7a47} .mode.semi{background:#fdf3e3;color:#9a6400}
-  .mode.live{background:#e9f0fe;color:#1f5fce}
-
-  footer.foot{margin-top:34px;font-size:12.5px;color:var(--sub);border-top:1px solid var(--line);padding-top:16px}
-  footer.foot b{color:var(--ink)}
-  .fetchwarn{background:#fff8e6;border:1px solid #f0d488;color:#7a5a00;border-radius:8px;padding:8px 12px;font-size:12.5px;margin-top:10px}
-  @media(max-width:520px){ .cmp{grid-template-columns:1fr}.mid{display:none} }
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,"Noto Sans TC","PingFang TC",sans-serif}
+  #app{max-width:1080px;margin:0 auto;padding:24px 18px 60px}
+  header.hd{margin:8px 0 20px}
+  h1{font-size:27px;margin:0 0 6px;letter-spacing:.3px}
+  .sub{color:var(--sub);font-size:14px}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0 26px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .kpi .lab{font-size:12.5px;color:var(--sub)}
+  .kpi .val{font-size:24px;font-weight:700;margin-top:3px;line-height:1.2}
+  .kpi .note{font-size:12px;color:var(--sub);margin-top:2px}
+  .kpi .up{color:var(--pos)} .kpi .down{color:var(--neg)}
+  section.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;margin:16px 0}
+  section.card h2{font-size:18px;margin:0 0 3px}
+  section.card .cap{color:var(--sub);font-size:13px;margin:0 0 14px}
+  .chartbox{position:relative;width:100%}
+  .chartbox.tall{height:360px}.chartbox.mid{height:320px}
+  .chartbox.pie{height:440px;max-width:720px;margin:0 auto}
+  .switch{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+  .switch button{font:13px system-ui;padding:5px 11px;border:1px solid var(--line);background:#fff;color:var(--sub);border-radius:999px;cursor:pointer}
+  .switch button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .rangebar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 12px;font-size:13px;color:var(--sub)}
+  .rangebar select{font:13px system-ui;padding:4px 9px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+  .foot{color:var(--sub);font-size:12.5px;margin-top:24px;border-top:1px solid var(--line);padding-top:14px}
+  .loaderr{padding:16px;border:1px solid #e33;color:#c00;border-radius:8px;background:#fff5f5}
+  @media(max-width:720px){.kpis{grid-template-columns:repeat(2,1fr)}h1{font-size:22px}}
 </style>
 </head>
 <body>
 <div id="app"><div class="loading">載入中…</div></div>
 <script>
-// 所有數字來自 window.SCIENCE_DATA（build 產出），勿寫死在 HTML。
-var CHARTS = [];
-function esc(s){ return String(s==null?'':s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];}); }
+// 所有數字來自 window.TRADE_DATA（build 產出），勿寫死在 HTML。
+var CH = {};
+var PALETTE = ['#0f766e','#b45309','#1d4ed8','#be123c','#7c3aed','#0891b2','#4d7c0f','#a16207','#db2777','#475569'];
+
+// 千美元 → 億美元（千美元×1000＝美元；億＝1e8 美元；故 /1e5）
+function yi(v){ return v==null? null : v/1e5; }
+function fmtYi(v){ if(v==null) return '—'; return Math.round(v).toLocaleString('en-US')+' 億美元'; }
+function fmtNum(v){ if(v==null) return '—'; return Math.round(v).toLocaleString('en-US'); }
+
+// 圓餅外圍引線標籤
+var pieLabelPlugin = {
+  id:'pieOuterLabels',
+  afterDatasetsDraw:function(chart){
+    if(chart.config.type!=='pie') return;
+    var ctx=chart.ctx, meta=chart.getDatasetMeta(0), data=chart.data.datasets[0].data;
+    var total=data.reduce(function(s,v){return s+(v||0);},0); if(!total) return;
+    var placed=[];
+    meta.data.forEach(function(arc,i){
+      var val=data[i]||0, pct=val/total*100; if(pct<2) return;
+      var mid=(arc.startAngle+arc.endAngle)/2, cos=Math.cos(mid), sin=Math.sin(mid), rOut=arc.outerRadius;
+      var x0=arc.x+cos*rOut, y0=arc.y+sin*rOut, x1=arc.x+cos*(rOut+12), y1=arc.y+sin*(rOut+12), right=cos>=0;
+      var key=right?1:0;
+      while(placed.some(function(p){return p.k===key && Math.abs(p.y-y1)<15;})) { y1 += right?15:-15; }
+      placed.push({k:key,y:y1});
+      var x2=x1+(right?16:-16);
+      ctx.save();
+      ctx.strokeStyle=(arc.options&&arc.options.backgroundColor)||'#bbb'; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(x0,y0); ctx.lineTo(x1,y1); ctx.lineTo(x2,y1); ctx.stroke();
+      ctx.fillStyle='#1a1f26'; ctx.font='bold 11.5px system-ui,"Noto Sans TC",sans-serif';
+      ctx.textAlign=right?'left':'right'; ctx.textBaseline='middle';
+      ctx.fillText(chart.data.labels[i]+' '+pct.toFixed(1)+'%', x2+(right?4:-4), y1);
+      ctx.restore();
+    });
+  }
+};
+
+function selEl(years,def){ var s=document.createElement('select'); years.forEach(function(y){var o=document.createElement('option');o.value=y;o.textContent=y;if(y===def)o.selected=true;s.appendChild(o);}); return s; }
+function span(t){ var s=document.createElement('span'); s.textContent=t; return s; }
+// 起訖年控制列：預設起＝近 lookback 年、迄＝最新
+function rangeBar(container, years, onChange, lookback){
+  var lb=lookback||years.length, latest=years[years.length-1], start=years[Math.max(0,years.length-lb)];
+  var bar=document.createElement('div'); bar.className='rangebar';
+  var s1=selEl(years,start), s2=selEl(years,latest);
+  bar.appendChild(span('起日')); bar.appendChild(s1); bar.appendChild(span('～ 迄日')); bar.appendChild(s2);
+  function fire(){ var a=+s1.value,b=+s2.value; if(a>b){b=a;s2.value=a;} onChange(a,b); }
+  s1.onchange=fire; s2.onchange=fire; container.appendChild(bar);
+  return {start:start,end:latest};
+}
+function rangeIdx(years,a,b){ var o=[]; for(var i=0;i<years.length;i++){ if(years[i]>=a&&years[i]<=b) o.push(i);} return o; }
+
+var CommonLine={responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+  plugins:{legend:{labels:{boxWidth:12,font:{size:12}}}},
+  scales:{x:{grid:{display:false},ticks:{font:{size:11},maxTicksLimit:12}},
+    y:{grid:{color:'#eef1f5'},ticks:{font:{size:11},callback:function(v){return v.toLocaleString('en-US');}}}}};
 
 function boot(){
-  var d = window.SCIENCE_DATA;
+  var d = window.TRADE_DATA;
   var app = document.getElementById('app');
-  if(!d){ app.innerHTML = '<div class="loaderr">⚠ 無資料</div>'; return; }
-  var c = d.meta.counts || {};
+  if(!d || !d.years){ app.innerHTML='<div class="loaderr">⚠ 無資料，請先執行 build（node build-taiwantrade.js）</div>'; return; }
+  var ys=d.years, li=ys.length-1, latest=d.meta.latestYear||ys[li];
+  var lyi=ys.indexOf(latest);
+  var exL=d.total.exports[lyi], imL=d.total.imports[lyi], surplus=(exL!=null&&imL!=null)?exL-imL:null;
+  var depL=d.crossStrait.ratio[lyi];
 
-  var html = '';
-  // Hero + 計分板
-  html += '<header class="hero"><h1>🔬 '+esc(d.meta.title)+'</h1>'+
-          '<p>'+esc(d.meta.subtitle)+'</p>'+
-          '<div class="scoreboard">'+
-            score('red','🔴',c.red,'已改寫')+
-            score('yellow','🟡',c.yellow,'需更新')+
-            score('green','🟢',c.green,'仍準')+
-            score('info','⚪',c.info,'補充')+
-          '</div></header>';
+  app.innerHTML=
+    '<header class="hd"><h1>進出口與兩岸貿易</h1>'
+    + '<div class="sub">台灣跟誰做生意、對中國大陸＋香港依存度、出口結構怎麼變 — 財政部海關進出口貿易統計（民國70年／1981 至今）。單位：億美元。年度圖僅納入完整年度（2001 年起進出口各有 1～12 月不同月份且總額有效）；資料截止：'+latest+' 年。</div></header>'
+    + '<div class="kpis">'
+      + kpi(latest+' 年出口', fmtYi(yi(exL)), '海關統計')
+      + kpi(latest+' 年進口', fmtYi(yi(imL)), '海關統計')
+      + kpi(latest+' 年出（入）超', (surplus!=null?(surplus>=0?'+':'')+fmtYi(yi(surplus)):'—'), surplus>=0?'出超（順差）':'入超（逆差）', surplus>=0?'up':'down')
+      + kpi('對中國＋香港出口占比', depL!=null? depL.toFixed(1)+'%':'—', latest+' 年（海關自算）', 'down')
+    + '</div>'
+    + '<section class="card"><h2>進出口總值與出（入）超</h2><p class="cap">出口、進口與出超（1981 起）。台灣長期出超、2021 後受惠 AI 供應鏈出口躍升。可調起訖年。</p>'
+      + '<div id="rb_tot"></div><div class="chartbox tall"><canvas id="c_tot"></canvas></div></section>'
+    + '<section class="card"><h2>主要貿易夥伴</h2><p class="cap">主要出口市場的金額排行與市占趨勢。中國大陸＋香港仍居首、對美出口近年因 AI 供應鏈快速上升。切換檢視並選區間。</p>'
+      + '<div class="switch" id="sw_ptn"></div><div id="rb_ptn"></div><div class="chartbox mid"><canvas id="c_ptn"></canvas></div></section>'
+    + '<section class="card"><h2>兩岸依存度</h2><p class="cap">對中國大陸＋香港出口占總出口比重（我國海關統計自算）。2000 年代一度逼近 4 成，近年隨供應鏈重組回落。可調起訖年。</p>'
+      + '<div id="rb_dep"></div><div class="chartbox mid"><canvas id="c_dep"></canvas></div></section>'
+    + (d.hs && d.hs.categories && d.hs.categories.length ?
+        '<section class="card"><h2>出口貨品結構（HS 大類）</h2><p class="cap">'+d.hs.statYear+' 年出口按 HS 大類占比——第十六類（機械及電機設備，含半導體與電子零組件）一枝獨秀，反映台灣出口高度集中電子業。</p><div class="chartbox pie"><canvas id="c_hs"></canvas></div></section>' : '')
+    + '<div class="foot">資料來源：財政部統計處海關進出口貿易統計（service.mof.gov.tw，u2010／u2011 系列）；1981–2000 與 2001 起兩段國別欄位同序接軌。單位千美元（頁面換算億美元）。'
+      + '兩岸依存度採我國海關統計「中國大陸＋香港」自算，與陸委會雙邊互引統計範圍略有差異。'
+      + (d.hs? '出口貨品結構（HS 大類）為 '+d.hs.statYear+' 年快照。':'')
+      + (d.meta.incompleteYears&&d.meta.incompleteYears.length ? '<br>未完整年度未納入年度序列：'+d.meta.incompleteYears.join('、')+'。':'')
+      + (d.meta.fetchError? '<br>⚠ 本次更新部分資料抓取異常，顯示為前次資料。':'')
+      + '<br>更新時間：'+((d.meta.generatedAt)||'').slice(0,10)+'</div>';
 
-  // 旗艦對照：太陽系行星數（冥王星降級）
-  var flag1 = d.points.find(function(p){return p.id==='planets';});
-  if(flag1){
-    html += '<div class="callout"><div class="k">課本最容易記錯的一題</div>'+
-      '<div class="big">'+esc(flag1.name)+'</div>'+
-      '<div class="flip"><span class="was">課本：'+esc(flag1.textbook.display)+'</span>'+
-      '<span class="arrow">→ 已改寫 →</span>'+
-      '<span class="now">現在：'+esc(flag1.current.display)+'</span></div>'+
-      '<div style="font-size:13px;color:var(--sub);margin-top:8px">'+esc(flag1.current.note)+'</div></div>';
+  setupTotals(d);
+  setupPartners(d);
+  setupDependency(d);
+  if(d.hs && d.hs.categories && d.hs.categories.length) drawHS(d.hs);
+}
+
+function kpi(lab,val,note,cls){ return '<div class="kpi"><div class="lab">'+lab+'</div><div class="val '+(cls||'')+'">'+val+'</div><div class="note">'+(note||'')+'</div></div>'; }
+
+// 1. 進出口總值與出超
+function setupTotals(d){
+  var ys=d.years;
+  function render(a,b){
+    if(CH.tot) CH.tot.destroy();
+    var idx=rangeIdx(ys,a,b), labels=idx.map(function(i){return ys[i];});
+    CH.tot=new Chart(document.getElementById('c_tot'),{
+      data:{labels:labels,datasets:[
+        {type:'bar',label:'出（入）超',data:idx.map(function(i){var e=d.total.exports[i],m=d.total.imports[i];return (e!=null&&m!=null)?yi(e-m):null;}),backgroundColor:idx.map(function(i){var e=d.total.exports[i],m=d.total.imports[i];return (e-m)>=0?'#15803d55':'#b91c1c55';}),borderWidth:0,order:3},
+        {type:'line',label:'出口',data:idx.map(function(i){return yi(d.total.exports[i]);}),borderColor:'#0f766e',backgroundColor:'#0f766e',pointRadius:0,borderWidth:2,tension:.2,order:1},
+        {type:'line',label:'進口',data:idx.map(function(i){return yi(d.total.imports[i]);}),borderColor:'#b45309',backgroundColor:'#b45309',pointRadius:0,borderWidth:2,tension:.2,order:2}
+      ]},
+      options:Object.assign({},CommonLine,{plugins:{legend:{labels:{boxWidth:12,font:{size:12}}},tooltip:{callbacks:{title:function(t){return t[0].label+' 年';},label:function(c){return c.dataset.label+'：'+fmtYi(c.raw);}}}}})});
   }
-
-  // 各章節
-  d.chapters.forEach(function(ch){
-    var pts = d.points.filter(function(p){return p.chapter===ch.key;});
-    if(!pts.length) return;
-    html += '<h2 class="chap">'+esc(ch.icon)+' '+esc(ch.name)+' <span class="g">'+esc(ch.grade)+'</span></h2>';
-    html += '<div class="grid">'+pts.map(cardHtml).join('')+'</div>';
-  });
-
-  // footer
-  html += '<footer class="foot">'+
-    '<p><b>怎麼看：</b>'+esc(d.meta.flag_rule)+'</p>'+
-    '<p><b>資料模式：</b><span class="mode auto">auto</span>程式自動抓權威源（每次更新即最新）　'+
-    '<span class="mode semi">semi</span>科學界權威值人工年查。'+esc(d.meta.verify_policy)+'</p>'+
-    '<p><b>課本基準值</b>為國中小自然（理化／生物／地科）課本常見的科學「數字或分類事實」（非課文重製），標示對應版本年代，供對照「課本 vs 現在」。'+
-    '各數字均附權威來源（IUPAC／IAU／NASA／IUCN／CODATA 等）；紅黃綠僅在同一統計範圍下比較。'+
-    '本站<b>只收會隨科學進展改變的項目</b>，不含牛頓定律、光合作用等恆定不變的科學原理。</p>'+
-    '<p style="color:#9aa2ab">資料產生時間：'+esc(d.meta.generatedAt)+'</p>'+
-    (d.meta.fetchError?'<div class="fetchwarn">⚠ 本次自動來源狀態：'+esc(d.meta.fetchError)+'</div>':'')+
-    '</footer>';
-
-  app.innerHTML = html;
-  // 畫圖
-  CHARTS.forEach(function(cfg){ drawChart(cfg); });
-  CHARTS = [];
+  var r=rangeBar(document.getElementById('rb_tot'),ys,render);
+  render(r.start,r.end);
 }
 
-function score(cls,emoji,n,txt){
-  return '<div class="score"><b>'+(n||0)+'</b>'+emoji+' '+txt+'</div>';
-}
-
-function cardHtml(p){
-  var chartId = null, cap = '';
-  var hasSeries = p.series && (p.series.length || p.series.milestones); // 陣列或里程碑物件
-  if(hasSeries){ chartId = 'chart_'+p.id; CHARTS.push({id:chartId, p:p});
-    if(p.id==='exoplanets') cap='累積確認顆數（NASA Exoplanet Archive，真實資料）';
-    if(p.id==='element_count') cap='已知元素數成長（化學史里程碑，示意）';
+// 2. 主要貿易夥伴（排行／市占趨勢）
+function setupPartners(d){
+  var ys=d.years, names=Object.keys(d.countries);
+  var sw=document.getElementById('sw_ptn'), state={mode:'排行',start:null,end:null};
+  function renderRank(){
+    if(CH.ptn) CH.ptn.destroy();
+    var yi2=ys.indexOf(state.end); if(yi2<0) yi2=ys.length-1;
+    var rows=names.map(function(n){return {n:n,v:d.countries[n].ex[yi2]};}).filter(function(r){return r.v!=null;}).sort(function(a,b){return b.v-a.v;});
+    CH.ptn=new Chart(document.getElementById('c_ptn'),{type:'bar',
+      data:{labels:rows.map(function(r){return r.n;}),datasets:[{label:state.end+' 年出口',data:rows.map(function(r){return yi(r.v);}),backgroundColor:'#0f766ecc',borderColor:'#0f766e',borderWidth:1}]},
+      options:Object.assign({},CommonLine,{plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return fmtYi(c.raw);}}}},scales:Object.assign({},CommonLine.scales,{x:{grid:{display:false},ticks:{font:{size:10},maxRotation:60,minRotation:45}}})})});
   }
-  var tb = p.textbook||{}, now = p.current||{};
-  return '<div class="card">'+
-    '<div class="top"><div class="name">'+esc(p.name)+'</div>'+
-      '<span class="badge '+p.flag.level+'">'+esc(p.flag.label)+'</span></div>'+
-    '<div class="cmp">'+
-      '<div class="cell tb"><div class="lab">課本說</div>'+
-        '<div class="val">'+esc(tb.display||'—')+'</div>'+
-        (tb.note?'<div class="sub2">'+esc(tb.note)+'</div>':'')+'</div>'+
-      '<div class="mid">➜</div>'+
-      '<div class="cell now"><div class="lab">科學界最新</div>'+
-        '<div class="val">'+esc(now.display||'—')+'</div>'+
-        '<div class="sub2">事實／版本時間：'+esc(now.effectiveAsOf||now.asof||'未知')+(now.lastReviewed?'｜最後查證：'+esc(now.lastReviewed):'｜最後查證日未知')+(now.note?'｜'+esc(now.note):'')+'</div></div>'+
-    '</div>'+
-    (chartId?'<div class="chartbox"><canvas id="'+chartId+'"></canvas></div>'+(cap?'<div class="chartcap">'+esc(cap)+'</div>':''):'')+
-    '<div class="meta"><span class="mode '+p.mode+'">'+p.mode+'</span>'+
-      '統計範圍：'+esc(p.caliber||'—')+'<br>來源：'+
-      (p.source_url?'<a href="'+esc(p.source_url)+'" target="_blank" rel="noopener">'+esc(p.source)+'</a>':esc(p.source))+
-      '（'+esc(p.freq)+'）</div>'+
-  '</div>';
+  function renderShare(){
+    if(CH.ptn) CH.ptn.destroy();
+    var idx=rangeIdx(ys,state.start,state.end), labels=idx.map(function(i){return ys[i];});
+    var pick=['中國大陸','香港','美國','日本','越南','新加坡'];
+    var ds=pick.map(function(n,k){return {label:n,data:idx.map(function(i){var v=d.countries[n].ex[i],t=d.total.exports[i];return (v!=null&&t)?(v/t*100):null;}),borderColor:PALETTE[k],backgroundColor:PALETTE[k],pointRadius:0,borderWidth:2,tension:.2};});
+    CH.ptn=new Chart(document.getElementById('c_ptn'),{type:'line',data:{labels:labels,datasets:ds},
+      options:Object.assign({},CommonLine,{plugins:{legend:{labels:{boxWidth:12,font:{size:12}}},tooltip:{callbacks:{title:function(t){return t[0].label+' 年';},label:function(c){return c.dataset.label+'：'+(c.raw==null?'—':c.raw.toFixed(1)+'%');}}}},scales:Object.assign({},CommonLine.scales,{y:{grid:{color:'#eef1f5'},ticks:{font:{size:11},callback:function(v){return v+'%';}}}})})});
+  }
+  function render(){ if(state.mode==='排行')renderRank(); else renderShare(); [].forEach.call(sw.children,function(b){b.classList.toggle('on',b.textContent===state.mode);}); }
+  [['排行',function(){state.mode='排行';render();}],['市占趨勢',function(){state.mode='市占趨勢';render();}]].forEach(function(p){var b=document.createElement('button');b.textContent=p[0];b.onclick=p[1];sw.appendChild(b);});
+  var r=rangeBar(document.getElementById('rb_ptn'),ys,function(a,b){state.start=a;state.end=b;render();});
+  state.start=r.start; state.end=r.end; render();
 }
 
-function drawChart(cfg){
-  var el = document.getElementById(cfg.id); if(!el || !window.Chart) return;
-  var p = cfg.p, s = p.series;
-  var base = { responsive:true, maintainAspectRatio:false,
-    plugins:{legend:{display:false}}, scales:{x:{ticks:{maxTicksLimit:6,font:{size:10}},grid:{display:false}},
-      y:{ticks:{font:{size:10}},grid:{color:'#eef1f4'}}} };
-  var cfgObj;
-  if(p.id==='exoplanets'){
-    cfgObj={type:'line',data:{labels:s.map(function(r){return r.year;}),datasets:[
-      {data:s.map(function(r){return r.cum;}),borderColor:'#4527a0',backgroundColor:'rgba(69,39,160,.10)',fill:true,pointRadius:0,borderWidth:2}
-    ]},options:base};
-  } else if(p.id==='element_count'){
-    var mil = s.milestones||[];
-    cfgObj={type:'line',data:{labels:mil.map(function(m){return m.year;}),datasets:[
-      {data:mil.map(function(m){return m.n;}),borderColor:'#2b9a66',backgroundColor:'rgba(43,154,102,.10)',fill:true,
-       pointRadius:4,pointBackgroundColor:'#2b9a66',borderWidth:2}
-    ]},options:base};
-  } else { return; }
-  new Chart(el.getContext('2d'), cfgObj);
+// 3. 兩岸依存度
+function setupDependency(d){
+  var ys=d.crossStrait.years;
+  function render(a,b){
+    if(CH.dep) CH.dep.destroy();
+    var idx=rangeIdx(ys,a,b), labels=idx.map(function(i){return ys[i];});
+    CH.dep=new Chart(document.getElementById('c_dep'),{type:'line',
+      data:{labels:labels,datasets:[{label:'對中國＋香港出口占比',data:idx.map(function(i){return d.crossStrait.ratio[i];}),borderColor:'#be123c',backgroundColor:'#be123c22',fill:true,pointRadius:0,borderWidth:2.5,tension:.2}]},
+      options:Object.assign({},CommonLine,{plugins:{legend:{display:false},tooltip:{callbacks:{title:function(t){return t[0].label+' 年';},label:function(c){return '占總出口 '+(c.raw==null?'—':c.raw.toFixed(1)+'%');}}}},scales:Object.assign({},CommonLine.scales,{y:{grid:{color:'#eef1f5'},ticks:{font:{size:11},callback:function(v){return v+'%';}}}})})});
+  }
+  var r=rangeBar(document.getElementById('rb_dep'),ys,render);
+  render(r.start,r.end);
 }
 
-window.SCIENCE_DATA = {"meta":{"generatedAt":"2026-10-06T12:08:16.561Z","title":"自然課本數據即時站","subtitle":"國中小自然（理化／生物／地科）課本上的科學數字，對照科學界最新共識","verify_policy":"auto：跑 apps/EduScience/update-eduscience.sh 自動刷新（NASA 系外行星）；semi：每年寒暑假人工查一輪（IUPAC 元素／CODATA 常數／IUCN 名錄等）；textbook：課本改版年重查，並確認舊翻轉是否已被新課本追上。","flag_rule":"打臉指數：分類／定義翻轉或量級改變 → 🔴 已改寫；表示法更新或估計值明顯修正 → 🟡 需更新；方向一致、僅精度提升或屬補充 → 🟢／⚪。自然科九成內容是不變的原理，本站只收會變的那一類。","counts":{"red":7,"info":4,"yellow":4,"green":4},"fetchError":null,"autoStatus":"ok"},"chapters":[{"key":"matter","name":"物質與元素","grade":"國中理化／自然","icon":"🧪"},{"key":"energy","name":"能量、宇宙與單位","grade":"國中理化／地球科學","icon":"🔭"},{"key":"life","name":"生命與演化","grade":"國中生物","icon":"🧬"},{"key":"earth","name":"地球與環境","grade":"國小自然／國中地科","icon":"🌏"}],"points":[{"id":"element_count","chapter":"matter","name":"元素週期表的元素種數","unit":"種","mode":"semi","source":"國際純粹與應用化學聯合會 IUPAC","source_url":"https://iupac.org/what-we-do/periodic-table-of-elements/","freq":"極罕變（新元素命名時）","caliber":"已正式命名並獲 IUPAC 承認的化學元素總數","textbook":{"value":109,"display":"約 109 種（或稱「一百多種」）","note":"較早課本常見；週期表第七週期尚未填滿"},"current":{"value":118,"display":"118 種（第七週期已填滿）","asof":"2016","note":"2016 年 IUPAC 正式命名 113 Nh、115 Mc、117 Ts、118 Og，週期表第七列補齊","effectiveAsOf":"2016","lastReviewed":null,"nextReview":null},"flag":{"level":"red","label":"已改寫"},"series":{"milestones":[{"year":1869,"n":63,"label":"門得列夫週期表"},{"year":1913,"n":85,"label":"莫斯利原子序"},{"year":1945,"n":96,"label":"超鈾元素時代"},{"year":1970,"n":105},{"year":2016,"n":118,"label":"第七週期填滿"}]}},{"id":"heaviest_element","chapter":"matter","name":"目前原子序最大的元素","unit":"元素","mode":"semi","source":"IUPAC 元素命名公告","source_url":"https://iupac.org/what-we-do/periodic-table-of-elements/","freq":"極罕變","caliber":"原子序最大、已獲正式命名的元素（含人工合成）","textbook":{"value":"鈾 U","display":"鈾（原子序 92）常被當成最重的元素","note":"課本多以鈾為最重天然元素的例子"},"current":{"value":"Og","display":"Oganesson（Og，原子序 118）","asof":"2016","note":"目前原子序最大的元素，人工合成、極不穩定；統計範圍不同（鈾仍是最重的天然元素）","effectiveAsOf":"2016","lastReviewed":null,"nextReview":null},"flag":{"level":"info","label":"補充"},"series":null},{"id":"atomic_weight_interval","chapter":"matter","name":"標準原子量的表示法","unit":"表示法","mode":"semi","source":"IUPAC 原子量委員會 CIAAW","source_url":"https://ciaaw.org/atomic-weights.htm","freq":"不定期（每 1–2 年審訂）","caliber":"IUPAC 公告的標準原子量呈現方式","textbook":{"value":null,"display":"原子量是單一固定值（如氫 1.008、碳 12.011）","note":"課本多給單一標準原子量"},"current":{"value":null,"display":"部分元素改用「區間」表示（如氫 [1.00784, 1.00811]）","asof":"2009 起陸續","note":"因同位素組成隨來源而異，IUPAC 對氫、碳、氯等十餘種元素改以區間公告標準原子量","effectiveAsOf":"2009 起陸續","lastReviewed":null,"nextReview":null},"flag":{"level":"yellow","label":"表示法更新"},"series":null},{"id":"avogadro","chapter":"matter","name":"亞佛加厥常數","unit":"／mol","mode":"semi","source":"CODATA／國際度量衡局 BIPM","source_url":"https://physics.nist.gov/cgi-bin/cuu/Value?na","freq":"已固定（定義值）","caliber":"1 莫耳所含基本粒子數；2019 後為定義精確值","textbook":{"value":null,"display":"約 6.02×10²³／mol（實驗測得值）","note":"課本多述為由實驗測定、帶不確定度"},"current":{"value":null,"display":"6.02214076×10²³／mol（定義精確值）","asof":"2019-05-20","note":"2019 SI 改制後，亞佛加厥常數成為定義值，不再有測量不確定度","effectiveAsOf":"2019-05-20","lastReviewed":null,"nextReview":null},"flag":{"level":"info","label":"已改為定義值"},"series":null},{"id":"planets","chapter":"energy","name":"太陽系的行星數","unit":"顆","mode":"semi","source":"國際天文聯合會 IAU","source_url":"https://www.iau.org/public/themes/pluto/","freq":"極罕變（分類決議）","caliber":"符合 IAU 行星定義的太陽系大行星數","textbook":{"value":9,"display":"9 大行星（含冥王星）","note":"2006 年前課本；水金地火木土天海冥"},"current":{"value":8,"display":"8 大行星（冥王星除外）","asof":"2006","note":"2006 年 IAU 決議將冥王星重新歸類為「矮行星」，太陽系大行星剩 8 顆","effectiveAsOf":"2006","lastReviewed":null,"nextReview":null},"flag":{"level":"red","label":"已改寫"},"series":null},{"id":"si_kg","chapter":"energy","name":"1 公斤的定義基準","unit":"定義","mode":"semi","source":"國際度量衡局 BIPM","source_url":"https://www.bipm.org/en/measurement-units","freq":"極罕變（單位制改制）","caliber":"國際單位制 (SI) 對公斤的定義基準","textbook":{"value":null,"display":"1 公斤＝巴黎「國際公斤原器」（鉑銥圓柱）","note":"2019 年前的定義；以一個實體砝碼為準"},"current":{"value":null,"display":"1 公斤由普朗克常數 h 定義","asof":"2019-05-20","note":"SI 七大基本單位改由物理常數定義，公斤脫離實體砝碼；公尺、安培、莫耳、克耳文等一併重新定義","effectiveAsOf":"2019-05-20","lastReviewed":null,"nextReview":null},"flag":{"level":"red","label":"已改寫"},"series":null},{"id":"exoplanets","chapter":"energy","name":"已確認的太陽系外行星數","unit":"顆","mode":"auto","source":"NASA Exoplanet Archive","source_url":"https://exoplanetarchive.ipac.caltech.edu/","freq":"即時（build 自動抓取；每週有新確認）","caliber":"NASA Exoplanet Archive 綜合表 (pscomppars) 中已確認的系外行星數","textbook":{"value":null,"display":"太陽系外「發現了一些」／數百顆","note":"早期課本；1995 年才首度確認繞主序星的系外行星"},"current":{"value":6375,"display":"6,375 顆（且持續增加）","asof":null,"note":"數量持續增加，2014、2016 年因 Kepler 任務批次確認而大增","effectiveAsOf":"2026","lastReviewed":null,"autoStatus":"supported","nextReview":null},"flag":{"level":"red","label":"已改寫"},"series":[{"year":1992,"cum":2},{"year":1994,"cum":3},{"year":1995,"cum":4},{"year":1996,"cum":10},{"year":1997,"cum":11},{"year":1998,"cum":17},{"year":1999,"cum":30},{"year":2000,"cum":46},{"year":2001,"cum":58},{"year":2002,"cum":87},{"year":2003,"cum":109},{"year":2004,"cum":136},{"year":2005,"cum":172},{"year":2006,"cum":204},{"year":2007,"cum":256},{"year":2008,"cum":318},{"year":2009,"cum":405},{"year":2010,"cum":498},{"year":2011,"cum":639},{"year":2012,"cum":783},{"year":2013,"cum":911},{"year":2014,"cum":1783},{"year":2015,"cum":1938},{"year":2016,"cum":3442},{"year":2017,"cum":3594},{"year":2018,"cum":3902},{"year":2019,"cum":4096},{"year":2020,"cum":4330},{"year":2021,"cum":4894},{"year":2022,"cum":5261},{"year":2023,"cum":5584},{"year":2024,"cum":5844},{"year":2025,"cum":6090},{"year":2026,"cum":6375}]},{"id":"speed_of_light","chapter":"energy","name":"光速","unit":"m/s","mode":"semi","source":"CODATA／BIPM","source_url":"https://physics.nist.gov/cgi-bin/cuu/Value?c","freq":"已固定（定義值）","caliber":"真空中光速；1983 年起為定義精確值","textbook":{"value":null,"display":"約 3×10⁸ m/s（每秒約 30 萬公里）","note":"課本常用的近似值"},"current":{"value":null,"display":"299,792,458 m/s（定義精確值）","asof":"1983 起","note":"光速為定義值，公尺反過來由光速定義；課本近似值方向正確，僅精度提升","effectiveAsOf":"1983 起","lastReviewed":null,"nextReview":null},"flag":{"level":"green","label":"大致仍準"},"series":null},{"id":"saturn_moons","chapter":"energy","name":"衛星最多的行星","unit":"行星","mode":"semi","source":"IAU 小行星中心 MPC／NASA JPL","source_url":"https://science.nasa.gov/saturn/moons/","freq":"不定期（新衛星確認時）","caliber":"已確認並編號的天然衛星數最多者","textbook":{"value":"木星","display":"木星是衛星最多的行星","note":"課本常見敘述（木星曾長期居冠）"},"current":{"value":"土星","display":"土星衛星最多（已確認 140+ 顆）","asof":"2023","note":"2023 年起土星確認衛星數躍升至逾 140 顆，超越木星（約 90+）；數字隨新發現持續變動","effectiveAsOf":"2023","lastReviewed":null,"nextReview":null},"flag":{"level":"yellow","label":"已翻轉"},"series":null},{"id":"universe_age","chapter":"energy","name":"宇宙年齡","unit":"億年","mode":"semi","source":"ESA 普朗克衛星 (Planck 2018)","source_url":"https://www.esa.int/Science_Exploration/Space_Science/Planck","freq":"隨新觀測微調","caliber":"由宇宙微波背景輻射推估的宇宙年齡","textbook":{"value":137,"display":"約 137 億年","note":"較早課本常見值"},"current":{"value":138,"display":"約 138 億年（137.9±0.2）","asof":"2018","note":"ESA 普朗克衛星 2018 年結果；與課本量級一致，精度提升","effectiveAsOf":"2018","lastReviewed":null,"nextReview":null},"flag":{"level":"green","label":"大致仍準"},"series":null},{"id":"human_genes","chapter":"life","name":"人類的基因數","unit":"個","mode":"semi","source":"Ensembl／GENCODE（人類基因體註解）","source_url":"https://www.ensembl.org/Homo_sapiens/Info/Annotation","freq":"隨註解版本微調","caliber":"人類蛋白質編碼基因數（protein-coding genes）","textbook":{"value":100000,"display":"約 10 萬個基因","note":"人類基因體計畫完成前的估計"},"current":{"value":20000,"display":"約 2 萬個蛋白質編碼基因","asof":"2020s","note":"人類基因體計畫後估計大幅下修至約 19,000–20,000；非編碼 RNA 基因另計","effectiveAsOf":"2020s","lastReviewed":null,"nextReview":null},"flag":{"level":"red","label":"已改寫"},"series":null},{"id":"domains_kingdoms","chapter":"life","name":"生物的分類系統","unit":"分類","mode":"semi","source":"學界共識（Woese 三域系統，1990）","source_url":"https://en.wikipedia.org/wiki/Three-domain_system","freq":"教科書改版時採用","caliber":"生物最高階分類架構","textbook":{"value":null,"display":"分成五界（原核、原生生物、真菌、植物、動物）","note":"Whittaker 五界系統"},"current":{"value":null,"display":"改以「三域」系統為主流（細菌、古菌、真核）","asof":"1990 提出、近代教科書採用","note":"Woese 依 rRNA 提出三域；古菌 (Archaea) 自成一域，是五界系統所沒有的層級","effectiveAsOf":"1990 提出、近代教科書採用","lastReviewed":null,"nextReview":null},"flag":{"level":"yellow","label":"分類更新"},"series":null},{"id":"described_species","chapter":"life","name":"已描述（命名）的生物種數","unit":"種","mode":"semi","source":"Catalogue of Life","source_url":"https://www.catalogueoflife.org/","freq":"年更（持續收錄）","caliber":"已被科學描述並命名的有效物種數（估計總數 800 萬–1000 萬，多數尚未描述）","textbook":{"value":1500000,"display":"約 150 萬種已知生物","note":"課本常見量級"},"current":{"value":2100000,"display":"約 210 萬種已描述","asof":"2024","note":"Catalogue of Life 收錄逾 200 萬有效物種；估計實際總數達 800 萬–1000 萬，多數仍未被發現","effectiveAsOf":"2024","lastReviewed":null,"nextReview":null},"flag":{"level":"red","label":"已改寫","diffPct":40},"series":null},{"id":"taiwan_species","chapter":"life","name":"臺灣已記錄的物種數","unit":"種","mode":"semi","source":"臺灣物種名錄 TaiCOL／TaiBIF","source_url":"https://taibif.tw/","freq":"年更（持續增補）","caliber":"臺灣物種名錄收錄之已記錄物種數","textbook":{"value":null,"display":"臺灣生物多樣性高、特有種比例高","note":"課本多為定性描述，少列總數"},"current":{"value":60000,"display":"已記錄逾 6 萬種（且持續增補）","asof":"2024","note":"臺灣物種名錄 (TaiCOL) 收錄；面積雖小但物種數可觀，特有種比例高","effectiveAsOf":"2024","lastReviewed":null,"nextReview":null},"flag":{"level":"info","label":"補充"},"series":null},{"id":"iucn_threatened","chapter":"life","name":"全球受威脅（瀕危）物種數","unit":"種","mode":"semi","source":"IUCN 紅皮書 Red List","source_url":"https://www.iucnredlist.org/","freq":"年更（每年至少更新兩次）","caliber":"IUCN 評估為受威脅（易危 VU 以上）的物種數","textbook":{"value":null,"display":"許多生物瀕臨絕種","note":"課本多為定性描述"},"current":{"value":46000,"display":"逾 4.6 萬種被列為受威脅","asof":"2024","note":"IUCN 已評估逾 16 萬物種，其中逾 4.6 萬種受威脅；數字逐年上升","effectiveAsOf":"2024","lastReviewed":null,"nextReview":null},"flag":{"level":"info","label":"補充"},"series":null},{"id":"human_cells","chapter":"life","name":"人體的細胞數","unit":"兆個","mode":"semi","source":"學界估計（Bianconi et al. 2013 等）","source_url":"https://pubmed.ncbi.nlm.nih.gov/23829164/","freq":"隨研究修正","caliber":"人體細胞總數估計（單位：兆＝10¹²）","textbook":{"value":60,"display":"人體約有數十兆個細胞（常見約 60 兆）","note":"課本常見估計"},"current":{"value":37,"display":"約 37 兆個細胞","asof":"2013","note":"2013 年較嚴謹估計約 3.7×10¹³ 個（含大量紅血球）","effectiveAsOf":"2013","lastReviewed":null,"nextReview":null},"flag":{"level":"yellow","label":"已修正"},"series":null},{"id":"microbiome_ratio","chapter":"life","name":"人體細菌數 vs 自身細胞數","unit":"倍","mode":"semi","source":"Sender, Fuchs & Milo 2016（Cell）","source_url":"https://pubmed.ncbi.nlm.nih.gov/26824647/","freq":"隨研究修正","caliber":"人體內細菌總數 ÷ 人體自身細胞數","textbook":{"value":10,"display":"體內細菌約為自身細胞的 10 倍","note":"長年流傳的 10:1 說法"},"current":{"value":1,"display":"約 1:1（菌數與人體細胞相當）","asof":"2016","note":"2016 年重新估算推翻 10:1，兩者數量相近","effectiveAsOf":"2016","lastReviewed":null,"nextReview":null},"flag":{"level":"red","label":"已推翻"},"series":null},{"id":"everest","chapter":"earth","name":"聖母峰（珠穆朗瑪峰）高度","unit":"公尺","mode":"semi","source":"中國與尼泊爾聯合公告（2020）","source_url":"https://en.wikipedia.org/wiki/Mount_Everest","freq":"極罕變（重新測量時）","caliber":"聖母峰海拔高度（含雪蓋）","textbook":{"value":8848,"display":"8,848 公尺","note":"課本沿用多年的高度"},"current":{"value":8848.86,"display":"8,848.86 公尺","asof":"2020","note":"2020 年中國與尼泊爾聯合公布最新測量結果","effectiveAsOf":"2020","lastReviewed":null,"nextReview":null},"flag":{"level":"green","label":"微幅更新"},"series":null},{"id":"taiwan_highest","chapter":"earth","name":"臺灣最高峰（玉山）高度","unit":"公尺","mode":"semi","source":"內政部國土測繪","source_url":"https://www.nlsc.gov.tw/","freq":"極罕變","caliber":"玉山主峰海拔高度","textbook":{"value":3952,"display":"玉山 3,952 公尺","note":"課本常見值"},"current":{"value":3952,"display":"玉山 3,952 公尺","asof":"現行","note":"與課本一致；為東北亞第一高峰。此點示範「課本仍準」的對照","effectiveAsOf":"現行","lastReviewed":null,"nextReview":null},"flag":{"level":"green","label":"大致仍準","diffPct":0},"series":null}]};
+// 4. HS 貨品結構圓餅
+function drawHS(hs){
+  if(hs.total==null || hs.total<=0){document.getElementById('c_hs').parentNode.textContent='官方總計缺漏或為零，無法計算全體出口占比。';return;}
+  var cats=hs.categories.slice();
+  var labels=cats.map(function(c){return c.name.replace(/^第[一二三四五六七八九十百]+類\s*/,'').slice(0,10)||c.name;});
+  // 用簡短大類名；小類合併「其他」
+  var big=cats.filter(function(c){return c.pct>=2;}), small=cats.filter(function(c){return c.pct<2;});
+  var dispLabels=big.map(function(c){return shortHS(c.name);}), dispData=big.map(function(c){return c.value;});
+  if(small.length){ dispLabels.push('其他'); dispData.push(small.reduce(function(s,c){return s+c.value;},0)); }
+  var known=dispData.reduce(function(s,v){return s+v;},0);
+  if(hs.total!=null && known>hs.total+1){document.getElementById('c_hs').parentNode.textContent='分類合計超過官方總計，暫不顯示占比。';return;}
+  if(hs.total!=null && hs.total>known){dispLabels.push('未分類／來源缺漏');dispData.push(hs.total-known);}
+  var colors=dispLabels.map(function(l,i){return l==='其他'?'#94a3b8':PALETTE[i%PALETTE.length];});
+  var sum=dispData.reduce(function(s,v){return s+v;},0);
+  CH.hs=new Chart(document.getElementById('c_hs'),{type:'pie',
+    data:{labels:dispLabels,datasets:[{data:dispData,backgroundColor:colors,borderColor:'#fff',borderWidth:1.5}]},
+    options:{responsive:true,maintainAspectRatio:false,radius:'80%',layout:{padding:{left:110,right:110,top:12,bottom:12}},
+      plugins:{legend:{display:false},title:{display:true,text:hs.statYear+' 年出口 HS 大類占比',font:{size:12},color:'#5b6572'},
+        tooltip:{callbacks:{label:function(c){var p=sum?(c.raw/sum*100):0;return c.label+'：'+fmtYi(yi(c.raw))+'（'+p.toFixed(1)+'%）';}}}}},
+    plugins:[pieLabelPlugin]});
+}
+function shortHS(name){
+  // 「第十六類　機械及電機設備…」→「機械電機」等精簡；取類號後主詞
+  var m=name.match(/第([一二三四五六七八九十百]+)類[　\s]*(.+)/);
+  if(!m) return name.slice(0,8);
+  var core=m[2].replace(/[；;].*$/,'').replace(/及其[^、]*$/,'').slice(0,8);
+  return core;
+}
+
+window.TRADE_DATA = {"meta":{"generatedAt":"2026-09-25T14:11:18.386Z","title":"進出口與兩岸貿易","source":"財政部統計處海關進出口貿易統計（service.mof.gov.tw）","unit":"千美元（US$ Thousand）","caliber":"兩岸依存度採我國海關統計自算（中國大陸＋香港）／總計；與陸委會雙邊互引統計範圍略有差異","fetchError":null,"completenessRule":"2001 年起僅納入進出口各自具 1–12 月不同月份且總額有效的完整年度；1981–2000 沿用官方 u2011 年度歷史表統計範圍。缺月份不補零，合法 0 保留為有效值。","incompleteYears":[],"latestYear":2025},"years":[1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025],"total":{"exports":[22611197,22204270,25122747,30456390,30725662,39861504,53678748,60667362,66303952,67214446,76178309,81470250,85091458,93048783,111658800,115942064,122080673,112595448,123733345,151949756,126608592,135769775,151334450,183631186,199752569,225904198,248669973,257754830,205201752,277352073,312182400,305314663,310865636,319413274,284433978,279174656,315486658,334007338,329157320,345125944,446371191,479415230,432419962,474925154,639961977],"imports":[21199551,18888375,20287078,21959086,20102049,24181460,34983380,49672800,52265326,54716004,62860545,72006794,77061203,85349194,103550044,102370021,114424665,105229820,111196086,140731990,109585639,115112835,130244108,171547039,185430191,206442269,222981666,244197197,177132536,255745764,287315902,276466442,277384288,281095615,236380483,229199459,257199590,284791673,285651450,286147643,381957539,428082522,351631640,394349566,485110247]},"countries":{"中國大陸":{"ex":[null,null,null,null,null,null,null,null,null,null,null,1051,16227,131634,376614,623379,626480,914872,2602091,4391494,5020729,10690015,23209786,36722825,44056256,52377134,62928415,67480900,54767030,77886868,85122327,82592334,84122247,84709050,73270118,73732229,88745404,96497850,91789357,102446179,125902555,121092996,95725727,96953212,100081018],"im":[0,0,0,0,0,0,0,0,0,0,293248,747073,1015504,1858713,3091306,3059852,3915312,4113882,4528891,6229334,5970374,8041252,11095670,16891452,20161610,24908965,28221209,31569648,24554421,36255159,44094821,41431372,43345498,49253561,45264650,43990846,50037132,53789774,57394384,63587815,82484777,84002349,70231852,79325678,91722167]},"香港":{"ex":[1896959,1565348,1643628,2087134,2539718,2921305,4123315,5587070,7042278,8556243,12430520,15414978,18452603,21262326,26105855,26787641,28688053,25398248,26825264,32741718,28789386,33049186,30982417,33068466,34220105,37668852,38274266,33022170,29707959,38233568,40682210,38490883,41183242,43772042,39116308,38253914,41165189,41400954,40325208,48935181,62972006,64782182,56513014,53635460,70373044],"im":[308912,307398,298892,370361,319677,378655,753785,1922086,2205206,1445867,1946753,1781388,1728757,1532958,1842873,1704663,1996134,2076093,2223600,2364182,1863024,1753335,1740495,2109556,1900967,1694785,1635405,1352747,1047864,1566591,1585848,2584966,1585409,1734798,1467509,1330471,1511687,1409290,1062194,1220676,1709026,1505613,1486052,1325629,1426983]},"日本":{"ex":[2478738,2382307,2477068,3186462,3460945,4559809,6986014,8771697,9064862,8337715,9188897,8893655,8977167,10221109,13156727,13658783,11691036,9438826,12042837,16887176,13031446,12393482,12477122,13950903,15246183,16508659,16143838,17818620,14606566,18445058,19120126,19517937,19391110,20129137,19556522,19470701,20573772,22800957,23278741,23398254,29206218,33608899,31434886,25830238,30011738],"im":[5928525,4780222,5586683,6441861,5548847,8254741,11840566,14825440,16031015,15998428,18858256,21766639,23186059,24785822,30265880,27492964,29021671,27059609,30637138,38622073,26105024,27609846,33101690,44323705,46684866,46848784,46710377,47087528,36751217,52910333,53148667,48341770,43689850,41978720,38865379,40620288,41938924,44151300,44051896,45900765,56116546,54626029,44344434,46464122,54871238]},"韓國":{"ex":[280388,194135,222637,230467,253822,351562,638192,917301,1132751,1212816,1287320,1150428,1273460,1740090,2571771,2661602,2365903,1509573,2645415,4002304,3379063,3977959,4740914,5689046,5945086,7252867,7913452,8792637,7366426,10765285,12485955,11984379,12223186,12857318,12772060,12531227,14415736,15738931,16917052,15140525,20140178,22178146,18203299,20790607,26609756],"im":[301396,232778,165093,243915,186620,328698,532746,900089,1239071,1343646,1747031,2300890,2537291,3015198,4327379,4161720,5024480,5682165,7202328,9027154,6762758,7785115,8794743,11768876,13356933,15094771,15164651,13190380,10558046,16223532,18186414,15304648,16162544,15286049,13452681,14649503,16892551,19524872,17740668,20610395,30639558,34261450,28414772,43703813,63672402]},"新加坡":{"ex":[603976,576170,710581,878443,885175,930946,1350456,1682691,1975647,2203661,2403482,2505166,2890381,3365837,4404987,4573182,4894589,3359182,3946906,5637065,4234012,4646355,5316367,6810815,8104189,9378650,10613104,11777382,8698501,12198128,16978012,20198583,19609087,20678284,17396074,16147227,17619613,17324072,18183980,19083955,25718674,29522660,29738313,33741480,40394595],"im":[199371,152146,167225,267998,275883,339864,522145,740057,889404,1406040,1445867,1694883,1865877,2412279,2957975,2789115,3150380,2716455,3327118,5036409,3386012,3565957,3890615,4329754,4982202,5119205,4777702,4860039,4814185,7675032,8022298,8171787,8605822,8435272,7170552,7526000,8711443,8416360,7922364,8989117,12073253,12525520,9524282,9699961,13164372]},"馬來西亞":{"ex":[187495,222551,223698,232035,194868,205745,272137,451054,694811,1103562,1464854,1600272,1671801,2224156,2898592,2953726,3035450,2339475,2908407,3686724,3141450,3223997,3187443,4244648,4309863,4979048,5421303,5541843,4082371,5974549,6923594,6587785,8243300,8670203,7196851,7814116,10368478,10601675,9399840,9458244,13327838,17013703,15165841,19888019,37009320],"im":[452541,469639,493743,550816,481466,500799,729044,943382,887489,1003033,1409367,1829182,1938936,2326856,2953718,3565236,4228301,3639473,3895257,5350520,4237177,4181317,4789012,5466819,5257569,6118187,6321242,6916704,4700786,7861085,8792879,7980532,8254795,8952644,6733747,6288797,7178476,9304519,10365562,9889400,11798642,13549161,9688207,14610610,18648524]},"越南":{"ex":[null,null,null,null,null,null,null,null,8879,62746,152288,278485,501307,742614,1013694,1175386,1297245,1243333,1351944,1679042,1756335,2324333,2697520,3480959,4136208,4918488,6901329,7983915,6016430,7585609,9205773,8557048,9018544,10104121,9675233,9511294,10456687,10770602,10771752,10521227,13966601,14574219,11725257,14274984,18167708],"im":[0,0,0,0,0,0,0,1515,32466,55558,80065,122911,154148,218962,270295,316733,391431,347224,394190,473634,420310,449889,455151,602979,692028,850036,1041230,1199198,914587,1277123,1867194,2302968,2696409,2584372,2543697,2746446,3120021,3697691,5281778,5496903,6146516,6985458,6157384,7936437,14359923]},"泰國":{"ex":[195273,215913,263829,244848,236213,278600,424614,753672,1110156,1423637,1444860,1809558,2018957,2440238,3071726,2789603,2562108,2005672,2194685,2652616,2210056,2384470,2658684,3363915,3871961,4632717,5262071,4975330,3873357,5355081,6214005,6665294,6431935,6193998,5769926,5490290,6381470,6167705,5517710,5289108,7023744,7549522,10858627,11819781,12781642],"im":[117460,107057,74460,139985,146917,162895,200413,341901,390169,447961,586133,824579,973005,1108777,1485292,1671718,1926910,1979826,2400863,2780181,2199389,2193689,2395669,2811541,2916451,3354831,3629547,3262261,2701140,3840014,4404640,3708830,3793413,4407970,4042623,3817594,4357407,4581401,4253398,4543670,5961364,6291303,5381291,6233010,6590758]},"菲律賓":{"ex":[280317,235144,245794,190699,239163,328627,459745,601378,778076,811425,848019,1023253,1031107,1222485,1653555,1931207,2242475,1993637,2671889,3136585,2219050,2117889,2516509,4062757,4351158,4516470,4957745,4820816,4456782,6034825,7053466,8945191,9820662,9614527,7513737,8659120,9592794,8942334,6156565,5646009,6073164,7639749,5062215,4248684,4480756],"im":[120800,68499,91247,134320,104204,152672,194435,242301,238478,236259,235312,305177,364815,460680,623225,840302,1374642,1829646,2180770,3601532,3265731,3671143,3105987,3092639,2825500,2814530,2287587,2252346,1603137,2331566,2406915,2172069,2320922,2295464,2094615,2203982,2378258,2493341,2114208,2125028,2997760,3080700,2347634,2462413,2683252]},"印尼":{"ex":[423989,422488,429073,346204,280904,391818,445505,632637,934092,1245811,1207204,1214753,1284546,1433032,1868877,1955334,2133844,1058121,1315269,1741769,1486330,1480239,1536100,1914124,2377687,2525924,2944432,3595184,3242325,4536294,4875186,5244446,5203416,3877398,3105979,2746257,3193161,3329164,2921604,2276826,3069876,3214730,3009964,3063853,4713752],"im":[467069,259552,344516,422978,413794,357325,567248,613435,706196,921587,1234332,1407269,1624039,2114386,2150425,1884483,2184708,2114404,2296941,3020530,2533924,2600693,2938426,4135683,4565267,5245054,5801663,7313478,5197563,6055275,7452648,7350191,7173389,7398468,5961973,4311256,4880588,5486763,4681096,4507631,7909457,11211753,7388708,7688708,6563281]},"印度":{"ex":[111116,106812,97789,58997,89951,106529,122777,176270,214178,229127,158459,173359,211951,344923,520996,463099,549430,529290,596863,723886,642185,668785,790886,1117495,1615188,1507554,2422212,3081939,2572290,3688249,4504681,3452187,3517186,3491071,3020959,2819155,3281316,3771080,3281844,2595109,4522447,5318569,6010142,7891489,9210670],"im":[42073,18123,49717,28308,23753,47976,100596,92276,135393,214694,240823,218381,318122,411425,413864,468437,662373,463256,391057,514322,494684,552622,626010,863745,860652,1247022,2539038,2340477,1625062,2863390,3149399,2629266,2758360,2529521,1910416,2185980,3055346,3258495,2514570,2199511,3177653,3140909,2211069,2717214,3303520]},"美國":{"ex":[8163099,8758918,11333713,14867717,14773373,19013878,23684790,23467169,24036214,21745853,22320844,23571604,23587325,24336757,26407389,26866357,29551755,29959134,31339373,35588452,28128251,27373955,26571270,28809375,29162882,32474639,32130276,30883569,23619884,31566001,36450635,33119861,32630181,35033279,34448479,33396311,36772593,39490380,46247108,50549921,65685966,75052059,76234038,111361914,198258264],"im":[4765763,4563266,4646433,5041650,4746273,5432594,7647962,13006725,12002788,12611827,14113788,15771032,16722624,18042642,20771393,19971851,23233847,19845059,19818117,25269878,19088599,19020666,17790159,22612090,21878879,23839305,27508082,27333463,18735649,26274123,27025167,24843729,27784597,29337543,28362487,27086971,28395694,33104900,34849797,32513548,39258764,45690982,40881729,46659157,49017805]},"德國":{"ex":[910616,791669,854023,870905,807337,1277722,1992510,2345321,2577937,3197671,3868708,3599103,3504002,3251303,3839174,3644109,3690558,4107201,4098634,4936278,4531184,3884094,4284076,4611912,4470240,5021828,5194940,5758645,4721489,6548996,6935226,5684520,5670747,6207421,5981585,5896890,6428811,7058113,6522200,6039153,8172971,8810574,8139226,6888030,7373649],"im":[649015,790299,695768,771657,848521,1146368,1664950,2204633,2659784,2716128,3013232,3919339,4220329,4784285,5683348,5023379,5369228,5170438,5331787,5578810,4309467,4500470,5067884,5974684,6304082,6299324,7208127,7738379,5744586,8603272,9884114,8122136,8497104,9631536,8765361,8569135,9198027,9969467,9403160,10178449,12506054,14235172,13896258,13538080,14292582]},"荷蘭":{"ex":[386828,327584,379729,435188,457791,673869,1088709,1508412,1582011,1856238,2170853,2194712,2116369,2374835,3209459,3823041,4297960,4384019,4229949,4952979,4255522,3836991,4221229,4809509,4399256,4419133,4425877,4588155,4245853,5296462,4608998,4437940,4497862,5082092,4180732,4468989,4971900,5855544,5863340,6047225,8079420,8852939,12926796,9688249,8319253],"im":[132056,157770,217082,248755,221310,323558,455929,898077,663343,728592,803304,872184,1002333,1145958,1320059,1470630,1638284,1574653,1719510,2116834,1533286,1447688,1305604,2197698,2055819,2334194,2769122,2348004,1867524,3255288,2963248,3616152,4668870,3191945,2807154,4145367,3475715,3882620,7879274,6557916,10232723,10146827,7466301,5039401,8481076]},"英國":{"ex":[566132,527797,617125,690661,650049,966293,1547779,1906553,2101815,1979352,2071791,2205064,2171052,2172524,2408718,2807366,3278220,3304758,3873172,4591422,3371698,2983025,2929826,3427017,3260253,3508525,3621967,3632683,2984792,3641361,4628186,5070797,4330238,4233725,3905034,3642856,3755981,3858019,3575952,3344234,4148751,4050891,3625970,3655017,4307583],"im":[302070,270321,307565,294375,262435,356819,792130,1113322,926795,1153672,1123803,1357667,1192466,1529102,1643210,1805433,1952801,1711250,1745372,1952902,1480949,1401240,1468426,1791613,1756642,1857089,1995121,1941111,1290597,1807983,2118203,2068808,1923422,1982509,1990742,1843050,1943994,2076426,2020074,1901819,2374628,2592037,2728873,2791083,2936141]},"澳大利亞":{"ex":[676906,643554,634368,831629,747337,870321,1103020,1358576,1537674,1279237,1353625,1428391,1449566,1632446,1755641,1836932,1872960,1640570,1854738,1839301,1377541,1605354,1905387,2292384,2410461,2746740,3292687,3591801,2413409,3208294,3719130,3711772,3833788,3645203,3277057,2948391,2931443,3395405,3236588,3229140,4808452,7538248,5796600,5674713,5501074],"im":[593082,643540,682372,777524,800647,883499,999923,1336221,1631033,1659679,2018071,2055566,2096898,2224988,2575298,2845058,3217348,2919705,2964741,3510837,3092423,2840465,2735629,3434475,4735409,5363948,6163735,8350004,6007586,9036498,10991273,9462217,8105533,7588684,6854287,6118370,8235214,9552030,10017262,8062645,14939208,24641502,17349041,14556543,11737631]}},"continents":{"亞洲":[6559925,6074661,6482562,7634929,8356705,10338201,15141970,19910195,23400949,25692601,31152988,34800227,39074096,45943958,58666022,60753894,61543747,51296513,60662273,79130927,67480658,78460818,91685421,116166325,130117839,148272238,165895669,171199154,141331063,193092397,216176091,215270976,221898059,227291210,201316815,200033903,228809735,240834122,231905920,247506568,315553298,330556406,286112754,294839142,356479191],"歐洲":[2887799,2587328,2761229,3063846,2996535,4774413,7891605,9887121,10953898,12233431,14001441,13928888,12902013,12927365,15725252,16944831,18415323,19800590,20452113,23903931,19989079,18807691,20765156,23820130,23641547,26150897,28720781,30013737,22641958,29500837,31364449,28871609,27905933,29070625,25869495,26123541,28778050,31277632,29770314,28143108,38484236,41099083,42283483,38628925,41275969],"北美洲":[8731017,9268746,12061349,15784107,15718279,20286058,25245937,25051636,25795677,23304896,23945546,25217779,25127893,25796535,27838364,28265202,31150760,31552668,33100128,37479133,29705762,28915817,28054518,30460174,30852631,34244497,33981414,32736504,25081248,33507906,39022855,35626363,35041237,37481919,36809974,35437746,38977445,42030102,48629018,52721105,68695825,78353686,78869142,113969370,201043059],"中美洲":[530990,466109,369401,427071,492120,661125,756332,722505,884854,925259,1014580,1095578,1191431,1375519,1075899,1129852,1630582,1598805,1684980,2243839,1793185,1789063,1694203,1801813,1792569,2132791,2357912,2774298,1754874,2422751,2487624,2750761,2744708,2973071,3133528,2824469,3086674,3340014,3609390,3345027,4636533,5865548,5632149,8739720,22760442],"南美洲":[459102,289687,133197,159708,166355,268566,309004,301415,325885,427694,719607,823509,1017847,1239278,1692118,1772086,1955252,1630906,1261971,1731015,1445591,1144792,1198363,1613498,2183319,2519793,3227896,4438507,2682153,3593787,4521391,4183617,3906393,3610481,2776913,2286671,2628048,2749248,2326225,2126595,3097001,2821059,2460731,2128921,2032426],"大洋洲":[804195,768108,751675,941635,902401,1046184,1342430,1641667,1832267,1540976,1620425,1696406,1731332,1962349,2118938,2250699,2283443,2001599,2204833,2309084,1746212,1953656,2472968,2905923,3039475,3394588,4045390,4489930,2927794,4017642,4572314,4755767,5014640,4611662,4097737,3702749,3869811,4232915,3989464,3941537,5827412,9035530,6856880,6512350,6366419],"非洲":[1100479,884243,680883,699969,560541,742626,1084542,1365326,1256114,1257121,1378188,1387071,1337523,1361078,1631060,1551261,1528276,1464452,1300413,1332643,1191056,1186252,1384965,1549653,1667536,2095758,2158460,2888664,2254979,2244991,2967598,3127234,3385056,2819630,2363752,1913354,1869200,2106411,2117069,1704226,2222056,3024958,1941097,1659522,1488321]},"crossStrait":{"years":[1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025],"exportValue":[null,null,null,null,null,null,null,null,null,null,null,15416029,18468830,21393960,26482469,27411020,29314533,26313120,29427355,37133212,33810115,43739201,54192203,69791291,78276361,90045986,101202681,100503070,84474989,116120436,125804537,121083217,125305489,128481092,112386426,111986143,129910593,137898804,132114565,151381360,188874561,185875178,152238741,150588672,170454062],"totalExport":[22611197,22204270,25122747,30456390,30725662,39861504,53678748,60667362,66303952,67214446,76178309,81470250,85091458,93048783,111658800,115942064,122080673,112595448,123733345,151949756,126608592,135769775,151334450,183631186,199752569,225904198,248669973,257754830,205201752,277352073,312182400,305314663,310865636,319413274,284433978,279174656,315486658,334007338,329157320,345125944,446371191,479415230,432419962,474925154,639961977],"ratio":[null,null,null,null,null,null,null,null,null,null,null,18.922280218852894,21.70468156744946,22.992197544378413,23.717314712320032,23.64199761011672,24.012427421660757,23.369612597482625,23.782881647627,24.437822723453404,26.704439616546722,32.21571295967751,35.809561537376325,38.00623005288437,39.1866604729374,39.86025350445236,40.69758796330428,38.99173101819275,41.166797152882005,41.86752049262672,40.29840791793516,39.65850045007501,40.30856887636175,40.22409287849446,39.51230678916989,40.11329130105564,41.17784055387851,41.2861600064607,40.13721007328654,43.862642792220804,42.31334028902417,38.771229274464226,35.20622412894065,31.707874542269455,26.635029599578854]},"hs":{"statYearRoc":114,"statYear":2025,"total":639982965,"categories":[{"name":"第十六類 機械及機械用具；電機設備；及其零件；錄音機及聲音重放機，電視影像、聲音記錄機及重放機，上述各物之零件及附件","value":514631349,"pct":80.41328865683167},{"name":"第十五類 卑金屬及卑金屬製品","value":27930037,"pct":4.364184443565619},{"name":"第六類 化學或有關工業的產品","value":18233018,"pct":2.848984894465121},{"name":"第七類 塑膠及其製品；橡膠及其製品","value":17998724,"pct":2.812375482525539},{"name":"第五類 礦產品","value":13920969,"pct":2.175209304203902},{"name":"第十八類 光學、照相、電影、計量、檢查、精密、內科或外科儀器及器具；鐘錶；樂器；上述物品之零件及附件","value":12650502,"pct":1.9766935515228912},{"name":"第十七類 車輛、航空器、船舶及有關運輸設備","value":10390946,"pct":1.6236285289249845},{"name":"第十一類 紡織品及紡織製品","value":6221147,"pct":0.9720800927880947},{"name":"第二十類 雜項製品","value":4205635,"pct":0.6571479601804714},{"name":"第十四類 天然珍珠或養珠、寶石或次寶石、貴金屬、被覆貴金屬之金屬及其製品；仿首飾；鑄幣","value":2793295,"pct":0.4364639611930921},{"name":"第四類 調製食品；飲料；酒類及醋；菸類及已製菸類代用品；以非燃燒方式吸入之產品，無論是否含尼古丁；其他供人攝入尼古丁之含尼古丁產品","value":2309181,"pct":0.3608191352405763},{"name":"第十三類 石料、膠泥、水泥、石棉、雲母或類似材料之製品；陶瓷產品；玻璃及玻璃器","value":2082474,"pct":0.3253952236056783},{"name":"第十類 木漿或其他纖維素材料之紙漿；回收（廢料及碎屑）紙或紙板；紙及紙板及其製品","value":1660684,"pct":0.25948878186156094},{"name":"第一類 活動物；動物產品","value":1521911,"pct":0.23780492344823587},{"name":"第二類 植物產品","value":641240,"pct":0.1001964169468167},{"name":"第八類 生皮、皮革、毛皮及其製品；鞍具及輓具；旅行用物品、手提袋及其類似容器；動物腸製品（蠶腸除外）","value":387451,"pct":0.06054083017662822},{"name":"第十二類 鞋、帽、雨傘、遮陽傘、手杖、座凳式手杖、鞭、馬鞭及其零件；已整理之羽毛及其製品；人造花；人髮製品","value":313219,"pct":0.04894177144230706},{"name":"第十九類 武器與彈藥；及其零件與附件","value":179440,"pct":0.02803824629925892},{"name":"第九類 木及木製品；木炭；軟木及軟木製品；草及其他編結材料之編結品；編籃及柳條編結品","value":139638,"pct":0.021819018260900117},{"name":"第三類 動植物或微生物油脂及其分解物；調製食用油脂；動植物蠟","value":116137,"pct":0.01814688926915422},{"name":"第二十一類 藝術品、珍藏品及古董","value":7693,"pct":0.0012020632455427933}]}};
 
 boot();
 </script>
