@@ -6,8 +6,9 @@
 # 需先把 Pages 發布來源改為「GitHub Actions」；網址由 repo 名稱決定，不變。
 # 兩個 repo 變數當開關：PAGES_FROM_ACTIONS=true（切換發布來源時才設；未設前本工作流程完全不動作，舊的「從分支發布」照常）、
 # CLOUD_SCHEDULE_ENABLED=true（打開排程）。底稿與模板由本機產生後推上 .cloud/apps/CityStroll/，雲端只讀。
-# 2026-10-06 加入 TaiwanData 三支（TaiwanAlerts、TaiwanWater 每天；TaiwanEpidemic 每週二）：.cloud/cloud_update_taiwandata.mjs
-#   - 城市散步與這三支各跑各的，一支失敗不擋其他支；每支結果記在 .cloud/status/taiwandata.json
+# 2026-10-06 加入 TaiwanData 兩支（TaiwanAlerts、TaiwanWater 每天）：.cloud/cloud_update_taiwandata.mjs
+#   （TaiwanEpidemic 試過，疾管署網站從 GitHub 的機器連不上，改回本機更新）
+#   - 城市散步與這兩支各跑各的，一支失敗不擋其他支；每支結果記在 .cloud/status/taiwandata.json
 #   - 本機推送的檔案裡有 .cloud/ 的雲端程式時，也跑一次雲端更新（程式一改就用新程式重產，順便驗證）
 #   - 有任何一支失敗：照常提交與發布成功的部分，最後由 alert 工作把這次執行標成失敗（GitHub 會寄信）
 name: site

@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 /**
- * TaiwanData 三支日更／週更頁的雲端更新（2026-10-06 使用者裁定；AutoDeploy 計劃書 #taiwandata-publish-scope）。
+ * TaiwanData 日更頁的雲端更新（2026-10-06 使用者裁定；AutoDeploy 計劃書 #taiwandata-publish-scope）。
+ * 目前兩支：TaiwanAlerts、TaiwanWater。TaiwanEpidemic 原本也在內，2026-10-06 第一次實跑時疾管署 od.cdc.gov.tw
+ * 從 GitHub 的機器連不上（連線逾時，研判擋國外連線），已改回本機更新；要加新的一支，先確認來源從國外連得到。
  * 在網站 repo（weococreate/Taiwan）的 GitHub Actions 內執行，放在 .cloud/cloud_update_taiwandata.mjs。
  *
  * .cloud/ 的資料夾長得和本機專案根目錄一樣（apps/<名稱>/、vendor/、deploy/、deploy-lib.js、taiwan-lib.js），
@@ -21,42 +23,19 @@ const CLOUD = path.dirname(fileURLToPath(import.meta.url));          // .cloud/
 const SITE = process.env.SITE_REPO_ROOT || path.dirname(CLOUD);       // repo 根目錄（對外網頁所在）
 const EVENT = process.env.CLOUD_EVENT || 'manual';                   // schedule／push／workflow_dispatch
 const STATUS = path.join(CLOUD, 'status', 'taiwandata.json');
-const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/126 Safari/537.36';
 
 const APPS = [
   { id: 'TaiwanAlerts', dataVar: 'ALERTS_DATA', minBytes: 100_000 },
   { id: 'TaiwanWater', dataVar: 'WATER_DATA', minBytes: 200_000,
     // 只增不減的累積歷史：雲端是唯一寫入者，每輪跟著網頁一起提交；變小就當失敗並還原。
     state: ['taiwanwater-history.json', 'taiwanwater-gw-history.json', 'taiwanwater-river-history.json'] },
-  { id: 'TaiwanEpidemic', dataVar: 'EPIDEMIC_DATA', minBytes: 100_000,
-    scheduleWeekday: 2,            // 排程時只在台北時間週二跑（週更）；手動或推送程式時照跑
-    prefetch: fetchEpidemic },
+  // 可用的選項：scheduleWeekday（排程時只在台北時間星期幾跑，0＝週日）、prefetch（build 之前要先做的下載）。
 ];
 
 const taipei = () => new Date(Date.now() + 8 * 3600e3);
 const nowTaipei = () => taipei().toISOString().replace('Z', '+08:00').slice(0, 19) + '+08:00';
 const run = (cmd, args, opt = {}) => execFileSync(cmd, args, { cwd: CLOUD, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], timeout: 240_000, ...opt });
 const tail = (s, n = 400) => String(s || '').trim().slice(-n);
-
-/** 疾管署 od.cdc.gov.tw 送出的憑證鏈缺中介憑證，要用「系統憑證＋已存的 TWCA 中介憑證」才能安全下載（同本機 update 腳本）。 */
-function fetchEpidemic(appDir) {
-  const raw = path.join(appDir, 'taiwanepidemic-raw');
-  const sys = ['/etc/ssl/certs/ca-certificates.crt', '/etc/ssl/cert.pem'].find(f => fs.existsSync(f));
-  if (!sys) throw new Error('找不到系統憑證檔');
-  const bundle = path.join(raw, 'ca-bundle.pem');
-  fs.writeFileSync(bundle, fs.readFileSync(sys, 'utf8') + '\n' + fs.readFileSync(path.join(raw, 'twca-ssl-intermediate.pem'), 'utf8'));
-  const files = [
-    ['RODS_Influenza_like_illness.csv', 'ili.csv'], ['RODS_EnteroviralInfection.csv', 'entero.csv'],
-    ['RODS_AcuteDiarrhea.csv', 'diarrhea.csv'], ['RODS_AcuteHemorrhagicConjunctivitis.csv', 'conjunctivitis.csv'],
-    ['RODS_Herpangina.csv', 'herpangina.csv'],
-  ];
-  for (const [src, dst] of files) {
-    const out = path.join(raw, dst);
-    run('curl', ['-fsS', '--retry', '2', '--max-time', '120', '--cacert', bundle, '-A', UA, '-o', out, `https://od.cdc.gov.tw/eic/${src}`]);
-    const head = fs.readFileSync(out, 'utf8').slice(0, 300);
-    if (!head.includes('就診人次')) throw new Error(`${dst} 內容不是預期的 CSV`);
-  }
-}
 
 function checkPage(html, app, publishedSize) {
   const must = [['gtag(', 'GA4 追蹤碼'], ['與 Claude Code', '免責聲明（Taiwan 站文字）'], ['name="referrer"', 'referrer 標頭'], ['隱私', '隱私聲明'], [`window.${app.dataVar}`, '內嵌資料']];
@@ -104,7 +83,8 @@ function updateOne(app) {
 
 function main() {
   const prev = fs.existsSync(STATUS) ? JSON.parse(fs.readFileSync(STATUS, 'utf8')) : { apps: {} };
-  const status = { _note: 'TaiwanData 雲端更新最近一次的結果（每支一筆；ok=false 表示那一支這輪沒更新，網頁維持上一版）。', event: EVENT, ranAt: nowTaipei(), apps: { ...prev.apps } };
+  const status = { _note: 'TaiwanData 雲端更新最近一次的結果（每支一筆；ok=false 表示那一支這輪沒更新，網頁維持上一版）。', event: EVENT, ranAt: nowTaipei(),
+    apps: Object.fromEntries(APPS.filter(a => prev.apps[a.id]).map(a => [a.id, prev.apps[a.id]])) };   // 已移出清單的不留舊紀錄
   const files = [];
   let failed = 0;
   for (const app of APPS) {
