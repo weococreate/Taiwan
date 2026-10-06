@@ -6,6 +6,10 @@
 # 需先把 Pages 發布來源改為「GitHub Actions」；網址由 repo 名稱決定，不變。
 # 兩個 repo 變數當開關：PAGES_FROM_ACTIONS=true（切換發布來源時才設；未設前本工作流程完全不動作，舊的「從分支發布」照常）、
 # CLOUD_SCHEDULE_ENABLED=true（打開排程）。底稿與模板由本機產生後推上 .cloud/apps/CityStroll/，雲端只讀。
+# 2026-10-06 加入 TaiwanData 三支（TaiwanAlerts、TaiwanWater 每天；TaiwanEpidemic 每週二）：.cloud/cloud_update_taiwandata.mjs
+#   - 城市散步與這三支各跑各的，一支失敗不擋其他支；每支結果記在 .cloud/status/taiwandata.json
+#   - 本機推送的檔案裡有 .cloud/ 的雲端程式時，也跑一次雲端更新（程式一改就用新程式重產，順便驗證）
+#   - 有任何一支失敗：照常提交與發布成功的部分，最後由 alert 工作把這次執行標成失敗（GitHub 會寄信）
 name: site
 on:
   push:
@@ -15,7 +19,7 @@ on:
   workflow_dispatch:
     inputs:
       update:
-        description: '執行城市散步雲端更新（不勾＝只發布整站）'
+        description: '執行雲端更新（不勾＝只發布整站）'
         type: boolean
         default: true
 permissions:
@@ -25,13 +29,18 @@ concurrency:
   cancel-in-progress: false
 jobs:
   update:
-    if: vars.PAGES_FROM_ACTIONS == 'true' && ((github.event_name == 'workflow_dispatch' && inputs.update) || (github.event_name == 'schedule' && vars.CLOUD_SCHEDULE_ENABLED == 'true'))
+    if: >-
+      vars.PAGES_FROM_ACTIONS == 'true' && (
+        (github.event_name == 'workflow_dispatch' && inputs.update) ||
+        (github.event_name == 'schedule' && vars.CLOUD_SCHEDULE_ENABLED == 'true') ||
+        (github.event_name == 'push' && contains(github.event.head_commit.message, '.cloud/')))
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 25
     permissions:
       contents: write
     outputs:
-      changed: ${{ steps.update.outputs.changed }}
+      changed: ${{ steps.commit.outputs.changed }}
+      failed: ${{ steps.result.outputs.failed }}
     env:
       SITE_REPO_ROOT: ${{ github.workspace }}
       TZ: Asia/Taipei
@@ -43,26 +52,51 @@ jobs:
         with:
           node-version: '22.14.0'
       - id: update
+        continue-on-error: true
         run: node .cloud/apps/CityStroll/cloud_update.mjs
-      - if: steps.update.outputs.changed == 'true'
+      - id: td
+        continue-on-error: true
+        env:
+          CLOUD_EVENT: ${{ github.event_name }}
+        run: node .cloud/cloud_update_taiwandata.mjs
+      - id: commit
+        env:
+          CITY_CHANGED: ${{ steps.update.outputs.changed }}
+          TD_FILES: ${{ steps.td.outputs.files }}
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add CityStroll.html
-          test "$(git diff --cached --name-only)" = "CityStroll.html"
-          git commit -m "雲端更新 城市散步 展覽活動"
+          if [ "$CITY_CHANGED" = "true" ]; then git add -- CityStroll.html; fi
+          for f in $TD_FILES; do git add -- "$f"; done
+          if git diff --cached --quiet; then echo "changed=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          # 只准提交這幾個：四支網頁、水情的三個累積歷史檔、結果紀錄。多出任何檔就停。
+          extra=$(git diff --cached --name-only | grep -v -x -E 'CityStroll\.html|Taiwan(Alerts|Water|Epidemic)\.html|\.cloud/apps/TaiwanWater/taiwanwater(-gw|-river)?-history\.json|\.cloud/status/taiwandata\.json' || true)
+          test -z "$extra"
+          git commit -m "雲端更新 $(git diff --cached --name-only | grep -E '\.html$' | tr '\n' ' ')"
           for i in 1 2 3; do
-            git push origin HEAD:main && exit 0
+            if git push origin HEAD:main; then echo "changed=true" >> "$GITHUB_OUTPUT"; exit 0; fi
             git pull --rebase origin main || { git rebase --abort; exit 1; }
           done
           exit 1
+      - id: result
+        if: always()
+        env:
+          CITY: ${{ steps.update.outcome }}
+          TD: ${{ steps.td.outcome }}
+          TD_FAILED: ${{ steps.td.outputs.failed }}
+        run: |
+          n=0
+          if [ "$CITY" = "failure" ]; then n=$((n+1)); fi
+          if [ "$TD" = "failure" ]; then n=$((n+1)); fi
+          n=$((n + ${TD_FAILED:-0}))
+          echo "failed=$n" >> "$GITHUB_OUTPUT"
   deploy:
     needs: update
     if: >-
       !cancelled() && vars.PAGES_FROM_ACTIONS == 'true' && (
         github.event_name == 'push' ||
         (github.event_name == 'workflow_dispatch' && !inputs.update) ||
-        (needs.update.result == 'success' && needs.update.outputs.changed == 'true'))
+        needs.update.outputs.changed == 'true')
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
@@ -87,3 +121,12 @@ jobs:
           path: _site
       - id: deployment
         uses: actions/deploy-pages@v5.0.1
+  alert:
+    needs: update
+    if: ${{ !cancelled() && needs.update.outputs.failed != '' && needs.update.outputs.failed != '0' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    steps:
+      - run: |
+          echo "::error::雲端更新有 ${{ needs.update.outputs.failed }} 支失敗；成功的部分已照常發布。明細見 update 工作的紀錄與 .cloud/status/taiwandata.json"
+          exit 1
