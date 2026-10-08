@@ -8,7 +8,7 @@
  * .cloud/ 的資料夾長得和本機專案根目錄一樣（apps/<名稱>/、vendor/、deploy/、deploy-lib.js、taiwan-lib.js），
  * 所以各支的 build-*.js 原封不動就能跑，不必為雲端另寫一份。
  *
- * 每支依序：抓資料並重算 → 打包成單一網頁 → 補 GA4／免責／隱私 → 檢查 → 和線上那份不同才寫到 repo 根目錄。
+ * 每支依序：抓資料並重算 → 打包成單一網頁 → 補 GA4／免責／隱私／資料更新時間 → 檢查 → 和線上那份不同才寫到 repo 根目錄。
  * 任一步失敗：那一支不寫、累積歷史檔還原成執行前的樣子，其他支照常；結果一律記進 .cloud/status/taiwandata.json。
  * 雲端沒有上一輪的原始檔可退，來源抓不到就是失敗，不會拿舊資料冒充新資料。
  *
@@ -38,7 +38,7 @@ const run = (cmd, args, opt = {}) => execFileSync(cmd, args, { cwd: CLOUD, encod
 const tail = (s, n = 400) => String(s || '').trim().slice(-n);
 
 function checkPage(html, app, publishedSize) {
-  const must = [['gtag(', 'GA4 追蹤碼'], ['與 Claude Code', '免責聲明（Taiwan 站文字）'], ['name="referrer"', 'referrer 標頭'], ['隱私', '隱私聲明'], [`window.${app.dataVar}`, '內嵌資料']];
+  const must = [['gtag(', 'GA4 追蹤碼'], ['與 Claude Code', '免責聲明（Taiwan 站文字）'], ['name="referrer"', 'referrer 標頭'], ['隱私', '隱私聲明'], [`window.${app.dataVar}`, '內嵌資料'], ['data-updated-stamp="weoco"', '資料更新時間標示']];
   for (const [needle, label] of must) if (!html.includes(needle)) throw new Error(`產物缺 ${label}`);
   const ext = [...html.matchAll(/<script[^>]*src="([^"]+)"/g)].map(m => m[1]).filter(u => !/^https:\/\/www\.googletagmanager\.com\//.test(u));
   if (ext.length) throw new Error('產物有不該有的 script 來源：' + ext.join(' '));
@@ -64,6 +64,7 @@ function updateOne(app) {
     run('python3', ['deploy/ensure-ga4.py', outLocal]);
     run('python3', ['deploy/ensure-disclaimer.py', outLocal], { env: { ...process.env, DISCLAIMER_SITE: 'Taiwan' } });
     run('python3', ['deploy/ensure-privacy.py', outLocal]);
+    run('python3', ['deploy/ensure-updated-stamp.py', outLocal]);   // 2026-10-07：頁面蓋上「資料更新：日期 時間」（台北時間，工具自己換算）
     const html = fs.readFileSync(outLocal, 'utf8');
     checkPage(html, app, fs.existsSync(published) ? fs.statSync(published).size : 0);
     stateFiles.forEach((f, i) => {

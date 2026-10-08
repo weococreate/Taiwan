@@ -12,12 +12,15 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 
 const ROOT = process.env.SITE_REPO_ROOT || process.cwd();
 const HERE = path.dirname(new URL(import.meta.url).pathname);
 const BASE = path.join(HERE, 'citystroll-base.json');
 const TEMPLATE = path.join(HERE, 'CityStroll.template.html');
 const OUT = path.join(ROOT, 'CityStroll.html');
+// 2026-10-07：寫出網頁後蓋上「資料更新：日期 時間」。工具與本機共用同一支（雲端在 .cloud/deploy/，本機測試在專案的 deploy/）。
+const STAMP_TOOL = [path.join(HERE, '..', '..', 'deploy', 'ensure-updated-stamp.py'), path.join(HERE, '..', '..', '..', 'deploy', 'ensure-updated-stamp.py')].find(f => fs.existsSync(f));
 const URL_EVENTS = 'https://cloud.culture.tw/frontsite/trans/SearchShowAction.do?method=doFindTypeJ&category=all';
 const EV_TYPE = { '1': '音樂', '2': '戲劇', '3': '舞蹈', '4': '親子', '5': '獨立音樂', '6': '展覽', '7': '講座', '8': '電影', '11': '綜藝', '13': '競賽', '14': '徵選', '15': '其他', '16': '演唱會', '17': '研習課程', '19': '旅遊', '200': '文化' };
 const NEAR_M = 300, HORIZON_DAYS = 60;
@@ -95,9 +98,15 @@ async function main() {
   const html = template.replace('null /*__CITYSTROLL_DATA__*/', json);
   selfCheck(html, events);
   const before = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : '';
-  const strip = s => s.replace(/"generated":"\d{4}-\d{2}-\d{2}"/g, '').replace(/"cloud_update":"\d{4}-\d{2}-\d{2}"/g, '');
+  // 比對「內容有沒有變」時不看日期欄與資料更新時間標示，否則每天都會被當成有變而空轉提交
+  const strip = s => s.replace(/"generated":"\d{4}-\d{2}-\d{2}"/g, '').replace(/"cloud_update":"\d{4}-\d{2}-\d{2}"/g, '').replace(/<p data-updated-stamp="weoco"[^>]*>.*?<\/p>/gs, '');
   const changed = strip(before) !== strip(html);
-  if (changed) fs.writeFileSync(OUT, html);
+  if (changed) {
+    if (!STAMP_TOOL) throw new Error('找不到 ensure-updated-stamp.py，無法蓋資料更新時間');
+    fs.writeFileSync(OUT, html);
+    execFileSync('python3', [STAMP_TOOL, OUT], { stdio: ['ignore', 'pipe', 'pipe'] });
+    if (!fs.readFileSync(OUT, 'utf8').includes('data-updated-stamp="weoco"')) throw new Error('資料更新時間沒蓋上');
+  }
   console.log(`文化部活動 ${raw.length} 筆、場地組 ${seen}、雙北未過期 60 天內 ${events.length} 筆；地點合計 ${data.places.length}；${changed ? '已寫出 CityStroll.html' : '內容沒變，不寫'}`);
   if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `changed=${changed}\n`);
 }
