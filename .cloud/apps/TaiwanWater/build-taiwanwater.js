@@ -308,7 +308,7 @@ async function main() {
       measuredAt: b ? b.measuredAt : null,
     });
   }
-  if (computable < 40) throw new Error(`可算蓄水率僅 ${computable} 座（預期 ≥55），中止不覆寫`);
+  if (computable < 40) throw new Error(`可算蓄水率僅 ${computable} 座（門檻 40；正常 45-60 座，46 座每天只在 07:00 回報一次，07:00-08:00 之間抓會落在 24h 窗口空檔），中止不覆寫`);
   reservoirs.sort((a, b) => (b.capacity || 0) - (a.capacity || 0));
 
   // 全台合計（有量且有分母者）

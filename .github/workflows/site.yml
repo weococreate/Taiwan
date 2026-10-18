@@ -1,7 +1,7 @@
 # 網站 repo（weococreate/Taiwan）的 .github/workflows/site.yml 正本；由 deploy_all.py 的 support_files 放入。
 # 2026-10-04 城市散步「展覽活動」雲端自動更新（做法同 Global 的 GlobalRates，AutoDeploy 計劃書 #github-cloud-update）：
 #   - 本機 deploy_all 推送到 main → 只發布整站（其他 17 頁照舊由本機更新）
-#   - 每天台北 06:00 排程 → 抓文化部藝文活動、合進底稿、重產 CityStroll.html，有變更才以 GITHUB_TOKEN 提交回 main，同一次執行發布
+#   - 每天台北 09:00 排程（2026-10-18 起，原 06:00）→ 抓文化部藝文活動、合進底稿、重產 CityStroll.html，有變更才以 GITHUB_TOKEN 提交回 main，同一次執行發布
 #   - 手動執行 → 可選是否做雲端更新
 # 需先把 Pages 發布來源改為「GitHub Actions」；網址由 repo 名稱決定，不變。
 # 兩個 repo 變數當開關：PAGES_FROM_ACTIONS=true（切換發布來源時才設；未設前本工作流程完全不動作，舊的「從分支發布」照常）、
@@ -16,7 +16,9 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: '0 22 * * *'   # 台北 06:00（文化部資料每日更新，起床前就是最新）
+    - cron: '0 1 * * *'    # 台北 09:00（2026-10-18 改，原 22:00 UTC＝台北 06:00：GitHub 排程常延後 1-3 小時，若落在 07:00-08:00 之間，
+                           #   水利署 45501 即時水情的 24 小時窗口剛好缺少 46 座每天只在 07:00 回報一次的水庫，TaiwanWater 建置會以座數不足中止；
+                           #   09:00 之後 07:00 那批一定已進 API。文化部資料改在 09:00 後更新，實際完成時間原本就都在 08:00 以後）
   workflow_dispatch:
     inputs:
       update:
