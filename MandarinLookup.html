@@ -309,7 +309,7 @@ function charView(ch) {
   var zs = [];
   (c.m || []).concat(c.k || []).forEach(function (r) { if (zs.indexOf(r.z) < 0) zs.push(r.z); });
   // 讀音用和注音標記一樣的排法（符號一欄、聲調貼在最後一個符號旁、輕聲在上），不要讓聲調掉到下一個字的位置
-  h += '<div class="meta">讀音：' + zs.map(function (z, i) { return cn(i) + '<span class="zyline">' + rtHtml(z) + '</span>'; }).join('　／　') + '</div>';
+  h += '<div class="meta">讀音：' + zs.map(function (z) { return '<span class="zyline">' + rtHtml(z) + '</span>'; }).join('　／　') + '</div>';   // 不編號，多個讀音用／分開（使用者 2026-10-23）
   h += '<div class="actions">';
   if (OFFICIAL && c.so) h += '<button type="button" data-act="stroke" data-ch="' + esc(ch) + '" data-id="' + c.so + '">看筆順動畫</button>';
   h += '<button type="button" data-act="words" data-ch="' + esc(ch) + '">相關的詞</button></div></section>';
