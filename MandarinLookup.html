@@ -83,6 +83,10 @@ button.minor:hover{background:var(--line);color:var(--ink)}
 .rc .ch{display:block;line-height:1}
 .zy{font-size:.42em;line-height:1.05;color:var(--sub);letter-spacing:0;font-family:"PingFang TC","Noto Sans TC","Heiti TC",sans-serif;text-orientation:upright;display:inline-flex;flex-direction:column-reverse;align-items:flex-end;block-size:2.2em}
 .zy.n{flex-direction:row;align-items:center}
+/* 單獨列出來的注音（讀音那一行、注音查字的標題）：同一套排法，但用內文大小、正文顏色 */
+.zyline{display:inline-block;margin:0 .2em;vertical-align:middle}
+.zyline .zy{font-size:1em;color:var(--ink)}
+h1.big .zyline .zy{font-size:.75em}
 .zy .t{line-height:1}
 #app.hz .zy{display:inline-flex;flex-direction:row;align-items:flex-end;block-size:auto;inline-size:auto;line-height:1}
 #app.hz .zy.n{flex-direction:row}
@@ -304,7 +308,8 @@ function charView(ch) {
   h += '<div class="meta">部首 ' + esc(c.r || '？') + '　<span class="tcy">' + c.s + '</span>畫　' + tagLevel(c) + (c.c ? '<span class="tag">常用字</span>' : '') + '</div>';
   var zs = [];
   (c.m || []).concat(c.k || []).forEach(function (r) { if (zs.indexOf(r.z) < 0) zs.push(r.z); });
-  h += '<div class="meta">讀音：' + zs.map(function (z, i) { return cn(i) + '　' + esc(z); }).join('　／　') + '</div>';
+  // 讀音用和注音標記一樣的排法（符號一欄、聲調貼在最後一個符號旁、輕聲在上），不要讓聲調掉到下一個字的位置
+  h += '<div class="meta">讀音：' + zs.map(function (z, i) { return cn(i) + '<span class="zyline">' + rtHtml(z) + '</span>'; }).join('　／　') + '</div>';
   h += '<div class="actions">';
   if (OFFICIAL && c.so) h += '<button type="button" data-act="stroke" data-ch="' + esc(ch) + '" data-id="' + c.so + '">看筆順動畫</button>';
   h += '<button type="button" data-act="words" data-ch="' + esc(ch) + '">相關的詞</button></div></section>';
@@ -361,7 +366,7 @@ function zhuyinView(q) {
   var key = q.replace(/[\s　]/g, ''), hits = zhuyinIndex[key] || [], prefix = [];
   if (!hits.length) Object.keys(zhuyinIndex).forEach(function (k) { if (k.indexOf(key) === 0) prefix = prefix.concat(zhuyinIndex[k]); });
   var list = hits.length ? hits : prefix;
-  var h = '<section class="sec head"><h1 class="big">' + esc(key) + '</h1><div class="meta">' + (hits.length ? '唸這個音的字有 <span class="tcy">' + hits.length + '</span> 個' : (prefix.length ? '沒有完全一樣的音，開頭相同的字有 <span class="tcy">' + prefix.length + '</span> 個' : '')) + '</div></section>';
+  var h = '<section class="sec head"><h1 class="big"><span class="zyline">' + rtHtml(key) + '</span></h1><div class="meta">' + (hits.length ? '唸這個音的字有 <span class="tcy">' + hits.length + '</span> 個' : (prefix.length ? '沒有完全一樣的音，開頭相同的字有 <span class="tcy">' + prefix.length + '</span> 個' : '')) + '</div></section>';
   if (!list.length) return h + '<section class="sec"><div class="empty">找不到唸這個音的字。注音可以只打聲母韻母，例如 ㄊㄧㄠ；聲調 ˊˇˋ˙ 可加可不加。</div></section>';
   list.sort(function (a, b) { return (D.chars[a].lv - D.chars[b].lv) || (D.chars[a].s - D.chars[b].s); });
   h += '<section class="sec"><div class="chips">' + list.map(function (ch) { var z = hits.length ? key : charZhuyin(ch, null); return '<a class="chip big" data-ch="' + esc(ch) + '">' + ruby(ch, z) + '</a>'; }).join('') + '</div></section>';
@@ -487,7 +492,7 @@ window.LOOKUP_DATA = {"meta":{"generatedAt":"2026-10-23T09:57+08:00","title":"�
 
 boot();
 </script>
-<p data-updated-stamp="weoco" align="right"><small>資料更新：2026-10-23 09:57（台北時間）</small></p>
+
 <div data-disclaimer="weoco" style="box-sizing:border-box;max-width:1100px;margin:28px auto 20px;padding:14px 20px;border-top:1px solid rgba(128,128,128,.25);font-size:12.5px;line-height:1.75;color:#5b6472;text-align:left"><strong style="color:#39404b">免責聲明</strong>：本頁是個人與 Claude Code（Anthropic 的 AI 程式開發工具）協作、利用台灣政府開放資料與其他公開資料所做的練習作品，非商業用途，不代表任何機關或機構立場。內容僅供參考，不構成任何專業建議。資料由程式自動彙整，文字說明部分由 AI 協助撰寫，可能有解析誤差、統計範圍差異或未及更新之處；實際資訊請以各主管機關公布為準，使用本頁內容所作的判斷與結果由使用者自行負責。</div>
 <details data-privacy-notice="v1" style="max-width:960px;margin:24px auto 40px;padding:0 16px;font-size:12px;line-height:1.7;color:#6b7280;">
 <summary style="cursor:pointer;">隱私權說明</summary>
