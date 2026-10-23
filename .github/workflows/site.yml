@@ -11,6 +11,7 @@
 #   - 城市散步與這兩支各跑各的，一支失敗不擋其他支；每支結果記在 .cloud/status/taiwandata.json
 #   - 本機推送的檔案裡有 .cloud/ 的雲端程式時，也跑一次雲端更新（程式一改就用新程式重產，順便驗證）
 #   - 有任何一支失敗：照常提交與發布成功的部分，最後由 alert 工作把這次執行標成失敗（GitHub 會寄信）
+# 2026-10-23 資安體檢第 3 項：第三方動作改釘 commit 編號（標籤可被重新指向，commit 不能）；註解保留原版本號，升版時兩邊一起改。
 name: site
 on:
   push:
@@ -48,10 +49,10 @@ jobs:
       SITE_REPO_ROOT: ${{ github.workspace }}
       TZ: Asia/Taipei
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: main
-      - uses: actions/setup-node@v7.0.0
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: '22.14.0'
       - id: update
@@ -109,7 +110,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: main
       # 只發布對外網頁：與「從分支發布」時對外可見的檔案相同，不含 .github／.cloud。
@@ -118,12 +119,12 @@ jobs:
           rsync -a --exclude=.git --exclude=.github --exclude=.cloud --exclude=.gitignore --exclude=_site ./ _site/
           test -f _site/index.html
           test -z "$(find _site -type f ! -name '*.html')"
-      - uses: actions/configure-pages@v6.0.0
-      - uses: actions/upload-pages-artifact@v5.0.0
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: _site
       - id: deployment
-        uses: actions/deploy-pages@v5.0.1
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
   alert:
     needs: update
     if: ${{ !cancelled() && needs.update.outputs.failed != '' && needs.update.outputs.failed != '0' }}
