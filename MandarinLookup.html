@@ -103,9 +103,9 @@ button.minor:hover{background:var(--line);color:var(--ink)}
    .zy 是注音：直式時符號一欄在左、聲調在最後兩個符號中間的右邊（只有一個符號就在它右邊）；輕聲改成由上往下排，˙ 在最上面。 */
 /* 排列整齊、大小一致（2026-10-20 使用者要求）：每個字（含標點、含沒有注音的字）都是同樣大小的一格，像稿紙；
    格子沿著讀的方向長 1.5 字、另一邊寬 2 字（放得下字＋三個注音符號＋聲調），直式橫式都用同一組數字。 */
-.rc{display:inline-flex;flex-direction:column-reverse;align-items:center;justify-content:flex-start;gap:.06em;inline-size:1.5em;block-size:2em;vertical-align:top;overflow:visible}
+.rc{display:inline-flex;flex-direction:column-reverse;align-items:center;justify-content:flex-start;gap:.06em;inline-size:1.4em;block-size:2em;vertical-align:top;overflow:visible}
 .rc .ch{display:block;line-height:1}
-.zy{font-size:.42em;line-height:1.05;color:var(--sub);letter-spacing:0;font-family:"PingFang TC","Noto Sans TC","Heiti TC",sans-serif;text-orientation:upright;display:inline-flex;flex-direction:column-reverse;align-items:flex-end;block-size:2.2em}
+.zy{font-size:.42em;line-height:.95;color:var(--sub);letter-spacing:0;font-family:"PingFang TC","Noto Sans TC","Heiti TC",sans-serif;text-orientation:upright;display:inline-flex;flex-direction:column-reverse;align-items:flex-end;block-size:2.2em}
 .zy.n{flex-direction:row;align-items:center}
 /* 單獨列出來的注音（讀音那一行、注音查字的標題）：同一套排法，但用內文大小、正文顏色 */
 .zyline{display:inline-block;margin:0 .2em;vertical-align:middle}
@@ -119,6 +119,10 @@ h1.big .zyline .zy{font-size:.75em}
 #app.hz .zy.n{flex-direction:row}
 .sense,.def,.ex,.para{line-height:1.1}
 .para{margin-block-end:.5em}
+/* 字距（2026-10-27 使用者：直排字距要一致、近一點）：每格沿讀的方向 1.4 字（三個注音符號剛好放得下，再小會碰到下一個字的注音）；沒有注音的說明文字（.plain）另一邊也縮成 1.3 字，欄與欄靠近 */
+.plain .rc{block-size:1.3em}
+/* 直的按鈕（首頁「猜猜部首是什麼？」） */
+#app.vert .actions button.vbtn{writing-mode:vertical-rl;padding:.7em .45em;letter-spacing:.1em}
 .tcy{text-combine-upright:all}
 #app.hz .tcy{text-combine-upright:none}
 .empty{color:var(--sub)}
@@ -387,7 +391,7 @@ function radicalFigure(ch, c) {
   if (!c.g) return '';
   var svg = '<svg viewBox="0 0 256 256" role="img" aria-label="' + esc(ch) + '，紅色的部分是部首' + esc(c.r) + '"><g transform="scale(1,-1) translate(0,-225)">' +
     '<path class="rest" d="' + c.g[1] + '"/><path class="rad" d="' + c.g[0] + '"/></g></svg>';
-  return '<div class="radfig">' + svg + '<span class="cap">' + cells('紅色的部分是部首') + '<b>' + cells(c.r) + '</b></span></div>';
+  return '<div class="radfig">' + svg + '<span class="cap plain">' + cells('紅色的部分是部首') + '<b>' + cells(c.r) + '</b></span></div>';
 }
 // 同一個部首的其他字（使用者 2026-10-27：讓小朋友容易聯想和記憶）＋部首補充說明（本站自寫，c.rn）
 // 只列國小（小字典）的字、照筆畫排；查的是國中字也列國小字，方便從熟的字聯想
@@ -403,7 +407,7 @@ function radicalSection(ch, c, all) {
   var h = '<section class="sec" id="radical"><h2>部首「' + esc(c.r) + '」的其他字<span class="meta">　共 <span class="tcy">' + list.length + '</span> 個</span></h2>';
   if (show.length) h += '<div class="chips">' + show.map(function (k) { return '<a class="chip big" data-ch="' + esc(k) + '">' + ruby(k, charZhuyin(k, null)) + '</a>'; }).join('') + '</div>';
   if (list.length > show.length) h += '<div class="actions"><button type="button" data-act="allradical" data-ch="' + esc(ch) + '">看全部 ' + list.length + ' 個</button></div>';
-  if (c.rn) h += '<h3 class="wg">為什麼放在' + esc(c.r) + '部</h3><div class="para rn">' + autoRuby(c.rn, null, true) + '</div><div class="note">' + cells('這段是本站補充的說明，不是教育部辭典的原文。') + '</div>';
+  if (c.rn) h += '<h3 class="wg">為什麼放在' + esc(c.r) + '部</h3><div class="para rn">' + autoRuby(c.rn, null, true) + '</div><div class="note plain">' + cells('這段是本站補充的說明，不是教育部辭典的原文。') + '</div>';
   return h + '</section>';
 }
 function wordsSection(ch, all) {
@@ -474,7 +478,7 @@ function radicalSvg(ch, c) {
 function reviewView() {
   var gs = D.meta.radicalGroups || [], total = 0;
   gs.forEach(function (g) { total += Array.from(g.chars).length; });
-  var h = '<section class="sec head"><h1 class="big">部首複習</h1><div class="para">' + cells('這些字一眼看不出部首。先想想看部首是什麼，再點一下字看答案；想知道為什麼，點「看說明」。') + '</div>';
+  var h = '<section class="sec head"><h1 class="big">猜猜部首是什麼？</h1><div class="para plain">' + cells('這些字一眼看不出部首。先想想看部首是什麼，再點一下字看答案；想知道為什麼，點「看說明」。') + '</div>';
   h += '<div class="actions"><button type="button" data-act="rvAll">全部翻開</button><button type="button" data-act="rvNone">全部蓋起來</button></div></section>';
   gs.forEach(function (g) {
     var list = Array.from(g.chars).filter(function (ch) { return D.chars[ch]; });
@@ -489,19 +493,19 @@ function reviewView() {
 }
 function homeView() {
   var ex = ['挑', '長', '行', '樂', '著', '好'], exw = ['挑戰', '挑選', '雞蛋裡挑骨頭'];
-  var h = '<section class="sec head"><h1 class="big">查字查詞</h1><div class="para">' + cells('打一個字，就把它所有的唸法、意思、詞和句子一次列出來；也可以打一個詞，或打注音找字。') + '</div></section>';
+  var h = '<section class="sec head"><h1 class="big">查字查詞</h1><div class="para plain">' + cells('打一個字，就把它所有的唸法、意思、詞和句子一次列出來；也可以打一個詞，或打注音找字。') + '</div></section>';
   // 為什麼做成直的（2026-10-20 使用者要求寫在首頁；佐證見 README）
   h += '<section class="sec"><h2>為什麼做成直的</h2>';
-  h += '<div class="para">' + cells('中文字一個字一格，從古到今都是直著寫、直著讀。台灣的國語課本、國文課本、考卷到許多故事書，都是直排，孩子每天在讀的就是直的。') + '</div>';
-  h += '<div class="para">' + cells('查字典時方向不變，注音也在同一邊：眼睛不用在橫的和直的之間切換，學到的字放回課本，長得一模一樣。') + '</div>';
+  h += '<div class="para plain">' + cells('中文字一個字一格，從古到今都是直著寫、直著讀。台灣的國語課本、國文課本、考卷到許多故事書，都是直排，孩子每天在讀的就是直的。') + '</div>';
+  h += '<div class="para plain">' + cells('查字典時方向不變，注音也在同一邊：眼睛不用在橫的和直的之間切換，學到的字放回課本，長得一模一樣。') + '</div>';
   h += '</section>';
   var rvN = 0; (D.meta.radicalGroups || []).forEach(function (g) { rvN += Array.from(g.chars).length; });
-  if (rvN) h += '<section class="sec"><h2>部首複習</h2><div class="para">' + cells('有些字一眼看不出部首，例如「問」查口部、「章」查音部。') + '</div><div class="actions"><button type="button" class="primary" data-act="review">看不出部首的字（' + rvN + ' 個）</button></div></section>';
+  if (rvN) h += '<section class="sec"><div class="actions"><button type="button" class="primary vbtn" data-act="review">猜猜部首是什麼？</button></div></section>';
   h += '<section class="sec"><h2>試試看</h2><div class="chips">' + ex.map(function (ch) { return '<a class="chip big" data-ch="' + ch + '">' + ruby(ch, charZhuyin(ch, null) || (D.chars[ch].m ? D.chars[ch].m[0].z : '')) + '</a>'; }).join('') + exw.map(function (w) { return '<a class="chip" data-w="' + w + '">' + wordRuby(w, D.words[w].z) + '</a>'; }).join('') + '</div></section>';
   var recent = recentList();
   if (recent.length) h += '<section class="sec"><h2>最近查過<button type="button" class="minor" data-act="clearRecent">清掉</button></h2><div class="chips">' + recent.map(function (q) { return D.chars[q] ? '<a class="chip big" data-ch="' + esc(q) + '">' + ruby(q, charZhuyin(q, null)) + '</a>' : (D.words[q] ? '<a class="chip" data-w="' + esc(q) + '">' + wordRuby(q, D.words[q].z) + '</a>' : ''); }).join('') + '</div></section>';
-  h += '<section class="sec"><h2>怎麼用</h2><ol>' + ['直式和課本一樣：由上往下讀，一行讀完往左邊換行；手機用手指左右滑。', '注音在字的右邊。「只看國小」會先收起國中才學的簡編本內容。', '藍色的詞可以點，會跳到那個詞；詞裡的字也可以再點回去。', '看不習慣直的，按「橫式」就變回橫的。'].map(function (t, i) { return '<li class="sense"><span class="num">' + cells(cn(i) + '、') + '</span>' + cells(t) + '</li>'; }).join('') + '</ol></section>';
-  h += '<section class="sec"><h2>收了多少</h2><div class="para">' + cells(D.meta.sources.mini.name + '　' + String(D.meta.sources.mini.chars) + ' 字') + '</div><div class="para">' + cells(D.meta.sources.con.name + '　' + String(D.meta.sources.con.chars) + ' 字、' + String(D.meta.sources.con.words) + ' 詞') + '</div></section>';
+  h += '<section class="sec"><h2>怎麼用</h2><ol class="plain">' + ['直式和課本一樣：由上往下讀，一行讀完往左邊換行；手機用手指左右滑。', '注音在字的右邊。「只看國小」會先收起國中才學的簡編本內容。', '藍色的詞可以點，會跳到那個詞；詞裡的字也可以再點回去。', '看不習慣直的，按「橫式」就變回橫的。'].map(function (t, i) { return '<li class="sense"><span class="num">' + cells(cn(i) + '、') + '</span>' + cells(t) + '</li>'; }).join('') + '</ol></section>';
+  h += '<section class="sec"><h2>收了多少</h2><div class="para plain">' + cells(D.meta.sources.mini.name + '　' + String(D.meta.sources.mini.chars) + ' 字') + '</div><div class="para plain">' + cells(D.meta.sources.con.name + '　' + String(D.meta.sources.con.chars) + ' 字、' + String(D.meta.sources.con.words) + ' 詞') + '</div></section>';
   return h;
 }
 function recentList() { var s = store('recent'); try { var a = JSON.parse(s || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
