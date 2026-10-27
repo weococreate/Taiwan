@@ -58,6 +58,8 @@ h3{font-size:1em;color:var(--sub);margin-block-end:.3em}
 .rvcard{display:inline-flex;flex-direction:column;align-items:center;gap:.2em;border:2px solid var(--line);border-radius:12px;background:#fff;padding:.3em .4em;cursor:pointer;writing-mode:horizontal-tb;min-inline-size:4.2em}
 .rvcard:hover{border-color:var(--accent2)}
 .rvcard .ch1{font-size:1.6em}
+/* 直式時卡片裡的字和注音照全頁直排的排法（注音一欄在字旁、聲調在注音旁、輕聲在上；使用者 2026-10-27） */
+#app.vert .rvcard .ch1{writing-mode:vertical-rl}
 .rvcard .ans{display:none;font-size:.8em;color:var(--sub);text-align:center}
 .rvcard.open{border-color:var(--accent)}
 .rvcard.open .ans{display:flex;flex-direction:column;align-items:center;gap:.15em}
