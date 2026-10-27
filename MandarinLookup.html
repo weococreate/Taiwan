@@ -119,6 +119,11 @@ h1.big .zyline .zy{font-size:.75em}
 #app.hz .zy.n{flex-direction:row}
 .sense,.def,.ex,.para{line-height:1.1}
 .para{margin-block-end:.5em}
+/* 注音表的格子一樣大、排整齊（使用者 2026-10-27）：最長四個符號＋字數放得下的固定大小，注音在前、字數在後（直式的 row 就是由上往下） */
+.chip.syl{display:inline-flex;flex-direction:row;align-items:center;justify-content:space-between;inline-size:5em;block-size:2.3em;padding:.3em .45em;box-sizing:border-box}
+#app.hz .chip.syl{inline-size:6em}
+.chip.syl .sylz{font-family:"PingFang TC","Noto Sans TC","Heiti TC",sans-serif;text-orientation:upright;line-height:1.1;letter-spacing:.05em}
+.chip.syl .meta{font-size:.75em}
 /* 部首頁的筆畫小標籤，夾在字的中間 */
 .strk{display:inline-block;align-self:center;font-size:.75em;font-weight:700;color:var(--accent);background:var(--tag);border-radius:6px;padding:.2em .35em;writing-mode:horizontal-tb;white-space:nowrap}
 /* 字距（2026-10-27 使用者：直排字距要一致、近一點）：每格沿讀的方向 1.4 字（三個注音符號剛好放得下，再小會碰到下一個字的注音）；沒有注音的說明文字（.plain）另一邊也縮成 1.3 字，欄與欄靠近 */
@@ -535,7 +540,7 @@ function zyListView() {
   var h = '<section class="sec head"><h1 class="big">注音表</h1><div class="para plain">' + cells('一共 ' + n + ' 種注音（不分聲調），照ㄅㄆㄇㄈ排。點一個注音，看唸這個音的所有字，依一聲、二聲、三聲、四聲、輕聲分開。') + '</div></section>';
   Object.keys(by).sort(function (a, b) { return zyKey(a.charAt(0)) < zyKey(b.charAt(0)) ? -1 : (a === b ? 0 : 1); }).forEach(function (g) {
     h += '<section class="sec"><h2>' + esc(g) + '</h2><div class="chips">' + by[g].map(function (x) {
-      return '<a class="chip big" data-syl="' + esc(x[0]) + '"><span class="zyline">' + rtHtml(x[0]) + '</span><span class="meta"> <span class="tcy">' + x[1] + '</span></span></a>';
+      return '<a class="chip big syl" data-syl="' + esc(x[0]) + '"><span class="sylz">' + esc(x[0]) + '</span><span class="meta"> <span class="tcy">' + x[1] + '</span></span></a>';
     }).join('') + '</div></section>';
   });
   return h;
