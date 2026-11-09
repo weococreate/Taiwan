@@ -1,23 +1,23 @@
 {
  "_note": "TaiwanData 雲端更新最近一次的結果（每支一筆；ok=false 表示那一支這輪沒更新，網頁維持上一版）。",
- "event": "schedule",
- "ranAt": "2026-11-09T15:21:41+08:00",
+ "event": "push",
+ "ranAt": "2026-11-09T23:37:14+08:00",
  "apps": {
   "TaiwanAlerts": {
    "ok": true,
-   "at": "2026-11-09T15:21:46+08:00",
+   "at": "2026-11-09T23:37:18+08:00",
    "changed": true,
-   "bytes": 253075,
-   "note": "→ apps/TaiwanAlerts/taiwanalerts-data.js 產出（feed 148 筆、生效 7（災防 7／生活 0）、颱風 1、36h 22 縣市、歷史 456 颱風）",
-   "lastOkAt": "2026-11-09T15:21:46+08:00"
+   "bytes": 251922,
+   "note": "→ apps/TaiwanAlerts/taiwanalerts-data.js 產出（feed 144 筆、生效 5（災防 5／生活 0）、颱風 1、36h 22 縣市、歷史 456 颱風）",
+   "lastOkAt": "2026-11-09T23:37:18+08:00"
   },
   "TaiwanWater": {
    "ok": true,
-   "at": "2026-11-09T15:21:53+08:00",
+   "at": "2026-11-09T23:37:25+08:00",
    "changed": true,
-   "bytes": 595610,
-   "note": "1/3] 抓取三源（offline=false）\n  45501:418 筆、41568:55 筆、32726:40 筆\n[2/3] 合併與蓄水率計算\n[3/4] 擴章：地下水位＋河川水位（失敗容忍）\n  地下水章：11/12 井有觀測、history 新增 11 格\n  河川章：23/23 站有觀測、history 新增 23 格\n[4/4] 歷史累積＋輸出\n→ apps/TaiwanWater/taiwanwater-data.js 產出（359 KB；43 座、可算蓄水率 40 座、history 新增 40 日格；全台主要水庫 90.8%；地下水 11/12 井、河川 23/23 站）",
-   "lastOkAt": "2026-11-09T15:21:53+08:00"
+   "bytes": 595686,
+   "note": "[1/3] 抓取三源（offline=false）\n  45501:426 筆、41568:55 筆、32726:40 筆\n[2/3] 合併與蓄水率計算\n[3/4] 擴章：地下水位＋河川水位（失敗容忍）\n  地下水章：12/12 井有觀測、history 新增 1 格\n  河川章：23/23 站有觀測、history 新增 0 格\n[4/4] 歷史累積＋輸出\n→ apps/TaiwanWater/taiwanwater-data.js 產出（359 KB；43 座、可算蓄水率 40 座、history 新增 0 日格；全台主要水庫 90.7%；地下水 12/12 井、河川 23/23 站）",
+   "lastOkAt": "2026-11-09T23:37:25+08:00"
   }
  }
 }
